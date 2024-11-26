@@ -1,0 +1,15 @@
+Package: coeparishdata
+Version: 0.0.0.9000
+Title: Interface to Parish Level Census Data Provided by the Church of England
+Description: Easy access to tidy ONS 2021 census data at the level of Church of England parishes. Thanks to Ken Eames (head of CoE Data Services) who calculated these data. The original dataset is available at: https://www.churchofengland.org/about/data-services/resources-publications-and-data.
+Authors@R: person(given = "Dave",
+       family = "Lovell",
+       role = c("aut", "cre"),
+       email = "david.lovell@churcharmy.org")
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Depends: 
+    R (>= 2.10)
+LazyData: true
