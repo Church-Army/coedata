@@ -3,3 +3,6 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^coeparishdata\.Rproj$
+^README\.Rmd$
+^\.github$
+^codecov\.yml$
