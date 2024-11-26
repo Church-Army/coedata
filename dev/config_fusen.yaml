@@ -1,0 +1,18 @@
+flat_first.qmd:
+  path: dev/flat_first.qmd
+  state: active
+  R:
+  - R/map_parish_stats.R
+  - R/parish_stats.R
+  tests:
+  - tests/testthat/test-parish_stats.R
+  - tests/testthat/test-map_parish_stats.R
+  vignettes: vignettes/getting-started.Rmd
+  inflate:
+    flat_file: dev/flat_first.qmd
+    vignette_name: Getting started
+    open_vignette: true
+    check: true
+    document: true
+    overwrite: ask
+    clean: ask
