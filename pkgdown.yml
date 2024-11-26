@@ -3,4 +3,7 @@ pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
   getting-started: getting-started.html
-last_built: 2024-11-26T16:49Z
+last_built: 2024-11-26T16:52Z
+urls:
+  reference: https://church-army.github.io/coeparishdata/reference
+  article: https://church-army.github.io/coeparishdata/articles
