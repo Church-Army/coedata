@@ -1,0 +1,138 @@
+---
+title: "Uploading parish data to Google Sheets"
+author: "Dave"
+format: html
+editor: source
+execute:
+  eval: false
+---
+
+## Set Up
+
+### Libraries
+
+```{r setup}
+library(fs)
+library(here)
+library(dplyr)
+library(googlesheets4)
+library(stringr)
+library(googlesheets4)
+library(purrr)
+```
+
+### Read data 
+
+Note that this code (and therefore this file) will stop working once we migrate all the data to Google sheets.
+
+```{r read_parish_data}
+load(here("data", "sysdata.rda"))
+```
+
+## Fix broken data
+
+```{r fix_broken}
+missing_cols <- select(ps_coe_parishes_rel, -data)
+
+fix <- function(.data){
+  out <- cbind(missing_cols, .data) |> 
+    as_tibble() 
+}
+
+ps_coe_dioceses <- fix(ps_coe_dioceses)
+ps_coe_england <- fix(ps_coe_england)
+ps_coe_england_rel <- fix(ps_coe_england_rel)
+```
+
+## Add units
+
+```{r add_units}
+units <- 
+  c(
+    rep("persons", 6),
+    rep("persons_sixteen_plus", 3),
+    rep("households", 6))
+
+stats <- 
+  list(
+    parishes = ps_coe_parishes,
+    parishes_rel = ps_coe_parishes_rel,
+    dioceses = ps_coe_dioceses,
+    dioceses_rel = ps_coe_dioceses_rel,
+    england = ps_coe_england,
+    england_rel = ps_coe_england_rel
+  )
+
+stats <- lapply(stats, \(.data) mutate(.data, units = units, .before = data))
+
+head(stats$parishes)
+```
+
+## Fix dodgy description
+
+```{r fix_dodgy_description}
+stats <- lapply(stats,
+                \(.data){
+                  mutate(.data, 
+                         description = if_else(str_detect(description, "TS007A"),
+                                               "TS007A - Age by 5 year age bands",
+                                               description))
+                  })
+```
+
+## Drop relative values
+
+```{r drop_rel}
+stats <- stats[str_detect(names(stats), "_rel", negate = TRUE)]
+```
+
+## Save 
+
+```{r save}
+tmp <- dir_create(here("dev", "tmp"))
+
+saveRDS(stats, path(tmp, "census-data", ext = "RDS"))
+```
+
+## Write parish data to Google sheets
+
+```{r write_parish_data_to_google_sheets}
+parish_data <- stats$parishes$data
+names(parish_data) <- stats$parishes$nomis_code
+
+workbook <- gs4_create("coeparishdata_parish-data", sheets = names(parish_data))
+
+purrr::iwalk(parish_data, 
+     \(.data, nm){
+       cat("Processing", nm)
+       write_sheet(.data, ss = workbook, sheet = nm)
+     })
+```
+## Give attributes to dioceses
+
+These must have been dropped during data creation
+
+```{r give_dioceses_attributes}
+set_units <- function(.data, using){
+  attr(.data, "units") <- using
+  .data
+}
+
+stats$dioceses <- 
+  rowwise(stats$dioceses) |> 
+  mutate(
+    data = list(set_units(data, units))
+  ) |> 
+  ungroup()
+
+attributes(stats$dioceses$data[[1]])$units
+```
+
+## Overwrite sysdata.rda
+
+```{r overwrite_sysdata}
+pd_coe_dioceses <- stats$dioceses
+pd_coe_england  <- stats$england
+
+save(pd_coe_dioceses, pd_coe_england, file = here("data", "sysdata.rda"))
+```
