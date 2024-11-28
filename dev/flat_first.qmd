@@ -15,95 +15,120 @@ library(testthat)
 pkgload::load_all(export_all = FALSE)
 ```
 
-# parish_stats
-    
-```{r function-parish_stats}
-#' Get census data for CoE parishes
+## Create data environment on load
+
+```{r function-create-environment}
+rlang::on_load({
+  .coeparishdata_envir <- new.env(parent = emptyenv())
+  # utils::data("sysdata", package = "coeparishdata", envir = .coeparishdata_envir)
+  .coeparishdata_envir$parish_data <- parish_data
+  })
+```
+
+## read_parish_data
+
+```{r function-read_parish_data}
+read_parish_data <- function(){
+  .coeparishdata_envir$parish_data
+  }
+```
+
+```{r tests-read_parish_data}
+test_that("read_parish_data works", {
+  expect(inherits(read_parish_data, "function"), "read_parish_data is not a function")
+  expect_s3_class(read_parish_data(), "tbl_df")
+})
+```
+
+## get_cpd_sheet
+
+```{r function-get_cpd_sheet}
+get_cpd_sheet <- function(drive_id, sheet){
+  
+  googlesheets4::gs4_deauth()
+  
+  googlesheets4::read_sheet(ss = drive_id, sheet = sheet)
+}
+```
+
+```{r tests-get_cpd_sheet}
+test_that("get_cpd_sheet works",{
+  expect_true(inherits(get_cpd_sheet, "function"))
+  
+  will_work <- min(which(!is.na(read_parish_data()$drive_id)))
+
+  drived <- read_parish_data()$drive_id[will_work]
+  sheet  <- read_parish_data()$nomis_code[will_work]
+
+  expect_no_error(get_cpd_sheet(drived, sheet))
+  })
+```
+
+## read_cpd_stats
+
+```{r function-read_cpd_stats}
+#' Low level function for getting parish-level census data
 #' 
-#' Get 2021 ONS census data for any number of Church of England parishes
+#' Get 2021 ONS census data for any number of parishes, dioceses or the whole of England. Parish data is read from a Google sheet
 #' 
 #' @return A single tibble
-#' @param nomis_code The nomis code for the data required must be a length-one character.
-#' @param parish_codes Character vector of parishes for which data are desired. If `NULL` (the default), all parishes are returned
-#' @param relative Logical. Should a tibble of relative values be returned? The default is absolute values.
-#' 
-#' @export
-parish_stats <- function(nomis_code, parish_codes = NULL, relative = FALSE){
-  
-  if(length(nomis_code) != 1 || !is.character(nomis_code)) rlang::abort("nomis_codes must be a character vector with length one")
-  if(!is.null(parish_codes) && !is.character(parish_codes))rlang::abort("parish_codes must be a character vector with length one")
+#' @param nomis_code Nomis code of required data set
+#' @param level One of 'parish', 'diocese' or 'england'
 
-  par <-
-    if(relative) ps_coe_parishes_rel
-  else ps_coe_parishes
+read_cpd_stats <- function(nomis_code, level){
   
-  if(!nomis_code %in% par$nomis_code){
-    rlang::abort(paste0("nomis_code '", nomis_code, "' represents a data set that does not exist or is not available"))
+  cpd_pd <- read_parish_data()
+  
+  if(!nomis_code %in% cpd_pd$nomis_code) rlang::abort(paste("Nomis code ", nomis_code, "does not correspond to a dataset that is available through this package"))
+  if(!level %in% c("parish", "diocese", "england")) rlang::abort("Argument 'level' must be one of 'parish', 'diocese' or 'england'")
+  
+  
+  requested_row <- which(cpd_pd$nomis_code == nomis_code & cpd_pd$level == level)
+  stopifnot(length(requested_row) == 1)
+  
+  local_data <- cpd_pd$local[requested_row]
+  
+  if(local_data){
+    out <- cpd_pd$data[requested_row][[1]]
+  } else{
+    # Read google sheet
+    out <- get_cpd_sheet(cpd_pd$drive_id[requested_row], cpd_pd$nomis_code[requested_row])
+    ## Assign class and units attributes
+    class(out) <- c("coe_parish_data", class(out))
+    attr(out, "units") <- cpd_pd$units[requested_row]
+    
+    ## Update data environment with sheet read from google
+    .coeparishdata_envir$parish_data[["data"]][[requested_row]] <- out
+    .coeparishdata_envir$parish_data[requested_row, "local"] <- TRUE
   }
-  
-  par <- par[par$nomis_code %in% nomis_code, ][["data"]][[1]]
-  if(!is.null(parish_codes)) par <- par[par$parish_code %in% parish_codes,]
-  
-  par
-}
-```
-  
-```{r example-parish_stats}
-parish_stats("TS001") |> 
-  head()
-
-parish_stats("TS004", c("100001", "100006"))
-```
-  
-```{r tests-parish_stats}
-test_that("parish_stats works", {
-  expect_true(inherits(parish_stats, "function")) 
-})
-
-test_that("parish_stats fails properly",{
-  ## Missing arguments
-  expect_error(parish_stats())
-  ## More than one nomis_code
-  expect_error(parish_stats(c("TS004", "TS001")))
-  ## nomis_code not in list
-  expect_error(parish_stats("bad-nomis-code"))
-})
-
-test_that("parish_stats works with no parish codes", {
-  expect_no_condition(parish_stats("TS004"))
-})
-```
-
-## map_parish_stats
-
-```{r function-map-parish-stats}
-#' Get a list of tibble containing parish-level UK census data
-#' 
-#' This function is a wrapper around [parish_stats()] that returns a list of tibbles
-#' 
-#' @return A list of tibbles
-#' @param nomis_codes The nomis code for the data required must be a length-one character.
-#' @param ... Arguments passed to [parish_stats()]
-#' 
-#' @export
-
-map_parish_stats <- function(nomis_codes, ...){
-  lapply(nomis_codes, \(x) parish_stats(x, ...))
+  out
 }
 ```
 
-```{r examples-map-parish-stats}
-map_parish_stats(c("TS004", "TS001"))
-map_parish_stats(c("TS004", "TS001"), parish_codes = "100006")
-```
-
-```{r tests-map-parish-stats}
-test_that("map-parish-stats works", {
-  inherits(map_parish_stats, "function")
-  expect_no_condition(map_parish_stats(c("TS004", "TS001")))
+```{r tests-read_cpd_stats}
+test_that("get_anglican_stats works",{
+  expect_true(inherits(read_cpd_stats, "function"))
+  
+  expect_no_error(read_cpd_stats("TS001", "diocese"))
+  expect_s3_class(read_cpd_stats("TS001", "diocese"), c("coe_parish_data", "tbl_df"))
 })
 
-test_that("map-parish-stats crashes",{
-  expect_error(map_parish_stats(c("TS004", "bad-nomis-code")))
-})
+test_that("caching is working for parish data",{
+  ## Check there's nothing there
+
+  tmp_dat <- read_parish_data()
+  
+  expect_identical(tmp_dat$data[tmp_dat$level == "parish" & tmp_dat$nomis_code == "TS001"],
+                   list(NULL))
+  
+  ## Read the data
+  read_cpd_stats("TS001", "parish")
+
+  ## Check it has cached
+  tmp_dat <- read_parish_data()
+  cached <- tmp_dat$data[tmp_dat$level == "parish" & tmp_dat$nomis_code == "TS001"][[1]]
+  
+  expect_true(!is.null(cached))
+  expect_s3_class(cached, c("coe_parish_data", "tbl_df"))
+   })
 ```

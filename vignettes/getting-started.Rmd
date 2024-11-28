@@ -23,23 +23,13 @@ library(coeparishdata)
 
 
 
-# parish_stats
-    
-  
-```{r example-parish_stats}
-parish_stats("TS001") |> 
-  head()
+## Create data environment on load
 
-parish_stats("TS004", c("100001", "100006"))
-```
+## read_parish_data
 
-  
 
-## map_parish_stats
+## get_cpd_sheet
 
-```{r examples-map-parish-stats}
-map_parish_stats(c("TS004", "TS001"))
-map_parish_stats(c("TS004", "TS001"), parish_codes = "100006")
-```
 
+## read_cpd_stats
 

@@ -19,6 +19,7 @@ library(googlesheets4)
 library(stringr)
 library(googlesheets4)
 library(purrr)
+library(forcats)
 ```
 
 ### Read data 
@@ -127,12 +128,33 @@ stats$dioceses <-
 
 attributes(stats$dioceses$data[[1]])$units
 ```
+## Something
 
+```{r something}
+single_table <-
+  imap(stats, \(.data, nm) mutate(.data, level = nm, .after = nomis_code)) |> 
+  list_rbind() |> 
+  mutate(level = factor(level))
+
+single_table <- mutate(single_table,
+                       level = fct_recode(level,
+                                          parish = "parishes",
+                                          diocese = "dioceses"))
+
+single_table["data"][single_table["level"] == "parish"] <- NA
+
+single_table <- 
+  rowwise(single_table) |> 
+  mutate(local = !is_empty(data))
+
+single_table <- 
+  ungroup(single_table) |> 
+  mutate(drive_id = if_else(level == "parish", "1Pyu7U4e7Y_igH9Dlwxb6Lg6wz8N_D7m3XNwRRtN37VY", NA))
+```
 ## Overwrite sysdata.rda
 
 ```{r overwrite_sysdata}
-pd_coe_dioceses <- stats$dioceses
-pd_coe_england  <- stats$england
+cpd_parish_data <- single_table
 
-save(pd_coe_dioceses, pd_coe_england, file = here("data", "sysdata.rda"))
+save(cpd_parish_data, file = here("data", "sysdata.rda"))
 ```

@@ -2,11 +2,14 @@ flat_first.qmd:
   path: dev/flat_first.qmd
   state: active
   R:
-  - R/map_parish_stats.R
-  - R/parish_stats.R
+  - R/create-data-environment-on-load.R
+  - R/read_parish_data.R
+  - R/get_cpd_sheet.R
+  - R/read_cpd_stats.R
   tests:
-  - tests/testthat/test-parish_stats.R
-  - tests/testthat/test-map_parish_stats.R
+  - tests/testthat/test-read_parish_data.R
+  - tests/testthat/test-get_cpd_sheet.R
+  - tests/testthat/test-read_cpd_stats.R
   vignettes: vignettes/getting-started.Rmd
   inflate:
     flat_file: dev/flat_first.qmd
@@ -16,3 +19,22 @@ flat_first.qmd:
     document: true
     overwrite: ask
     clean: ask
+flat_package-data-handling.qmd:
+  path: dev/flat_history/flat_package-data-handling.qmd
+  state: deprecated
+  R:
+  - R/fake-section-title.R
+  - R/onload.R
+  tests: []
+  vignettes: vignettes/internal-functions-for-handling-package-data.Rmd
+  inflate:
+    flat_file: dev/flat_history/flat_package-data-handling.qmd
+    vignette_name: Internal functions for handling package data
+    open_vignette: true
+    check: true
+    document: true
+    overwrite: ask
+    clean: ask
+keep:
+  path: keep
+  R: R/aaa.R
