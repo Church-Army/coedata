@@ -12,11 +12,7 @@
 read_cpd_stats <- function(nomis_code, level){
   
   cpd_pd <- read_parish_data()
-  
-  if(!nomis_code %in% cpd_pd$nomis_code) rlang::abort(paste("Nomis code ", nomis_code, "does not correspond to a dataset that is available through this package"))
-  if(!level %in% c("parish", "diocese", "england")) rlang::abort("Argument 'level' must be one of 'parish', 'diocese' or 'england'")
-  
-  
+
   requested_row <- which(cpd_pd$nomis_code == nomis_code & cpd_pd$level == level)
   stopifnot(length(requested_row) == 1)
   

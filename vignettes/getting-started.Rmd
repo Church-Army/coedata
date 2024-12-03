@@ -28,7 +28,15 @@ library(coeparishdata)
 ## read_parish_data
 
 
+
+## read_parish_table
+
+## good_nomis_codes
+
+## good_levels
+
 ## get_cpd_sheet
+
 
 
 ## read_cpd_stats

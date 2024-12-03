@@ -4,6 +4,9 @@ flat_first.qmd:
   R:
   - R/create-data-environment-on-load.R
   - R/read_parish_data.R
+  - R/read_parish_table.R
+  - R/good_nomis_codes.R
+  - R/good_levels.R
   - R/get_cpd_sheet.R
   - R/read_cpd_stats.R
   tests:
@@ -30,6 +33,23 @@ flat_package-data-handling.qmd:
   inflate:
     flat_file: dev/flat_history/flat_package-data-handling.qmd
     vignette_name: Internal functions for handling package data
+    open_vignette: true
+    check: true
+    document: true
+    overwrite: ask
+    clean: ask
+flat_reading-coe-statistics.Rmd:
+  path: dev/flat_reading-coe-statistics.Rmd
+  state: active
+  R:
+  - R/coe_nomis_codes.R
+  - R/coe_parish_in_context.R
+  - R/coe_stats.R
+  tests: tests/testthat/test-coe_stats.R
+  vignettes: vignettes/reading-coe-statistics.Rmd
+  inflate:
+    flat_file: dev/flat_reading-coe-statistics.Rmd
+    vignette_name: Reading CoE statistics
     open_vignette: true
     check: true
     document: true

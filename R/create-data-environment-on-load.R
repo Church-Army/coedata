@@ -2,6 +2,6 @@
 
 rlang::on_load({
   .coeparishdata_envir <- new.env(parent = emptyenv())
-  # utils::data("sysdata", package = "coeparishdata", envir = .coeparishdata_envir)
   .coeparishdata_envir$parish_data <- parish_data
+  .coeparishdata_envir$parishes_2024 <- NULL
   })

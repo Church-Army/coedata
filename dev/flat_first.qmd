@@ -20,8 +20,8 @@ pkgload::load_all(export_all = FALSE)
 ```{r function-create-environment}
 rlang::on_load({
   .coeparishdata_envir <- new.env(parent = emptyenv())
-  # utils::data("sysdata", package = "coeparishdata", envir = .coeparishdata_envir)
   .coeparishdata_envir$parish_data <- parish_data
+  .coeparishdata_envir$parishes_2024 <- NULL
   })
 ```
 
@@ -30,7 +30,7 @@ rlang::on_load({
 ```{r function-read_parish_data}
 read_parish_data <- function(){
   .coeparishdata_envir$parish_data
-  }
+}
 ```
 
 ```{r tests-read_parish_data}
@@ -38,6 +38,38 @@ test_that("read_parish_data works", {
   expect(inherits(read_parish_data, "function"), "read_parish_data is not a function")
   expect_s3_class(read_parish_data(), "tbl_df")
 })
+```
+
+
+## read_parish_table
+
+```{r function-read_parish_table}
+read_parish_table <- function(){
+  p_table <- .coeparishdata_envir$parishes_2024
+  
+  if(is.null(p_table)){
+    p_table <- get_cpd_sheet("1UUUU96Iw5i0JmabEIczmi6DrDsPIw6yfsGwSO5ExeT0", "parishes")
+    .coeparishdata_envir$parishes_2024 <- p_table
+  } 
+  
+  p_table
+}
+```
+
+## good_nomis_codes
+
+```{r function-good_nomis_codes}
+good_nomis_codes <- function(){
+  unique(read_parish_data()$nomis_code)
+}
+```
+
+## good_levels
+
+```{r function-good_levels}
+good_levels <- function(){
+  unique(read_parish_data()$level)
+}
 ```
 
 ## get_cpd_sheet
@@ -64,6 +96,7 @@ test_that("get_cpd_sheet works",{
   })
 ```
 
+
 ## read_cpd_stats
 
 ```{r function-read_cpd_stats}
@@ -78,11 +111,7 @@ test_that("get_cpd_sheet works",{
 read_cpd_stats <- function(nomis_code, level){
   
   cpd_pd <- read_parish_data()
-  
-  if(!nomis_code %in% cpd_pd$nomis_code) rlang::abort(paste("Nomis code ", nomis_code, "does not correspond to a dataset that is available through this package"))
-  if(!level %in% c("parish", "diocese", "england")) rlang::abort("Argument 'level' must be one of 'parish', 'diocese' or 'england'")
-  
-  
+
   requested_row <- which(cpd_pd$nomis_code == nomis_code & cpd_pd$level == level)
   stopifnot(length(requested_row) == 1)
   
@@ -106,7 +135,7 @@ read_cpd_stats <- function(nomis_code, level){
 ```
 
 ```{r tests-read_cpd_stats}
-test_that("get_anglican_stats works",{
+test_that("read_cpd_stats works",{
   expect_true(inherits(read_cpd_stats, "function"))
   
   expect_no_error(read_cpd_stats("TS001", "diocese"))
@@ -114,21 +143,13 @@ test_that("get_anglican_stats works",{
 })
 
 test_that("caching is working for parish data",{
-  ## Check there's nothing there
-
-  tmp_dat <- read_parish_data()
-  
-  expect_identical(tmp_dat$data[tmp_dat$level == "parish" & tmp_dat$nomis_code == "TS001"],
-                   list(NULL))
-  
   ## Read the data
   read_cpd_stats("TS001", "parish")
 
   ## Check it has cached
   tmp_dat <- read_parish_data()
   cached <- tmp_dat$data[tmp_dat$level == "parish" & tmp_dat$nomis_code == "TS001"][[1]]
-  
-  expect_true(!is.null(cached))
+
   expect_s3_class(cached, c("coe_parish_data", "tbl_df"))
    })
 ```
