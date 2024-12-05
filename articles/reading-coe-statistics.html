@@ -34,7 +34,6 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
 <li><a class="dropdown-item" href="../articles/getting-started.html">Getting started</a></li>
-    <li><a class="dropdown-item" href="../articles/internal-functions-for-handling-package-data.html">Internal functions for handling package data</a></li>
     <li><a class="dropdown-item" href="../articles/reading-coe-statistics.html">Reading CoE statistics</a></li>
   </ul>
 </li>
@@ -73,11 +72,45 @@
 <div class="section level2">
 <h2 id="coe_nomis_codes">coe_nomis_codes<a class="anchor" aria-label="anchor" href="#coe_nomis_codes"></a>
 </h2>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_nomis_codes.html">coe_nomis_codes</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;    nomis_code</span></span>
+<span><span class="co">#&gt; 1       TS001</span></span>
+<span><span class="co">#&gt; 2       TS004</span></span>
+<span><span class="co">#&gt; 3      TS007A</span></span>
+<span><span class="co">#&gt; 4       TS021</span></span>
+<span><span class="co">#&gt; 5       TS030</span></span>
+<span><span class="co">#&gt; 6       TS037</span></span>
+<span><span class="co">#&gt; 7       TS062</span></span>
+<span><span class="co">#&gt; 8       TS066</span></span>
+<span><span class="co">#&gt; 9       TS067</span></span>
+<span><span class="co">#&gt; 10      TS011</span></span>
+<span><span class="co">#&gt; 11      TS025</span></span>
+<span><span class="co">#&gt; 12      TS044</span></span>
+<span><span class="co">#&gt; 13      TS045</span></span>
+<span><span class="co">#&gt; 14      TS054</span></span>
+<span><span class="co">#&gt; 15      TS003</span></span>
+<span><span class="co">#&gt;                                                                    description</span></span>
+<span><span class="co">#&gt; 1  TS001 - Number of usual residents in households and communal establishments</span></span>
+<span><span class="co">#&gt; 2                                                     TS004 - Country of birth</span></span>
+<span><span class="co">#&gt; 3                                             TS007A - Age by 5 year age bands</span></span>
+<span><span class="co">#&gt; 4                                                         TS021 - Ethnic group</span></span>
+<span><span class="co">#&gt; 5                                                             TS030 - Religion</span></span>
+<span><span class="co">#&gt; 6                                                       TS037 - General health</span></span>
+<span><span class="co">#&gt; 7                                       TS062 - Social Classification (NS-SeC)</span></span>
+<span><span class="co">#&gt; 8                                             TS066 - Economic activity status</span></span>
+<span><span class="co">#&gt; 9                                       TS067 - Highest level of qualification</span></span>
+<span><span class="co">#&gt; 10                                TS011 - Households by deprivation dimensions</span></span>
+<span><span class="co">#&gt; 11                                                  TS025 - Household language</span></span>
+<span><span class="co">#&gt; 12                                                  TS044 - Accommodation type</span></span>
+<span><span class="co">#&gt; 13                                             TS045 - Car or van availability</span></span>
+<span><span class="co">#&gt; 14                                                              TS054 - Tenure</span></span>
+<span><span class="co">#&gt; 15                                               TS003 - Household composition</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="coe_stats">coe_stats<a class="anchor" aria-label="anchor" href="#coe_stats"></a>
 </h2>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_stats.html">coe_stats</a></span><span class="op">(</span>nomis_code <span class="op">=</span>  <span class="st">"TS001"</span>, level <span class="op">=</span> <span class="st">"england"</span><span class="op">)</span></span>
 <span><span class="co">#&gt;   population lives_in_a_household lives_in_a_communal_establishment</span></span>
 <span><span class="co">#&gt; 1   56506784             55542946                          963837.8</span></span>
@@ -90,6 +123,16 @@
 <div class="section level2">
 <h2 id="coe_parish_in_context">coe_parish_in_context<a class="anchor" aria-label="anchor" href="#coe_parish_in_context"></a>
 </h2>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_parish_in_context.html">coe_parish_in_context</a></span><span class="op">(</span>parish_code <span class="op">=</span> <span class="st">"370047"</span>, nomis_codes <span class="op">=</span> <span class="st">"TS001"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coe-parishes-2024</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'parishes'</span>'.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coeparishdata_parish-data</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'TS001'</span>'.</span></span>
+<span><span class="co">#&gt; Warning in out[code] &lt;- rbind(parish_stats[[code]], diocese_stats[[code]], :</span></span>
+<span><span class="co">#&gt; number of items to replace is not a multiple of replacement length</span></span>
+<span><span class="co">#&gt; $TS001</span></span>
+<span><span class="co">#&gt; [1] "parish" "parish" "nation"</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
