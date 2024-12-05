@@ -79,7 +79,7 @@ coe_parish_in_context <- function(parish_code,
   names(out) <-  names(nomis_codes)
   
   for(code in names(nomis_codes)){
-    out[code] <- rbind(parish_stats[[code]], diocese_stats[[code]], england_stats[[code]])
+    out[[code]] <- rbind(parish_stats[[code]], diocese_stats[[code]], england_stats[[code]])
   }
   
   out
