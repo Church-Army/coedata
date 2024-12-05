@@ -15,3 +15,6 @@ A tibble of nomis codes and dataset descriptions, or a character vector of nomis
 \description{
 View nomis codes of available data
 }
+\examples{
+coe_nomis_codes()
+}

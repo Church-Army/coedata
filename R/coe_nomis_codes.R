@@ -5,6 +5,8 @@
 #' @return A tibble of nomis codes and dataset descriptions, or a character vector of nomis codes
 #' @param description Logical. If TRUE, (the default), a tibble is returned that contains nomis codes and corresponding dataset descriptions. If false, a character vector containing only nomis codes is returned. 
 #' @export
+#' @examples
+#' coe_nomis_codes()
 
 coe_nomis_codes <- function(description = TRUE){
   out <- read_parish_data()

@@ -7,8 +7,8 @@
 #' @return A single tibble
 #' @param nomis_code Nomis code of required data set
 #' @param level One of 'parish', 'diocese' or 'england'
+#' 
 #' @noRd
-
 read_cpd_stats <- function(nomis_code, level){
   
   cpd_pd <- read_parish_data()
@@ -24,8 +24,9 @@ read_cpd_stats <- function(nomis_code, level){
     # Read google sheet
     out <- get_cpd_sheet(cpd_pd$drive_id[requested_row], cpd_pd$nomis_code[requested_row])
     ## Assign class and units attributes
-    class(out) <- c("coe_parish_data", class(out))
-    attr(out, "units") <- cpd_pd$units[requested_row]
+    class(out)            <- c("coe_parish_data", class(out))
+    attr(out, "units")    <- cpd_pd$units[requested_row]
+    attr(out, "relative") <- FALSE
     
     ## Update data environment with sheet read from google
     .coeparishdata_envir$parish_data[["data"]][[requested_row]] <- out
