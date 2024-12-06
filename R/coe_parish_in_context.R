@@ -32,7 +32,7 @@ coe_parish_in_context <- function(parish_code,
   
   parish_stats  <- lapply(nomis_codes,
                           \(x){
-                            stat_table <- coe_stats(nomis_code = x, level = "parish",  areas = parish_code, relative = relative) 
+                            stat_table <- coe_census_stats(nomis_code = x, level = "parish",  areas = parish_code, relative = relative) 
                             
                             stat_table$parish_name <- par_table$parish_name[match(stat_table$parish_code, par_table$parish_code)]
                             
@@ -46,7 +46,7 @@ coe_parish_in_context <- function(parish_code,
   
   diocese_stats <- lapply(nomis_codes,
                           \(x){
-                            stat_table <- coe_stats(nomis_code = x, level = "diocese", areas = diocese_no, relative = relative)
+                            stat_table <- coe_census_stats(nomis_code = x, level = "diocese", areas = diocese_no, relative = relative)
                             
                             stat_table$diocese_name <- par_table$diocese_name[match(stat_table$diocese_number, par_table$diocese_number)]
                             
@@ -59,7 +59,7 @@ coe_parish_in_context <- function(parish_code,
                             })
   england_stats <- lapply(nomis_codes,
                           \(x){
-                            stat_table <- coe_stats(nomis_code = x, level = "england", relative = relative)
+                            stat_table <- coe_census_stats(nomis_code = x, level = "england", relative = relative)
                             
                             stat_table$level <- "nation"
                             stat_table$level_code = NA_character_

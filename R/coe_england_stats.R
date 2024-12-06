@@ -3,9 +3,9 @@
 #' Obtain national level statistics on a particular topic
 #' 
 #' @param nomis_code The nomis code for the required topic
-#' @param ... Other arguments passed to [coe_stats()]
+#' @param ... Other arguments passed to [coe_census_stats()]
 #' 
 #' @export
 coe_england_stats <- function(nomis_code, ...){
-  coe_stats(nomis_code, level = "england", ...)
+  coe_census_stats(nomis_code, level = "england", ...)
 }

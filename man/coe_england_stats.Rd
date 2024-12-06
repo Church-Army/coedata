@@ -9,7 +9,7 @@ coe_england_stats(nomis_code, ...)
 \arguments{
 \item{nomis_code}{The nomis code for the required topic}
 
-\item{...}{Other arguments passed to \code{\link[=coe_stats]{coe_stats()}}}
+\item{...}{Other arguments passed to \code{\link[=coe_census_stats]{coe_census_stats()}}}
 }
 \description{
 Obtain national level statistics on a particular topic

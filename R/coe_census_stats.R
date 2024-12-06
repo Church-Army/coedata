@@ -2,17 +2,17 @@
 
 #' Get Census data for the Church of England at a parish, diocesan or national level.
 #'
-#' @return A  
+#' @return A [tibble::tibble()] containing census data for the Church of England  
 #' @param nomis_code The Nomis code of required data. Must be one of [coe_datasets()].
 #' @param level The geographical level at which data are required. Must be one of 'parish', 'diocese' or 'england'.
 #' @param areas A character vector of parish codes or diocese numbers. If specified, the returned tibble will contain only data for these areas. Cannot be used with `level = 'england'`. `NA` values will be removed.
 #' @param relative Logical. Should returned table contain absolute statitiscs (e.g. persons/households) or proportions for each area?
-#' @export
+#' @export 
 #'
 #' @examples
-#' coe_stats(nomis_code =  "TS001", level = "england")
-#' coe_stats(nomis_code = "TS001", level = "diocese", areas = 1)
-coe_stats <- function(nomis_code, level, areas, relative = FALSE){
+#' coe_census_stats(nomis_code =  "TS001", level = "england")
+#' coe_census_stats(nomis_code = "TS001", level = "diocese", areas = 1)
+coe_census_stats <- function(nomis_code, level, areas, relative = FALSE){
   
   ## Validate inputs
   

@@ -11,7 +11,7 @@ coe_parish_stats(nomis_code, parish_codes, ...)
 
 \item{parish_codes}{Parish codes of required parishes. If empty (the default) data for all parishes are returned.}
 
-\item{...}{Other arguments passed to \code{\link[=coe_stats]{coe_stats()}}}
+\item{...}{Other arguments passed to \code{\link[=coe_census_stats]{coe_census_stats()}}}
 }
 \description{
 Obtain dicoese level statistics on a particular topic for any diocese of your choosing

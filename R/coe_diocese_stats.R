@@ -4,12 +4,12 @@
 #' 
 #' @param nomis_code The nomis code for the required topic
 #' @param diocese_numbers Diocese numbers of required dioceses. If empty (the default) data for all dioceses are returned.
-#' @param ... Other arguments passed to [coe_stats()]
+#' @param ... Other arguments passed to [coe_census_stats()]
 #' 
 #' @export
 coe_diocese_stats <- function(nomis_code, diocese_numbers, ...){
   
-  if(!rlang::is_missing(diocese_numbers)) out <- coe_stats(nomis_code, level = "diocese", areas = diocese_numbers, ...)
-  else out <- coe_stats(nomis_code, level = "diocese", ...)
+  if(!rlang::is_missing(diocese_numbers)) out <- coe_census_stats(nomis_code, level = "diocese", areas = diocese_numbers, ...)
+  else out <- coe_census_stats(nomis_code, level = "diocese", ...)
   out
 }

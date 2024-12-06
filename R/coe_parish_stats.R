@@ -4,12 +4,12 @@
 #' 
 #' @param nomis_code The nomis code for the required topic
 #' @param parish_codes Parish codes of required parishes. If empty (the default) data for all parishes are returned.
-#' @param ... Other arguments passed to [coe_stats()]
+#' @param ... Other arguments passed to [coe_census_stats()]
 #' 
 #' @export 
 coe_parish_stats <- function(nomis_code, parish_codes, ...){
   
-  if(!rlang::is_missing(parish_codes)) out <- coe_stats(nomis_code, level = "parish", areas = parish_codes, ...)
-  else out <- coe_stats(nomis_code, level = "parish", ...)
+  if(!rlang::is_missing(parish_codes)) out <- coe_census_stats(nomis_code, level = "parish", areas = parish_codes, ...)
+  else out <- coe_census_stats(nomis_code, level = "parish", ...)
   out
 }

@@ -11,7 +11,7 @@ coe_diocese_stats(nomis_code, diocese_numbers, ...)
 
 \item{diocese_numbers}{Diocese numbers of required dioceses. If empty (the default) data for all dioceses are returned.}
 
-\item{...}{Other arguments passed to \code{\link[=coe_stats]{coe_stats()}}}
+\item{...}{Other arguments passed to \code{\link[=coe_census_stats]{coe_census_stats()}}}
 }
 \description{
 Obtain dicoese level statistics on a particular topic for any diocese of your choosing
