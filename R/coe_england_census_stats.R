@@ -6,6 +6,6 @@
 #' @param ... Other arguments passed to [coe_census_stats()]
 #' 
 #' @export
-coe_england_stats <- function(nomis_code, ...){
+coe_england_census_stats <- function(nomis_code, ...){
   coe_census_stats(nomis_code, level = "england", ...)
 }

@@ -47,13 +47,13 @@ flat_reading-coe-statistics.Rmd:
   R:
   - R/coe_census_stats.R
   - R/coe_datasets.R
-  - R/coe_diocese_stats.R
-  - R/coe_england_stats.R
-  - R/coe_parish_in_context.R
-  - R/coe_parish_stats.R
+  - R/coe_diocese_census_stats.R
+  - R/coe_england_census_stats.R
+  - R/coe_parish_census_context.R
+  - R/coe_parish_census_stats.R
   tests:
   - tests/testthat/test-coe_census_stats.R
-  - tests/testthat/test-coe_parish_in_context.R
+  - tests/testthat/test-coe_parish_census_context.R
   vignettes: vignettes/reading-coe-statistics.Rmd
   inflate:
     flat_file: dev/flat_reading-coe-statistics.Rmd

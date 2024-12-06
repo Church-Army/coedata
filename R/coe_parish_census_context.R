@@ -11,9 +11,9 @@
 #' @param relative Logical. Should outputs be relative? Default is `TRUE`.
 #' @export
 #' @examples
-#' coe_parish_in_context(parish_code = "370047", nomis_codes = "TS001")
+#' coe_parish_census_context(parish_code = "370047", nomis_codes = "TS001")
 
-coe_parish_in_context <- function(parish_code,
+coe_parish_census_context <- function(parish_code,
                                   nomis_codes = coe_datasets(description = FALSE),
                                   relative = TRUE){
   
@@ -52,7 +52,7 @@ coe_parish_in_context <- function(parish_code,
                             
                             stat_table <- coe_relocate(stat_table, c("diocese_number", "diocese_name"))
                             names(stat_table)[1:2] <- c("level_code", "level_name")
-                            stat_table$level <- "parish"
+                            stat_table$level <- "diocese"
                             stat_table <- coe_relocate(stat_table, "level")
                             stat_table
                             

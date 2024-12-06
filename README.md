@@ -34,6 +34,8 @@ Full documentation website on: https://Church-Army.github.io/coeparishdata
 
 ## TODO:
 
+- [x] Replace national level data with NOMIS census data
+  - Aggregating parish data causes considerable rounding error
 - [ ] Add data-dictionary vignettes
 - [ ] Create print methods for `"coe_parish_data"` class
 - [ ] Create methods for `dplyr` that preserve attributes in `"coe_parish_data"` objects

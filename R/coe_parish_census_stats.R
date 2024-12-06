@@ -7,7 +7,7 @@
 #' @param ... Other arguments passed to [coe_census_stats()]
 #' 
 #' @export 
-coe_parish_stats <- function(nomis_code, parish_codes, ...){
+coe_parish_census_stats <- function(nomis_code, parish_codes, ...){
   
   if(!rlang::is_missing(parish_codes)) out <- coe_census_stats(nomis_code, level = "parish", areas = parish_codes, ...)
   else out <- coe_census_stats(nomis_code, level = "parish", ...)
