@@ -7,7 +7,7 @@
 coe_parish_in_context(
   parish_code,
   nomis_codes = coe_datasets(description = FALSE),
-  relative = FALSE
+  relative = TRUE
 )
 }
 \arguments{
@@ -15,7 +15,7 @@ coe_parish_in_context(
 
 \item{nomis_codes}{A character vector of nomis_codes.}
 
-\item{relative}{Logical. Should outputs be relative? Default is FALSE.}
+\item{relative}{Logical. Should outputs be relative? Default is \code{TRUE}.}
 }
 \value{
 A list of \code{coe_parish_data} tibbles

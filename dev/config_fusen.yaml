@@ -24,12 +24,32 @@ flat_first.qmd:
     document: true
     overwrite: ask
     clean: ask
+flat_read_church_data.Rmd:
+  path: dev/flat_read_church_data.Rmd
+  state: active
+  R:
+  - R/coe_church_data.R
+  - R/coe_church_parish.R
+  - R/coe_esri_fields.R
+  tests: tests/testthat/test-coe_church_data.R
+  vignettes: vignettes/data-on-individual-churches.Rmd
+  inflate:
+    flat_file: dev/flat_read_church_data.Rmd
+    vignette_name: Data on individual churches
+    open_vignette: true
+    check: true
+    document: true
+    overwrite: ask
+    clean: ask
 flat_reading-coe-statistics.Rmd:
   path: dev/flat_reading-coe-statistics.Rmd
   state: active
   R:
   - R/coe_datasets.R
+  - R/coe_diocese_stats.R
+  - R/coe_england_stats.R
   - R/coe_parish_in_context.R
+  - R/coe_parish_stats.R
   - R/coe_stats.R
   tests:
   - tests/testthat/test-coe_stats.R

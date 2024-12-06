@@ -8,14 +8,14 @@
 #' @returns A list of `coe_parish_data` tibbles
 #' @param parish_code A single parish code. Character.
 #' @param nomis_codes A character vector of nomis_codes.
-#' @param relative Logical. Should outputs be relative? Default is FALSE.
+#' @param relative Logical. Should outputs be relative? Default is `TRUE`.
 #' @export
 #' @examples
 #' coe_parish_in_context(parish_code = "370047", nomis_codes = "TS001")
 
 coe_parish_in_context <- function(parish_code,
                                   nomis_codes = coe_datasets(description = FALSE),
-                                  relative = FALSE){
+                                  relative = TRUE){
   
   p_table <- read_parish_table()
   
@@ -32,9 +32,7 @@ coe_parish_in_context <- function(parish_code,
   
   parish_stats  <- lapply(nomis_codes,
                           \(x){
-                            stat_table <- coe_stats(nomis_code = x, level = "parish",  areas = parish_code) 
-                            
-                            if(relative) stat_table <- cpd_relative(stat_table)
+                            stat_table <- coe_stats(nomis_code = x, level = "parish",  areas = parish_code, relative = relative) 
                             
                             stat_table$parish_name <- par_table$parish_name[match(stat_table$parish_code, par_table$parish_code)]
                             
@@ -48,7 +46,7 @@ coe_parish_in_context <- function(parish_code,
   
   diocese_stats <- lapply(nomis_codes,
                           \(x){
-                            stat_table <- coe_stats(nomis_code = x, level = "diocese", areas = diocese_no)
+                            stat_table <- coe_stats(nomis_code = x, level = "diocese", areas = diocese_no, relative = relative)
                             
                             stat_table$diocese_name <- par_table$diocese_name[match(stat_table$diocese_number, par_table$diocese_number)]
                             
@@ -61,9 +59,7 @@ coe_parish_in_context <- function(parish_code,
                             })
   england_stats <- lapply(nomis_codes,
                           \(x){
-                            stat_table <- coe_stats(nomis_code = x, level = "england")
-                            
-                            if(relative) stat_table <- cpd_relative(stat_table)
+                            stat_table <- coe_stats(nomis_code = x, level = "england", relative = relative)
                             
                             stat_table$level <- "nation"
                             stat_table$level_code = NA_character_

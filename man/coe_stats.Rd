@@ -4,7 +4,7 @@
 \alias{coe_stats}
 \title{Get Census data for the Church of England at a parish, diocesan or national level.}
 \usage{
-coe_stats(nomis_code, level, areas)
+coe_stats(nomis_code, level, areas, relative = FALSE)
 }
 \arguments{
 \item{nomis_code}{The Nomis code of required data. Must be one of \code{\link[=coe_datasets]{coe_datasets()}}.}
@@ -12,6 +12,8 @@ coe_stats(nomis_code, level, areas)
 \item{level}{The geographical level at which data are required. Must be one of 'parish', 'diocese' or 'england'.}
 
 \item{areas}{A character vector of parish codes or diocese numbers. If specified, the returned tibble will contain only data for these areas. Cannot be used with \code{level = 'england'}. \code{NA} values will be removed.}
+
+\item{relative}{Logical. Should returned table contain absolute statitiscs (e.g. persons/households) or proportions for each area?}
 }
 \value{
 A

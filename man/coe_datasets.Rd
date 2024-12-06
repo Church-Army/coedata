@@ -16,5 +16,6 @@ A tibble of nomis codes and dataset descriptions, or a character vector of nomis
 View nomis codes of available data
 }
 \examples{
-coe_datasets()
+coe_datasets() |>
+  dplyr::glimpse()
 }

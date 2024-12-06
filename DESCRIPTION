@@ -17,9 +17,12 @@ Depends:
     R (>= 2.10)
 Imports: 
     googlesheets4,
+    httr2,
     rlang,
+    sf,
     tibble
 Suggests: 
+    dplyr,
     knitr,
     rmarkdown,
     testthat
