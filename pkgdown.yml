@@ -2,9 +2,8 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles:
-  getting-started: getting-started.html
   reading-coe-statistics: reading-coe-statistics.html
-last_built: 2024-12-05T17:45Z
+last_built: 2024-12-06T09:47Z
 urls:
   reference: https://church-army.github.io/coeparishdata/reference
   article: https://church-army.github.io/coeparishdata/articles
