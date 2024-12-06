@@ -19,6 +19,8 @@ coeparishdata is a data package that's built around various datasets made availa
 - [x] A [database](https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer) of Churches, Parishes, Dioceses and other geographies (Updated November 2024)
 - [ ] ~~[Parish-level data](https://www.churchofengland.org/about/data-services/resources-publications-and-data) from the 2019 Index of Multiple Deprivation~~ (PENDING)
 
+National-level data are sourced directly from ONS data via [nomis](https://www.nomisweb.co.uk/) (via [nomisr](https://github.com/ropensci/nomisr)).
+
 ## Installation
 
 You can install the development version of coeparishdata from [GitHub](https://github.com/) with:
