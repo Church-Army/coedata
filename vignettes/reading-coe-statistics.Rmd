@@ -23,10 +23,12 @@ library(coeparishdata)
 
 
 
-## coe_nomis_codes
+## coe_datasets()
 
-```{r examples-coe_nomis_codes}
-coe_nomis_codes()
+Display information on all available datasets
+
+```{r examples-coe_datasets}
+coe_datasets()
 ```
 
 

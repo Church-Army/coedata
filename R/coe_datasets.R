@@ -6,9 +6,9 @@
 #' @param description Logical. If TRUE, (the default), a tibble is returned that contains nomis codes and corresponding dataset descriptions. If false, a character vector containing only nomis codes is returned. 
 #' @export
 #' @examples
-#' coe_nomis_codes()
+#' coe_datasets()
 
-coe_nomis_codes <- function(description = TRUE){
+coe_datasets <- function(description = TRUE){
   out <- read_parish_data()
   
   out <- out[c("nomis_code", "description")] |>

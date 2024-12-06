@@ -14,7 +14,7 @@
 #' coe_parish_in_context(parish_code = "370047", nomis_codes = "TS001")
 
 coe_parish_in_context <- function(parish_code,
-                                  nomis_codes = coe_nomis_codes(description = FALSE),
+                                  nomis_codes = coe_datasets(description = FALSE),
                                   relative = FALSE){
   
   p_table <- read_parish_table()

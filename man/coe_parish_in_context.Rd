@@ -6,7 +6,7 @@
 \usage{
 coe_parish_in_context(
   parish_code,
-  nomis_codes = coe_nomis_codes(description = FALSE),
+  nomis_codes = coe_datasets(description = FALSE),
   relative = FALSE
 )
 }

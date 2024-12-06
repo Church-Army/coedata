@@ -6,7 +6,7 @@
 #' Get Census data for the Church of England at a parish, diocesan or national level.
 #'
 #' @return A  
-#' @param nomis_code The Nomis code of required data. Must be one of [coe_nomis_codes()].
+#' @param nomis_code The Nomis code of required data. Must be one of [coe_datasets()].
 #' @param level The geographical level at which data are required. Must be one of 'parish', 'diocese' or 'england'.
 #' @param areas A character vector of parish codes or diocese numbers. If specified, the returned tibble will contain only data for these areas. Cannot be used with `level = 'england'`. `NA` values will be removed.
 #' @export

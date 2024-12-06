@@ -7,7 +7,7 @@
 coe_stats(nomis_code, level, areas)
 }
 \arguments{
-\item{nomis_code}{The Nomis code of required data. Must be one of \code{\link[=coe_nomis_codes]{coe_nomis_codes()}}.}
+\item{nomis_code}{The Nomis code of required data. Must be one of \code{\link[=coe_datasets]{coe_datasets()}}.}
 
 \item{level}{The geographical level at which data are required. Must be one of 'parish', 'diocese' or 'england'.}
 

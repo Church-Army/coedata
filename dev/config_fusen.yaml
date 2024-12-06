@@ -28,7 +28,7 @@ flat_reading-coe-statistics.Rmd:
   path: dev/flat_reading-coe-statistics.Rmd
   state: active
   R:
-  - R/coe_nomis_codes.R
+  - R/coe_datasets.R
   - R/coe_parish_in_context.R
   - R/coe_stats.R
   tests:
