@@ -64,6 +64,7 @@
 <li><label><input type="checkbox" checked>A <a href="https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer" class="external-link">database</a> of Churches, Parishes, Dioceses and other geographies (Updated November 2024)</label></li>
 <li><label><input type="checkbox"><del><a href="https://www.churchofengland.org/about/data-services/resources-publications-and-data" class="external-link">Parish-level data</a> from the 2019 Index of Multiple Deprivation</del> (PENDING)</label></li>
 </ul>
+<p>National-level data are sourced directly from ONS data via <a href="https://www.nomisweb.co.uk/" class="external-link">nomis</a> (via <a href="https://github.com/ropensci/nomisr" class="external-link">nomisr</a>).</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -81,6 +82,12 @@
 <h2 id="todo">TODO:<a class="anchor" aria-label="anchor" href="#todo"></a>
 </h2>
 <ul class="task-list">
+<li>
+<label><input type="checkbox" checked>Replace national level data with NOMIS census data</label>
+<ul>
+<li>Aggregating parish data causes considerable rounding error</li>
+</ul>
+</li>
 <li><label><input type="checkbox">Add data-dictionary vignettes</label></li>
 <li><label><input type="checkbox">Create print methods for <code>"coe_parish_data"</code> class</label></li>
 <li><label><input type="checkbox">Create methods for <code>dplyr</code> that preserve attributes in <code>"coe_parish_data"</code> objects</label></li>
