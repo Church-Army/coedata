@@ -58,7 +58,12 @@
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of coeparishdata is to …</p>
+<p>coeparishdata is a data package that’s built around various datasets made available by the Church of England’s <a href="https://www.churchofengland.org/about/data-services" class="external-link">Data Services</a> team. Data sources include:</p>
+<ul class="task-list">
+<li><label><input type="checkbox" checked><a href="https://www.churchofengland.org/about/data-services/resources-publications-and-data" class="external-link">Parish-level census data</a> from ONS’ 2021 Census of England and Wales (Updated November 2024)</label></li>
+<li><label><input type="checkbox" checked>A <a href="https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer" class="external-link">database</a> of Churches, Parishes, Dioceses and other geographies (Updated November 2024)</label></li>
+<li><label><input type="checkbox"><del><a href="https://www.churchofengland.org/about/data-services/resources-publications-and-data" class="external-link">Parish-level data</a> from the 2019 Index of Multiple Deprivation</del> (PENDING)</label></li>
+</ul>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -73,30 +78,15 @@
 <p>Full documentation website on: <a href="https://Church-Army.github.io/coeparishdata" class="external-link uri">https://Church-Army.github.io/coeparishdata</a></p>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="todo">TODO:<a class="anchor" aria-label="anchor" href="#todo"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/Church-Army/coeparishdata" class="external-link">coeparishdata</a></span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
-<p>What is special about using <code>README.Rmd</code> instead of just <code>README.md</code>? You can include R chunks like so:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      speed           dist       </span></span>
-<span><span class="co">#&gt;  Min.   : 4.0   Min.   :  2.00  </span></span>
-<span><span class="co">#&gt;  1st Qu.:12.0   1st Qu.: 26.00  </span></span>
-<span><span class="co">#&gt;  Median :15.0   Median : 36.00  </span></span>
-<span><span class="co">#&gt;  Mean   :15.4   Mean   : 42.98  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:19.0   3rd Qu.: 56.00  </span></span>
-<span><span class="co">#&gt;  Max.   :25.0   Max.   :120.00</span></span></code></pre></div>
-<p>You’ll still need to render <code>README.Rmd</code> regularly, to keep <code>README.md</code> up-to-date. <code>devtools::build_readme()</code> is handy for this.</p>
-<p>You can also embed plots, for example:</p>
-<div class="figure">
-<img src="reference/figures/README-pressure-1.png" alt="plot of chunk pressure" width="100%"><p class="caption">
-plot of chunk pressure
-</p>
-</div>
-<p>In that case, don’t forget to commit and push the resulting figure files, so they display on GitHub and CRAN.</p>
+<ul class="task-list">
+<li><label><input type="checkbox">Add data-dictionary vignettes</label></li>
+<li><label><input type="checkbox">Create print methods for <code>"coe_parish_data"</code> class</label></li>
+<li><label><input type="checkbox">Create methods for <code>dplyr</code> that preserve attributes in <code>"coe_parish_data"</code> objects</label></li>
+<li><label><input type="checkbox">Add IMD data</label></li>
+<li><label><input type="checkbox">Ensure appropriate credit/attribution/documentation</label></li>
+</ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
