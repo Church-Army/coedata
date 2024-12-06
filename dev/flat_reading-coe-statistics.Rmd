@@ -39,15 +39,15 @@ coe_datasets <- function(description = TRUE){
 ```
 
 ```{r examples-coe_datasets}
-coe_datasets()
+coe_datasets() |>
+  dplyr::glimpse()
 ```
 
 ## coe_stats
 
-```{r function-coe_stats}
-# TODO: Implement 'relative' argument
-# TODO: Implement 'relative' and 'absolute' functions
+Get statistics on a particular topic, for a particular geographical level, filtering as required. Levels include 'parish', 'diocese' or 'england'. Parishes can be filtered with parish codes and dioceses with diocese numbers, but national-level tables are comprised of a single row and cannot be filtered.
 
+```{r function-coe_stats}
 #' Get Census data for the Church of England at a parish, diocesan or national level.
 #'
 #' @return A  
