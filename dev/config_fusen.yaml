@@ -15,11 +15,11 @@ flat_first.qmd:
   - tests/testthat/test-get_cpd_sheet.R
   - tests/testthat/test-cpd_relative.R
   - tests/testthat/test-read_cpd_stats.R
-  vignettes: vignettes/getting-started.Rmd
+  vignettes: []
   inflate:
     flat_file: dev/flat_first.qmd
-    vignette_name: Getting started
-    open_vignette: false
+    vignette_name: .na
+    open_vignette: true
     check: true
     document: true
     overwrite: ask
