@@ -25,7 +25,7 @@ library(coeparishdata)
 
 ## coe_datasets()
 
-Display information on all available datasets
+Display information on all datasets available through this package. Default is to return a two-column tibble including `nomis_code` and `description`, but setting `description = FALSE` will return a character vector of all valid nomis codes which can be passed to functions such as `coe_stats()` 
 
 ```{r examples-coe_datasets}
 coe_datasets()

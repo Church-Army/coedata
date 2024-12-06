@@ -20,7 +20,7 @@ pkgload::load_all(export_all = FALSE)
 ```{r function-create-environment}
 rlang::on_load({
   .coeparishdata_envir <- new.env(parent = emptyenv())
-  .coeparishdata_envir$parish_data <- parish_data
+  .coeparishdata_envir$parish_data <- tibble::as_tibble(parish_data)
   .coeparishdata_envir$parishes_2024 <- NULL
   })
 ```
