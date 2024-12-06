@@ -13,7 +13,11 @@ output: github_document
 [![Codecov test coverage](https://codecov.io/gh/Church-Army/coeparishdata/graph/badge.svg)](https://app.codecov.io/gh/Church-Army/coeparishdata)
 <!-- badges: end -->
 
-The goal of coeparishdata is to ...
+coeparishdata is a data package that's built around various datasets made available by the Church of England's [Data Services](https://www.churchofengland.org/about/data-services) team. Data sources include:
+
+- [x] [Parish-level census data](https://www.churchofengland.org/about/data-services/resources-publications-and-data) from ONS' 2021 Census of England and Wales (Updated November 2024)
+- [x] A [database](https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer) of Churches, Parishes, Dioceses and other geographies (Updated November 2024)
+- [ ] ~~[Parish-level data](https://www.churchofengland.org/about/data-services/resources-publications-and-data) from the 2019 Index of Multiple Deprivation~~ (PENDING)
 
 ## Installation
 
@@ -28,37 +32,10 @@ pak::pak("Church-Army/coeparishdata")
 
 Full documentation website on: https://Church-Army.github.io/coeparishdata
 
-## Example
+## TODO:
 
-This is a basic example which shows you how to solve a common problem:
-
-
-``` r
-library(coeparishdata)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-
-``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-<div class="figure">
-<img src="man/figures/README-pressure-1.png" alt="plot of chunk pressure" width="100%" />
-<p class="caption">plot of chunk pressure</p>
-</div>
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+- [ ] Add data-dictionary vignettes
+- [ ] Create print methods for `"coe_parish_data"` class
+- [ ] Create methods for `dplyr` that preserve attributes in `"coe_parish_data"` objects
+- [ ] Add IMD data
+- [ ] Ensure appropriate credit/attribution/documentation
