@@ -18,7 +18,8 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/reading-coe-statistics.html">Reading CoE statistics</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/data-on-individual-churches.html">Data on individual churches</a></li>
+    <li><a class="dropdown-item" href="../articles/reading-coe-statistics.html">Reading CoE statistics</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -46,7 +47,7 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">coe_parish_in_context</span><span class="op">(</span></span>
 <span>  <span class="va">parish_code</span>,</span>
 <span>  nomis_codes <span class="op">=</span> <span class="fu"><a href="coe_datasets.html">coe_datasets</a></span><span class="op">(</span>description <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span>,</span>
-<span>  relative <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>  relative <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -63,7 +64,7 @@
 
 
 <dt id="arg-relative">relative<a class="anchor" aria-label="anchor" href="#arg-relative"></a></dt>
-<dd><p>Logical. Should outputs be relative? Default is FALSE.</p></dd>
+<dd><p>Logical. Should outputs be relative? Default is <code>TRUE</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -74,17 +75,15 @@
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">coe_parish_in_context</span><span class="op">(</span>parish_code <span class="op">=</span> <span class="st">"370047"</span>, nomis_codes <span class="op">=</span> <span class="st">"TS001"</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coe-parishes-2024</span>.</span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'parishes'</span>'.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coeparishdata_parish-data</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'TS001'</span>'.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $TS001</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 3 × 6</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   level  level_code level_name                population lives_in_a_household</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> parish 370047     South Dulwich: St Stephen       <span style="text-decoration: underline;">6</span>680                <span style="text-decoration: underline;">6</span>563.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> parish 37         Southwark                    2<span style="text-decoration: underline;">879</span>124             2<span style="text-decoration: underline;">845</span>651.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> nation <span style="color: #BB0000;">NA</span>         england                     56<span style="text-decoration: underline;">506</span>784            55<span style="text-decoration: underline;">542</span>946.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> parish 370047     South Dulwich: St Stephen       <span style="text-decoration: underline;">6</span>680                0.983</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> parish 37         Southwark                    2<span style="text-decoration: underline;">879</span>124                0.988</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> nation <span style="color: #BB0000;">NA</span>         england                     56<span style="text-decoration: underline;">506</span>784                0.983</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: lives_in_a_communal_establishment &lt;dbl&gt;</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 </code></pre></div>

@@ -33,7 +33,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/reading-coe-statistics.html">Reading CoE statistics</a></li>
+<li><a class="dropdown-item" href="../articles/data-on-individual-churches.html">Data on individual churches</a></li>
+    <li><a class="dropdown-item" href="../articles/reading-coe-statistics.html">Reading CoE statistics</a></li>
   </ul>
 </li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -78,29 +79,21 @@ Default is to return a two-column tibble including
 valid nomis codes which can be passed to functions such as
 <code><a href="../reference/coe_stats.html">coe_stats()</a></code></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_datasets.html">coe_datasets</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 15 × 2</span></span></span>
-<span><span class="co">#&gt;    nomis_code description                                                       </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                             </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> TS001      TS001 - Number of usual residents in households and communal esta…</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> TS004      TS004 - Country of birth                                          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> TS007A     TS007A - Age by 5 year age bands                                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> TS021      TS021 - Ethnic group                                              </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> TS030      TS030 - Religion                                                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> TS037      TS037 - General health                                            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> TS062      TS062 - Social Classification (NS-SeC)                            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> TS066      TS066 - Economic activity status                                  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> TS067      TS067 - Highest level of qualification                            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> TS011      TS011 - Households by deprivation dimensions                      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span> TS025      TS025 - Household language                                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span> TS044      TS044 - Accommodation type                                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span> TS045      TS045 - Car or van availability                                   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span> TS054      TS054 - Tenure                                                    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span> TS003      TS003 - Household composition</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_datasets.html">coe_datasets</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 15</span></span>
+<span><span class="co">#&gt; Columns: 2</span></span>
+<span><span class="co">#&gt; $ nomis_code  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "TS001", "TS004", "TS007A", "TS021", "TS030", "TS037", "TS…</span></span>
+<span><span class="co">#&gt; $ description <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "TS001 - Number of usual residents in households and commu…</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="coe_stats">coe_stats<a class="anchor" aria-label="anchor" href="#coe_stats"></a>
 </h2>
+<p>Get statistics on a particular topic, for a particular geographical
+level, filtering as required. Levels include ‘parish’, ‘diocese’ or
+‘england’. Parishes can be filtered with parish codes and dioceses with
+diocese numbers, but national-level tables are comprised of a single row
+and cannot be filtered.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_stats.html">coe_stats</a></span><span class="op">(</span>nomis_code <span class="op">=</span>  <span class="st">"TS001"</span>, level <span class="op">=</span> <span class="st">"england"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
@@ -119,18 +112,34 @@ valid nomis codes which can be passed to functions such as
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_parish_in_context.html">coe_parish_in_context</a></span><span class="op">(</span>parish_code <span class="op">=</span> <span class="st">"370047"</span>, nomis_codes <span class="op">=</span> <span class="st">"TS001"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coe-parishes-2024</span>.</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'parishes'</span>'.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coeparishdata_parish-data</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'TS001'</span>'.</span></span>
 <span><span class="co">#&gt; $TS001</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   level  level_code level_name                population lives_in_a_household</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> parish 370047     South Dulwich: St Stephen       <span style="text-decoration: underline;">6</span>680                <span style="text-decoration: underline;">6</span>563.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> parish 37         Southwark                    2<span style="text-decoration: underline;">879</span>124             2<span style="text-decoration: underline;">845</span>651.</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> nation <span style="color: #BB0000;">NA</span>         england                     56<span style="text-decoration: underline;">506</span>784            55<span style="text-decoration: underline;">542</span>946.</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> parish 370047     South Dulwich: St Stephen       <span style="text-decoration: underline;">6</span>680                0.983</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> parish 37         Southwark                    2<span style="text-decoration: underline;">879</span>124                0.988</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> nation <span style="color: #BB0000;">NA</span>         england                     56<span style="text-decoration: underline;">506</span>784                0.983</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: lives_in_a_communal_establishment &lt;dbl&gt;</span></span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="coe_parish_stats">coe_parish_stats<a class="anchor" aria-label="anchor" href="#coe_parish_stats"></a>
+</h2>
+<p>A convenient wrapper around <code>coe_stats</code> for getting
+parish-level statistics for parishes of your choosing</p>
+</div>
+<div class="section level2">
+<h2 id="coe_diocese_stats">coe_diocese_stats<a class="anchor" aria-label="anchor" href="#coe_diocese_stats"></a>
+</h2>
+<p>A convenient wrapper around <code>coe_stats</code> for getting
+diocese-level statistics for dioceses of your choosing</p>
+</div>
+<div class="section level2">
+<h2 id="coe_england_stats">coe_england_stats<a class="anchor" aria-label="anchor" href="#coe_england_stats"></a>
+</h2>
+<p>A convenient wrapper around <code>coe_stats</code> for getting
+national-level stats for a topic of your choosing</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
