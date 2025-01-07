@@ -23,14 +23,18 @@ read_cpd_stats <- function(nomis_code, level){
   } else{
     # Read google sheet
     out <- get_cpd_sheet(cpd_pd$drive_id[requested_row], cpd_pd$nomis_code[requested_row])
-    ## Assign class and units attributes
-    class(out)            <- c("coe_parish_data", class(out))
-    attr(out, "units")    <- cpd_pd$units[requested_row]
-    attr(out, "relative") <- FALSE
     
     ## Update data environment with sheet read from google
     .coeparishdata_envir$parish_data[["data"]][[requested_row]] <- out
     .coeparishdata_envir$parish_data[requested_row, "local"] <- TRUE
   }
+  
+    ## Assign class and units attributes
+    class(out)            <- c("coe_parish_data", class(out))
+    attr(out, "nomis_code") <- cpd_pd$nomis_code[requested_row]
+    attr(out, "description") <- cpd_pd$description[requested_row]
+    attr(out, "units")    <- cpd_pd$units[requested_row]
+    attr(out, "relative") <- FALSE
+    
   out
 }

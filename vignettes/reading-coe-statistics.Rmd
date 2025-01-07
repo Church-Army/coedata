@@ -23,29 +23,45 @@ library(coeparishdata)
 
 
 
-## coe_nomis_codes
+## coe_datasets()
 
-```{r examples-coe_nomis_codes}
-coe_nomis_codes()
+Display information on all datasets available through this package. Default is to return a two-column tibble including `nomis_code` and `description`, but setting `description = FALSE` will return a character vector of all valid nomis codes which can be passed to functions such as `coe_census_stats()` 
+
+```{r examples-coe_datasets}
+coe_datasets() |>
+  dplyr::glimpse()
 ```
 
 
-## coe_stats
+## coe_census_stats
 
-```{r examples-coe_stats}
-coe_stats(nomis_code =  "TS001", level = "england")
-coe_stats(nomis_code = "TS001", level = "diocese", areas = 1)
+Get statistics on a particular topic, for a particular geographical level, filtering as required. Levels include 'parish', 'diocese' or 'england'. Parishes can be filtered with parish codes and dioceses with diocese numbers, but national-level tables are comprised of a single row and cannot be filtered.
+
+```{r examples-coe_census_stats}
+coe_census_stats(nomis_code =  "TS001", level = "england")
+coe_census_stats(nomis_code = "TS001", level = "diocese", areas = 1)
 ```
 
 
 
-## coe_parish_in_context
+## coe_parish_census_context
 
-```{r examples-coe_parish_in_context}
-coe_parish_in_context(parish_code = "370047", nomis_codes = "TS001")
+```{r examples-coe_parish_census_context}
+coe_parish_census_context(parish_code = "370047", nomis_codes = "TS001")
 ```
 
 
 
 
+## coe_parish_census_stats
 
+A convenient wrapper around `coe_census_stats` for getting parish-level statistics for parishes of your choosing
+
+## coe_diocese_census_stats
+
+A convenient wrapper around `coe_census_stats` for getting diocese-level statistics for dioceses of your choosing
+
+
+## coe_england_census_stats
+
+A convenient wrapper around `coe_census_stats` for getting national-level stats for a topic of your choosing

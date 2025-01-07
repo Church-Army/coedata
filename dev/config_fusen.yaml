@@ -15,11 +15,28 @@ flat_first.qmd:
   - tests/testthat/test-get_cpd_sheet.R
   - tests/testthat/test-cpd_relative.R
   - tests/testthat/test-read_cpd_stats.R
-  vignettes: vignettes/getting-started.Rmd
+  vignettes: []
   inflate:
     flat_file: dev/flat_first.qmd
-    vignette_name: Getting started
-    open_vignette: false
+    vignette_name: .na
+    open_vignette: true
+    check: true
+    document: true
+    overwrite: ask
+    clean: ask
+flat_read_church_data.Rmd:
+  path: dev/flat_read_church_data.Rmd
+  state: active
+  R:
+  - R/coe_church_data.R
+  - R/coe_church_parish.R
+  - R/coe_esri_fields.R
+  tests: tests/testthat/test-coe_church_data.R
+  vignettes: vignettes/data-on-individual-churches.Rmd
+  inflate:
+    flat_file: dev/flat_read_church_data.Rmd
+    vignette_name: Data on individual churches
+    open_vignette: true
     check: true
     document: true
     overwrite: ask
@@ -28,12 +45,15 @@ flat_reading-coe-statistics.Rmd:
   path: dev/flat_reading-coe-statistics.Rmd
   state: active
   R:
-  - R/coe_nomis_codes.R
-  - R/coe_parish_in_context.R
-  - R/coe_stats.R
+  - R/coe_census_stats.R
+  - R/coe_datasets.R
+  - R/coe_diocese_census_stats.R
+  - R/coe_england_census_stats.R
+  - R/coe_parish_census_context.R
+  - R/coe_parish_census_stats.R
   tests:
-  - tests/testthat/test-coe_stats.R
-  - tests/testthat/test-coe_parish_in_context.R
+  - tests/testthat/test-coe_census_stats.R
+  - tests/testthat/test-coe_parish_census_context.R
   vignettes: vignettes/reading-coe-statistics.Rmd
   inflate:
     flat_file: dev/flat_reading-coe-statistics.Rmd
@@ -45,4 +65,6 @@ flat_reading-coe-statistics.Rmd:
     clean: ask
 keep:
   path: keep
-  R: R/aaa.R
+  R:
+  - R/aaa.R
+  - R/methods.R

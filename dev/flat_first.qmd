@@ -20,7 +20,7 @@ pkgload::load_all(export_all = FALSE)
 ```{r function-create-environment}
 rlang::on_load({
   .coeparishdata_envir <- new.env(parent = emptyenv())
-  .coeparishdata_envir$parish_data <- parish_data
+  .coeparishdata_envir$parish_data <- tibble::as_tibble(parish_data)
   .coeparishdata_envir$parishes_2024 <- NULL
   })
 ```
@@ -48,7 +48,12 @@ read_parish_table <- function(){
   p_table <- .coeparishdata_envir$parishes_2024
   
   if(is.null(p_table)){
-    p_table <- get_cpd_sheet("1UUUU96Iw5i0JmabEIczmi6DrDsPIw6yfsGwSO5ExeT0", "parishes")
+    p_table <- coe_church_data()
+    
+    p_table <-
+      p_table[-which(names(p_table) == "church_code")] |> 
+      unique()
+
     .coeparishdata_envir$parishes_2024 <- p_table
   } 
   
@@ -156,15 +161,19 @@ read_cpd_stats <- function(nomis_code, level){
   } else{
     # Read google sheet
     out <- get_cpd_sheet(cpd_pd$drive_id[requested_row], cpd_pd$nomis_code[requested_row])
-    ## Assign class and units attributes
-    class(out)            <- c("coe_parish_data", class(out))
-    attr(out, "units")    <- cpd_pd$units[requested_row]
-    attr(out, "relative") <- FALSE
     
     ## Update data environment with sheet read from google
     .coeparishdata_envir$parish_data[["data"]][[requested_row]] <- out
     .coeparishdata_envir$parish_data[requested_row, "local"] <- TRUE
   }
+  
+    ## Assign class and units attributes
+    class(out)            <- c("coe_parish_data", class(out))
+    attr(out, "nomis_code") <- cpd_pd$nomis_code[requested_row]
+    attr(out, "description") <- cpd_pd$description[requested_row]
+    attr(out, "units")    <- cpd_pd$units[requested_row]
+    attr(out, "relative") <- FALSE
+    
   out
 }
 ```
