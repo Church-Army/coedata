@@ -196,4 +196,8 @@ test_that("caching is working for parish data",{
 
   expect_s3_class(cached, c("coe_parish_data", "tbl_df"))
    })
+
+test_that("class information is not duplicated", {
+  expect_true(all(table(class(read_cpd_stats("TS001", "diocese"))) == 1))
+})
 ```

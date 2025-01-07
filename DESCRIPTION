@@ -16,13 +16,13 @@ BugReports: https://github.com/Church-Army/coeparishdata/issues
 Depends: 
     R (>= 3.5)
 Imports: 
+    dplyr,
     googlesheets4,
     httr2,
     rlang,
     sf,
     tibble
 Suggests: 
-    dplyr,
     knitr,
     rmarkdown,
     testthat

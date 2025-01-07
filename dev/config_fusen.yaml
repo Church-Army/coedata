@@ -67,4 +67,4 @@ keep:
   path: keep
   R:
   - R/aaa.R
-  - R/methods.R
+  - R/dplyr_subclass_methods.R
