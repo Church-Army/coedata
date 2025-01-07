@@ -168,7 +168,9 @@ read_cpd_stats <- function(nomis_code, level){
   }
   
     ## Assign class and units attributes
-    class(out)            <- c("coe_parish_data", class(out))
+  ### Shhh! This if statement is brushing some inconsistent data formatting under the rug 
+    if(!"coe_parish_data" %in% class(out)) class(out) <- c("coe_parish_data", class(out))
+  
     attr(out, "nomis_code") <- cpd_pd$nomis_code[requested_row]
     attr(out, "description") <- cpd_pd$description[requested_row]
     attr(out, "units")    <- cpd_pd$units[requested_row]

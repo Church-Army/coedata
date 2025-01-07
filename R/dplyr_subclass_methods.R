@@ -63,13 +63,13 @@
 
 #' @export
 #' @importFrom dplyr group_by
-group_by.coe_parish_data <- function(.data, ..., .add = FALSE, .drop = group_by_drop_default(.data)){
-  units <- attr(data, "units")
-  nomis_code <- attr(data, "nomis_code")
-  description <- attr(data, "description")
-  relative <- attr(data, "relative")
+group_by.coe_parish_data <- function(.data, ..., .add = FALSE, .drop = dplyr::group_by_drop_default(.data)){
+  units <- attr(.data, "units")
+  nomis_code <- attr(.data, "nomis_code")
+  description <- attr(.data, "description")
+  relative <- attr(.data, "relative")
 
-  x <-
+  x <- NextMethod(.data)
 
   attr(x, "units") <- units
   attr(x, "nomis_code") <- nomis_code
