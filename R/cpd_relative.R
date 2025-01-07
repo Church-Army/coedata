@@ -20,7 +20,7 @@ cpd_relative <- function(.data){
   }
   
   attr(.data, "relative") <- TRUE
-  attr(.data, "units") <- c("Proportion of all ", attr(.data, "units"))
+  attr(.data, "units") <- paste0("Proportion of all ", attr(.data, "units"))
   .data
   
 }

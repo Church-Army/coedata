@@ -20,7 +20,13 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/Church-Army/coeparishdata/graph/badge.svg)](https://app.codecov.io/gh/Church-Army/coeparishdata)
 <!-- badges: end -->
 
-The goal of coeparishdata is to ...
+coeparishdata is a data package that's built around various datasets made available by the Church of England's [Data Services](https://www.churchofengland.org/about/data-services) team. Data sources include:
+
+- [x] [Parish-level census data](https://www.churchofengland.org/about/data-services/resources-publications-and-data) from ONS' 2021 Census of England and Wales (Updated November 2024)
+- [x] A [database](https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer) of Churches, Parishes, Dioceses and other geographies (Updated November 2024)
+- [ ] ~~[Parish-level data](https://www.churchofengland.org/about/data-services/resources-publications-and-data) from the 2019 Index of Multiple Deprivation~~ (PENDING)
+
+National-level data are sourced directly from ONS data via [nomis](https://www.nomisweb.co.uk/) (via [nomisr](https://github.com/ropensci/nomisr)).
 
 ## Installation
 
@@ -35,27 +41,12 @@ pak::pak("Church-Army/coeparishdata")
 
 Full documentation website on: https://Church-Army.github.io/coeparishdata
 
-## Example
+## TODO:
 
-This is a basic example which shows you how to solve a common problem:
-
-```{r example}
-library(coeparishdata)
-## basic example code
-```
-
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
-
-```{r cars}
-summary(cars)
-```
-
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
-```
-
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+- [x] Replace national level data with NOMIS census data
+  - Aggregating parish data causes considerable rounding error
+- [ ] Add data-dictionary vignettes
+- [ ] Create print methods for `"coe_parish_data"` class
+- [x] Create methods for `dplyr` that preserve attributes in `"coe_parish_data"` objects
+- [ ] Add IMD data
+- [ ] Ensure appropriate credit/attribution/documentation

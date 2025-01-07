@@ -101,3 +101,13 @@ rowwise.coe_parish_data <- function(data, ...){
 
   x
 }
+
+## Print method
+
+print.coe_parish_data <- function(.data){
+
+  cat("Church of England Census Data\n")
+  cat(attr(.data, "description"), "\n")
+  cat("Units: ", units, "\n")
+  NextMethod(.data)
+}
