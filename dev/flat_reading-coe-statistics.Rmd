@@ -14,9 +14,20 @@ library(testthat)
 pkgload::load_all(export_all = FALSE)
 ```
 
-## coe_census_datasets()
+The functions on this page are all used for reading 2021 ONS census data for Church of England geographies. You can:
 
-Display information on all datasets available through this package. Default is to return a two-column tibble including `ons_id` and `description`, but setting `description = FALSE` will return a character vector of all valid nomis codes which can be passed to functions such as `coe_census()` 
+* View available datasets with `coe_census_datasets()`
+* Get census data at a level of your choosing with the general-purpose function `coe_census()`
+  * Get parish-level data with `coe_census_parish()`
+  * Get diocese-level data with `coe_census_diocese()`
+  * Get data for all of england with `coe_census_england()`
+* You can also compare a parish with its diocese and the whole of england in a single table with `coe_parish_snapshot()`
+
+## View available data with `coe_census_datasets()`
+
+`coe_census_datasets()` displays information on all the census datasets available through this package. By default, the function returns a two-column tibble including `ons_id` and `description`, but setting `description = FALSE` will return a character vector of all valid ONS ids that can be passed to functions such as `coe_census()`.
+
+Parish-level datasets were produced by Ken Eames, Senior Statistical Researcher at the Church of England's Data Services team. The original datasets are available on the [Church of England website](https://www.churchofengland.org/about/data-services/resources-publications-and-data). This package uses data that were last updated November 2024. If you notice that the source data have since been updated, please create a Github issue at [https://github.com/Church-Army/coedata](https://github.com/Church-Army/coedata)
 
 ```{r function-coe_census_datasets}
 #' Browse all available datasets of ONS census 2021 data
@@ -43,7 +54,7 @@ coe_census_datasets() |>
   dplyr::glimpse()
 ```
 
-## coe_census
+## Obtain census statistics for a parish, diocese, or the nation with `coe_census()` 
 
 Get statistics on a particular topic, for a particular geographical level, filtering as required. Levels include 'parish', 'diocese' or 'england'. Parishes can be filtered with parish codes and dioceses with diocese numbers, but national-level tables are comprised of a single row and cannot be filtered.
 
@@ -151,9 +162,9 @@ test_that("coe_census doesn't work when it shouldn't", {
 })
 ```
 
-## coe_census_parish
+## Obtain parish-level data with `coe_census_parish()`
 
-A convenient wrapper around `coe_census` for getting parish-level statistics for parishes of your choosing
+A convenient wrapper around `coe_census()` for getting parish-level statistics for parishes of your choosing
 
 ```{r function-coe_census_parish}
 #' Obtain parish-level census statistics on a given topic 
@@ -175,9 +186,9 @@ coe_census_parish <- function(ons_id, parish_codes, ...){
 coe_census_parish(ons_id = "TS062", parish_codes = "350041", relative = TRUE)
 ```
 
-## coe_census_diocese
+## Obtain diocese-level data with `coe_census_diocese()`
 
-A convenient wrapper around `coe_census` for getting diocese-level statistics for dioceses of your choosing
+A convenient wrapper around `coe_census()` for getting diocese-level statistics for dioceses of your choosing
 
 ```{r function-coe_census_diocese}
 #' Obtain diocese-level census statistics on a given topic
@@ -199,9 +210,9 @@ coe_census_diocese <- function(ons_id, diocese_numbers, ...){
 coe_census_diocese(ons_id = "TS062", diocese_numbers = c(3, 7), relative = TRUE)
 ```
 
-## coe_census_england
+## Obtain data for all of England with `coe_census_england()`
 
-A convenient wrapper around `coe_census` for getting national-level stats for a topic of your choosing
+A convenient wrapper around `coe_census()` for getting national-level stats for a topic of your choosing
 
 ```{r function-coe_census_england}
 #' Obtain national level census statistics on a given topic
@@ -219,21 +230,21 @@ coe_census_england <- function(ons_id, ...){
 coe_census_england(ons_id = "TS062", relative = TRUE)
 ```
 
-## coe_parish_census_context
+## Compare a parish to it's diocesan and national context with `coe_parish_snapshot()`
 
 Get a contextual 'snapshot' of any given parish for any number of census topics, comparing the parochial statistics with those of the diocese and the whole of England. A wrapper around `coe_census_parish()`, `coe_census_diocese()` and `coe_census_england()` to obtain relative statistics for each geography and combine them into a single table, iterating over census topics to return a list.
 
-```{r function-coe_parish_census_context}
+```{r function-coe_parish_snapshot}
 #' Get a list of comparative table(s) of local, diocesan and national data for a given parish
 #' 
-#' Extracts parish, diocese and national level data for a given parish, then [base::rbind]s them into a single table. Iterates over `ons_ids` to output a list of such tables
+#' Extracts parish, diocese and national level data fcor a given parish, then [base::rbind]s them into a single table. Iterates over `ons_ids` to output a list of such tables
 #' @returns A list of `coe_parish_data` tibbles
 #' @param parish_code A single parish code. Character.
 #' @param ons_ids A character vector of ons_ids.
 #' @param relative Logical. Should outputs be relative? Default is `TRUE`.
 #' @export
 
-coe_parish_census_context <- function(parish_code,
+coe_parish_snapshot <- function(parish_code,
                                   ons_ids = coe_census_datasets(description = FALSE),
                                   relative = TRUE){
   
@@ -303,15 +314,15 @@ coe_parish_census_context <- function(parish_code,
 
 ```
 
-```{r examples-coe_parish_census_context}
-coe_parish_census_context(parish_code = "370047", ons_ids = "TS001")
+```{r examples-coe_parish_snapshot}
+coe_parish_snapshot(parish_code = "370047", ons_ids = "TS001")
 ```
 
-```{r tests-coe_parish_census_context}
-test_that("coe_parish_census_context works", {
-  expect_true(inherits(coe_parish_census_context, "function"))
+```{r tests-coe_parish_snapshot}
+test_that("coe_parish_snapshot works", {
+  expect_true(inherits(coe_parish_snapshot, "function"))
   
-  test <- coe_parish_census_context("370047", ons_ids = "TS001")
+  test <- coe_parish_snapshot("370047", ons_ids = "TS001")
   
   expect_type(test, "list")
   
