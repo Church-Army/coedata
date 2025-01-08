@@ -113,7 +113,7 @@ nomis_codes_table[["data"]][[9]] <-
                 str_remove(x, "_health") |>
                   str_c("general_health_", z = _)
               }) |>
-  rename(popuation = 1)
+  rename(population = 1)
 
 nomis_codes_table[["data"]][[10]] <-
   rename_with(nomis_codes_table[["data"]][[10]], \(x) str_c("accommodation_type_", x)) |>
