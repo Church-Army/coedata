@@ -20,7 +20,9 @@ coe_parish_snapshot <- function(parish_code,
   ons_ids = as.list(ons_ids)
   names(ons_ids) = ons_ids
   
-  if(length(parish_code) != 1 || !is.character(parish_code)) rlang::abort("Argument 'parish_code' must be a character vector of length one")
+  if(length(parish_code) != 1) rlang::abort("Argument 'parish_code' must have length one")
+  parish_code <- as.character(parish_code)
+  
   if(!parish_code %in% p_table$parish_code) rlang::abort(c("Parish code:", x = parish_code, "is not valid"))
   
   diocese_no <- p_table$diocese_number[p_table$parish_code == parish_code]
