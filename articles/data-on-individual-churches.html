@@ -93,9 +93,12 @@
 <span><span class="co">#&gt; $ diocese_number    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 8</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="coe_church_parish">coe_church_parish<a class="anchor" aria-label="anchor" href="#coe_church_parish"></a>
+<h2 id="coe_parish_from_church">coe_parish_from_church<a class="anchor" aria-label="anchor" href="#coe_parish_from_church"></a>
 </h2>
-<p>Get the parish code of any given church(es).</p>
+<p>Get the parish code of any number of churches.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_parish_from_church.html">coe_parish_from_church</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">635041</span>, <span class="fl">623001</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; [1] 350041 230001</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="coe_esri_fields">coe_esri_fields<a class="anchor" aria-label="anchor" href="#coe_esri_fields"></a>
@@ -103,6 +106,12 @@
 <p>This tiny function returns the names of the fields used in the
 Feature Server of Churches provided by CoE Data Services through
 ESRI.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_esri_fields.html">coe_esri_fields</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "FID"        "ChurchCode" "ChurchName" "ACNY_url"   "ACNY_id"   </span></span>
+<span><span class="co">#&gt;  [6] "Heritg_url" "LBGrade"    "ParLocNa"   "ParLegNa"   "ParishID"  </span></span>
+<span><span class="co">#&gt; [11] "BenefNa"    "BenefID"    "DeanNa"     "DeanID"     "ArchdNa"   </span></span>
+<span><span class="co">#&gt; [16] "ArchdID"    "DioNa"      "DioID"</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside>
