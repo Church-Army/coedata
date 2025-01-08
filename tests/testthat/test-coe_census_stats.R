@@ -18,11 +18,11 @@ test_that("coe_census_stats doesn't work when it shouldn't", {
                class = "coe_bad_level")
   
   expect_error(coe_census_stats(c("TS001", "TS002")),
-               class = "coe_bad_nomis_code",
+               class = "coe_bad_ons_id",
                regexp = "length")
   
-  expect_error(coe_census_stats("bad_nomis_code"),
-               class = "coe_bad_nomis_code")
+  expect_error(coe_census_stats("bad_ons_id"),
+               class = "coe_bad_ons_id")
   
   expect_warning(coe_census_stats("TS001", level = "parish", areas = NA_character_),
                  class = "coe_warn_areas")

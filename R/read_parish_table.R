@@ -5,7 +5,7 @@ read_parish_table <- function(){
   p_table <- .coeparishdata_envir$parishes_2024
   
   if(is.null(p_table)){
-    p_table <- coe_church_data()
+    p_table <- coe_churches()
     
     p_table <-
       p_table[-which(names(p_table) == "church_code")] |> 

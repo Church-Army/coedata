@@ -3,7 +3,7 @@
 test_that("coe_parish_census_context works", {
   expect_true(inherits(coe_parish_census_context, "function"))
   
-  test <- coe_parish_census_context("370047", nomis_codes = "TS001")
+  test <- coe_parish_census_context("370047", ons_ids = "TS001")
   
   expect_type(test, "list")
   

@@ -6,7 +6,7 @@ test_that("get_cpd_sheet works",{
   will_work <- min(which(!is.na(read_parish_data()$drive_id)))
 
   drived <- read_parish_data()$drive_id[will_work]
-  sheet  <- read_parish_data()$nomis_code[will_work]
+  sheet  <- read_parish_data()$ons_id[will_work]
 
   expect_no_error(get_cpd_sheet(drived, sheet))
   })

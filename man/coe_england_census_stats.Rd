@@ -4,10 +4,10 @@
 \alias{coe_england_census_stats}
 \title{Obtain national level statistics on a particular topic}
 \usage{
-coe_england_census_stats(nomis_code, ...)
+coe_england_census_stats(ons_id, ...)
 }
 \arguments{
-\item{nomis_code}{The nomis code for the required topic}
+\item{ons_id}{The ONS id for the required topic}
 
 \item{...}{Other arguments passed to \code{\link[=coe_census_stats]{coe_census_stats()}}}
 }

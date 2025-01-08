@@ -1,2 +1,7 @@
 "type","path","origin"
-"vignette","vignettes/internal-functions-for-handling-package-data.Rmd","No existing source path found."
+"R","R/coe_census_stats.R","Possibly deprecated file. Please check its link with detected flat source: dev/flat_reading-coe-statistics.Rmd"
+"R","R/coe_diocese_census_stats.R","Possibly deprecated file. Please check its link with detected flat source: dev/flat_reading-coe-statistics.Rmd"
+"R","R/coe_england_census_stats.R","Possibly deprecated file. Please check its link with detected flat source: dev/flat_reading-coe-statistics.Rmd"
+"R","R/coe_parish_census_stats.R","Possibly deprecated file. Please check its link with detected flat source: dev/flat_reading-coe-statistics.Rmd"
+"R","R/data.R","No existing source path found."
+"test","tests/testthat/test-coe_census_stats.R","Possibly deprecated file. Please check its link with detected flat source: dev/flat_reading-coe-statistics.Rmd"

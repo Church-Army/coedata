@@ -55,3 +55,4 @@ Full documentation website on:
   `"coe_parish_data"` objects
 - [ ] Add IMD data
 - [ ] Ensure appropriate credit/attribution/documentation
+- [ ] Rename everything, perhaps including this package

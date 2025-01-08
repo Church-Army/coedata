@@ -2,14 +2,14 @@
 
 #' Obtain dicoese level statistics on a particular topic for any diocese of your choosing
 #' 
-#' @param nomis_code The nomis code for the required topic
+#' @param ons_id The ONS id for the required topic
 #' @param diocese_numbers Diocese numbers of required dioceses. If empty (the default) data for all dioceses are returned.
 #' @param ... Other arguments passed to [coe_census_stats()]
 #' 
 #' @export
-coe_diocese_census_stats <- function(nomis_code, diocese_numbers, ...){
+coe_diocese_census_stats <- function(ons_id, diocese_numbers, ...){
   
-  if(!rlang::is_missing(diocese_numbers)) out <- coe_census_stats(nomis_code, level = "diocese", areas = diocese_numbers, ...)
-  else out <- coe_census_stats(nomis_code, level = "diocese", ...)
+  if(!rlang::is_missing(diocese_numbers)) out <- coe_census_stats(ons_id, level = "diocese", areas = diocese_numbers, ...)
+  else out <- coe_census_stats(ons_id, level = "diocese", ...)
   out
 }

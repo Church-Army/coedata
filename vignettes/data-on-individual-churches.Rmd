@@ -23,12 +23,12 @@ library(coeparishdata)
 
 
 
-## coe_church_data
+## coe_churches
 
 Get tidy data on Church of England churches. 
 
-```{r examples-coe_church_data}
-coe_church_data(where = "ChurchCode = 608186") |>
+```{r examples-coe_churches}
+coe_churches(where = "ChurchCode = 608186") |>
   dplyr::glimpse()
 ```
 

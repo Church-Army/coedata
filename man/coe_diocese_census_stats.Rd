@@ -4,10 +4,10 @@
 \alias{coe_diocese_census_stats}
 \title{Obtain dicoese level statistics on a particular topic for any diocese of your choosing}
 \usage{
-coe_diocese_census_stats(nomis_code, diocese_numbers, ...)
+coe_diocese_census_stats(ons_id, diocese_numbers, ...)
 }
 \arguments{
-\item{nomis_code}{The nomis code for the required topic}
+\item{ons_id}{The ONS id for the required topic}
 
 \item{diocese_numbers}{Diocese numbers of required dioceses. If empty (the default) data for all dioceses are returned.}
 

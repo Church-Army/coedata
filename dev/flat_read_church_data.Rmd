@@ -14,12 +14,12 @@ library(testthat)
 pkgload::load_all(export_all = FALSE)
 ```
 
-## coe_church_data
+## coe_churches
 
 Get tidy data on Church of England churches. 
 
-```{r function-coe_church_data}
-#' Get church-level data from CoE data services
+```{r function-coe_churces}
+#' Get data on the Anglican geography on Church of England Churches, including their parish, benefice, arcdeaconry and diocese. 
 #'
 #' Reads church data from the Church of England's [Data Services ESRI feature server](https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer), dropping spatial data and returning a [tibble::tibble()].
 #'
@@ -30,12 +30,9 @@ Get tidy data on Church of England churches.
 #' This function renames fields in the returned tibble, but any query passed to `where` must use the original names of the ESRI data provided by CoE data services. The names of these fields
 #' can be accessed via [coe_esri_fields()]
 #' 
-#' 
 #' @export
-#'
-#'
 #' @examples
-coe_church_data <- function(where = "1=1") {
+coe_churches <- function(where = "1=1") {
 
 churches <- esri_churches(where = where, outFields = "*")
 
@@ -49,14 +46,14 @@ churches
 }
 ```
 
-```{r examples-coe_church_data}
-coe_church_data(where = "ChurchCode = 608186") |>
+```{r examples-coe_churches}
+coe_churches(where = "ChurchCode = 608186") |>
   dplyr::glimpse()
 ```
 
 ```{r tests-read_church_data}
-test_that("read_church_data works", {
-  expect_true(inherits(coe_church_data, "function"))
+test_that("coe_churches works", {
+  expect_true(inherits(coe_churches, "function"))
 })
 ```
 
@@ -104,7 +101,7 @@ coe_church_parish <- function(church_codes){
 This tiny function returns the names of the fields used in the Feature Server of Churches provided by CoE Data Services through ESRI.
 
 ```{r function-coe_esri_fields}
-#' View fields that can be passed to the `where` argument of [coe_church_data]
+#' View fields that can be passed to the `where` argument of [coe_churches()]
 
 #' @returns A character vector of field names
 #' @export

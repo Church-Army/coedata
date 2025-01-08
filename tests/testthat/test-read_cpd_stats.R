@@ -13,7 +13,7 @@ test_that("caching is working for parish data",{
 
   ## Check it has cached
   tmp_dat <-  read_parish_data()
-  cached <- tmp_dat$data[tmp_dat$level == "parish" & tmp_dat$nomis_code == "TS001"][[1]]
+  cached <- tmp_dat$data[tmp_dat$level == "parish" & tmp_dat$ons_id == "TS001"][[1]]
 
   expect_s3_class(cached, c("coe_parish_data", "tbl_df"))
    })

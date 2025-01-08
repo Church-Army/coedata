@@ -6,14 +6,14 @@
 \usage{
 coe_parish_census_context(
   parish_code,
-  nomis_codes = coe_datasets(description = FALSE),
+  ons_ids = coe_datasets(description = FALSE),
   relative = TRUE
 )
 }
 \arguments{
 \item{parish_code}{A single parish code. Character.}
 
-\item{nomis_codes}{A character vector of nomis_codes.}
+\item{ons_ids}{A character vector of ons_ids.}
 
 \item{relative}{Logical. Should outputs be relative? Default is \code{TRUE}.}
 }
@@ -21,8 +21,8 @@ coe_parish_census_context(
 A list of \code{coe_parish_data} tibbles
 }
 \description{
-Extracts parish, diocese and national level data for a given parish, then \link[base:cbind]{base::rbind}s them into a single table. Iterates over \code{nomis_codes} to output a list of such tables
+Extracts parish, diocese and national level data for a given parish, then \link[base:cbind]{base::rbind}s them into a single table. Iterates over \code{ons_ids} to output a list of such tables
 }
 \examples{
-coe_parish_census_context(parish_code = "370047", nomis_codes = "TS001")
+coe_parish_census_context(parish_code = "370047", ons_ids = "TS001")
 }

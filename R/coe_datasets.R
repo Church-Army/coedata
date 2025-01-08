@@ -12,10 +12,10 @@
 coe_datasets <- function(description = TRUE){
   out <- read_parish_data()
   
-  out <- out[c("nomis_code", "description")] |>
+  out <- out[c("ons_id", "description")] |>
     unique()
   
-  if(!description) out <- out[["nomis_code"]]
+  if(!description) out <- out[["ons_id"]]
   
   out
 }

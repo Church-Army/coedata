@@ -2,7 +2,7 @@
 % Please edit documentation in R/coe_esri_fields.R
 \name{coe_esri_fields}
 \alias{coe_esri_fields}
-\title{View fields that can be passed to the \code{where} argument of \link{coe_church_data}}
+\title{View fields that can be passed to the \code{where} argument of \code{\link[=coe_churches]{coe_churches()}}}
 \usage{
 coe_esri_fields()
 }
@@ -10,5 +10,5 @@ coe_esri_fields()
 A character vector of field names
 }
 \description{
-View fields that can be passed to the \code{where} argument of \link{coe_church_data}
+View fields that can be passed to the \code{where} argument of \code{\link[=coe_churches]{coe_churches()}}
 }

@@ -50,3 +50,4 @@ Full documentation website on: https://Church-Army.github.io/coeparishdata
 - [x] Create methods for `dplyr` that preserve attributes in `"coe_parish_data"` objects
 - [ ] Add IMD data
 - [ ] Ensure appropriate credit/attribution/documentation
+- [ ] Rename everything, perhaps including this package

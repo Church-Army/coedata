@@ -5,15 +5,15 @@
 #' Get 2021 ONS census data for any number of parishes, dioceses or the whole of England. Parish data is read from a Google sheet
 #' 
 #' @return A single tibble
-#' @param nomis_code Nomis code of required data set
+#' @param ons_id Nomis code of required data set
 #' @param level One of 'parish', 'diocese' or 'england'
 #' 
 #' @noRd
-read_cpd_stats <- function(nomis_code, level){
+read_cpd_stats <- function(ons_id, level){
   
   cpd_pd <- read_parish_data()
 
-  requested_row <- which(cpd_pd$nomis_code == nomis_code & cpd_pd$level == level)
+  requested_row <- which(cpd_pd$ons_id == ons_id & cpd_pd$level == level)
   stopifnot(length(requested_row) == 1)
   
   local_data <- cpd_pd$local[requested_row]
@@ -22,7 +22,7 @@ read_cpd_stats <- function(nomis_code, level){
     out <- cpd_pd$data[requested_row][[1]]
   } else{
     # Read google sheet
-    out <- get_cpd_sheet(cpd_pd$drive_id[requested_row], cpd_pd$nomis_code[requested_row])
+    out <- get_cpd_sheet(cpd_pd$drive_id[requested_row], cpd_pd$ons_id[requested_row])
     
     ## Update data environment with sheet read from google
     .coeparishdata_envir$parish_data[["data"]][[requested_row]] <- out
@@ -33,7 +33,7 @@ read_cpd_stats <- function(nomis_code, level){
   ### Shhh! This if statement is brushing some inconsistent data formatting under the rug 
     if(!"coe_parish_data" %in% class(out)) class(out) <- c("coe_parish_data", class(out))
   
-    attr(out, "nomis_code") <- cpd_pd$nomis_code[requested_row]
+    attr(out, "ons_id") <- cpd_pd$ons_id[requested_row]
     attr(out, "description") <- cpd_pd$description[requested_row]
     attr(out, "units")    <- cpd_pd$units[requested_row]
     attr(out, "relative") <- FALSE

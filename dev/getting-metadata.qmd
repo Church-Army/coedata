@@ -1,0 +1,75 @@
+---
+title: "Creating data dictionary vignettes for census data"
+author: "Dave"
+format: html
+editor: visual
+---
+
+## Set up
+
+```{r libraries}
+library(purrr)
+library(nomisr)
+library(stringr)
+library(dplyr)
+```
+
+```{r loadpackage}
+pkgload::load_all()
+codes <- coeparishdata::coe_datasets(description = FALSE)
+names(codes) <- codes
+
+stat_names <- map(codes,
+                  \(x){
+                    x <- 
+                      coeparishdata::coe_england_census_stats(x) |> 
+                      names()
+                    
+                    x[-1]
+})
+
+nomis_ids <- map_chr(codes,
+                     \(x){
+                       nomis_search(name = str_c("*", x, "*")) |> 
+                        filter(str_detect(name.value, str_c(x, " "))) |> 
+                        pull(id)
+                       })
+
+overviews <- map(nomis_ids, nomis_overview)
+
+mnemonics <- map_chr(overviews, 
+                     \(x){
+                       out <- 
+                         filter(x, name == "mnemonic") |> 
+                         pull(value)
+                       
+                       out[[1]]
+                     })
+
+urls <- str_c("https://www.nomisweb.co.uk/datasets/", mnemonics)
+
+stat_names
+```
+
+## Write NS-SEC descriptions
+
+```{r write_ns_sec_descriptions}
+ns_sec_descriptions <- tribble(
+  ~stat_name, ~sub_category_code, ~sub_category_description,
+  "ns_sec_L1_3", "L1", "Employers in large establishments",
+  "ns_sec_L1_3", "L2", "Higher managerial and administrative occupations",
+  "ns_sec_L1_3", "L3", "Higher professional occupations",
+  "ns_sec_L4_6", "L4", "Lower professional and higher technical occupations",
+  "ns_sec_L4_6", "L5", "Lower managerial and administrative occupations",
+  "ns_sec_L4_6", "L6", "Higher supervisory occupations",
+  "ns_sec_L7", "L7", "Intermediate occupations",
+  "ns_sec_L8_9", "L8", "Employers in small organisations",
+  "ns_sec_L8_9", "L9", "Own account workers",
+  "ns_sec_L10_11", "L10", "Lower supervisory occupations",
+  "ns_sec_L10_11", "L11", "Lower technical occupations",
+  "ns_sec_L12", "L12", "Semi-routine occupations",
+  "ns_sec_L13", "L13", "Routine occupations",
+  "ns_sec_L14", "L14", "Never worked and long-term unemployed",
+  "ns_sec_L15", "L15", "Full-time students"
+)
+```
