@@ -1,4 +1,4 @@
-Package: coeparishdata
+Package: coedata
 Title: Interface to Parish Level Census Data Provided by the Church of
     England
 Version: 0.0.0.9000
@@ -10,9 +10,9 @@ Description: Easy access to tidy ONS 2021 census data at the level of
     at:
     https://www.churchofengland.org/about/data-services/resources-publications-and-data.
 License: MIT + file LICENSE
-URL: https://github.com/Church-Army/coeparishdata,
-    https://church-army.github.io/coeparishdata/
-BugReports: https://github.com/Church-Army/coeparishdata/issues
+URL: https://github.com/Church-Army/coedata,
+    https://church-army.github.io/coedata/
+BugReports: https://github.com/Church-Army/coedata/issues
 Depends: 
     R (>= 3.5)
 Imports: 

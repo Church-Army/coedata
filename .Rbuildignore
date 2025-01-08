@@ -2,7 +2,7 @@
 ^LICENSE\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^coeparishdata\.Rproj$
+^coedata\.Rproj$
 ^README\.Rmd$
 ^\.github$
 ^codecov\.yml$

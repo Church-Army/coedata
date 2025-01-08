@@ -1,16 +1,16 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# coeparishdata
+# coedata
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/Church-Army/coeparishdata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Church-Army/coeparishdata/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/Church-Army/coedata/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Church-Army/coedata/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
-coverage](https://codecov.io/gh/Church-Army/coeparishdata/graph/badge.svg)](https://app.codecov.io/gh/Church-Army/coeparishdata)
+coverage](https://codecov.io/gh/Church-Army/coedata/graph/badge.svg)](https://app.codecov.io/gh/Church-Army/coedata)
 <!-- badges: end -->
 
-coeparishdata is a data package that’s built around various datasets
+coedata is a data package that’s built around various datasets
 made available by the Church of England’s [Data
 Services](https://www.churchofengland.org/about/data-services) team.
 Data sources include:
@@ -32,18 +32,18 @@ National-level data are sourced directly from ONS data via
 
 ## Installation
 
-You can install the development version of coeparishdata from
+You can install the development version of coedata from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("pak")
-pak::pak("Church-Army/coeparishdata")
+pak::pak("Church-Army/coedata")
 ```
 
 ## Documentation
 
 Full documentation website on:
-<https://Church-Army.github.io/coeparishdata>
+<https://Church-Army.github.io/coedata>
 
 ## TODO:
 

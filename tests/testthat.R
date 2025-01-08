@@ -1,4 +1,4 @@
 library(testthat)
-library(coeparishdata)
+library(coedata)
 
-test_check("coeparishdata")
+test_check("coedata")

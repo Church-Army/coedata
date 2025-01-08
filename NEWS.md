@@ -1,4 +1,4 @@
-# coeparishdata (development version)
+# coedata (development version)
 
 ## 2024-11-28
 
