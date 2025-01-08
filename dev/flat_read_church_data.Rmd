@@ -14,7 +14,13 @@ library(testthat)
 pkgload::load_all(export_all = FALSE)
 ```
 
-## coe_churches
+The functions on this page all help with processing data related to individual churches:
+
+* `coe_churches()` returns a tibble of every church in the Church of England, including information on its parish, benefice, deanery, archdeaconry and diocese. Data are read directly from the [ESRI feature server](https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer) kindly provided by the Church of England's Data Services team.
+* `coe_esri_fields()` is a helper function that returns valid fields which can be passed to the `where` argument of `coe_churches()` to query the dataset.
+* `coe_parish_from_church()` returns a parish code for each of any number of church codes. Useful for obtaining a parish code from the church codes listed at [A Church Near You](https://www.achurchnearyou.com/)
+
+## coe_churches()
 
 Get tidy data on Church of England churches. 
 
@@ -72,7 +78,7 @@ esri_churches <- function(where, outFields){
 }
 ```
 
-## coe_parish_from_church
+## coe_parish_from_church()
 
 Get the parish code of any number of churches.
 
@@ -100,7 +106,7 @@ coe_parish_from_church <- function(church_codes){
 coe_parish_from_church(c(635041, 623001))
 ```
 
-## coe_esri_fields
+## coe_esri_fields()
 
 This tiny function returns the names of the fields used in the Feature Server of Churches provided by CoE Data Services through ESRI.
 
