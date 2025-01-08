@@ -19,10 +19,10 @@ pkgload::load_all(export_all = FALSE)
 Display information on all datasets available through this package. Default is to return a two-column tibble including `ons_id` and `description`, but setting `description = FALSE` will return a character vector of all valid nomis codes which can be passed to functions such as `coe_census()` 
 
 ```{r function-coe_census_datasets}
-#' View nomis codes of available data
+#' Browse all available datasets of ONS census 2021 data
 #' 
-#' @return A tibble of nomis codes and dataset descriptions, or a character vector of nomis codes
-#' @param description Logical. If TRUE, (the default), a tibble is returned that contains nomis codes and corresponding dataset descriptions. If false, a character vector containing only nomis codes is returned. 
+#' @return A tibble of ONS ids and dataset descriptions, or a character vector of ONS ids.
+#' @param description Logical. If TRUE, (the default), a tibble is returned that contains ONS ids and corresponding dataset descriptions. If false, a character vector containing only ONS ids is returned. 
 #' @export
 
 coe_census_datasets <- function(description = TRUE){
