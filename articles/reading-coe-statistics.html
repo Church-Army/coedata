@@ -75,21 +75,21 @@
 <h2 id="coe_datasets">coe_datasets()<a class="anchor" aria-label="anchor" href="#coe_datasets"></a>
 </h2>
 <p>Display information on all datasets available through this package.
-Default is to return a two-column tibble including
-<code>nomis_code</code> and <code>description</code>, but setting
+Default is to return a two-column tibble including <code>ons_id</code>
+and <code>description</code>, but setting
 <code>description = FALSE</code> will return a character vector of all
 valid nomis codes which can be passed to functions such as
-<code><a href="../reference/coe_census_stats.html">coe_census_stats()</a></code></p>
+<code><a href="../reference/coe_census.html">coe_census()</a></code></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_datasets.html">coe_datasets</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 15</span></span>
 <span><span class="co">#&gt; Columns: 2</span></span>
-<span><span class="co">#&gt; $ nomis_code  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "TS001", "TS004", "TS007A", "TS021", "TS030", "TS037", "TS…</span></span>
+<span><span class="co">#&gt; $ ons_id      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "TS001", "TS004", "TS007A", "TS021", "TS030", "TS037", "TS…</span></span>
 <span><span class="co">#&gt; $ description <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "TS001 - Number of usual residents in households and commu…</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="coe_census_stats">coe_census_stats<a class="anchor" aria-label="anchor" href="#coe_census_stats"></a>
+<h2 id="coe_census">coe_census<a class="anchor" aria-label="anchor" href="#coe_census"></a>
 </h2>
 <p>Get statistics on a particular topic, for a particular geographical
 level, filtering as required. Levels include ‘parish’, ‘diocese’ or
@@ -97,12 +97,18 @@ level, filtering as required. Levels include ‘parish’, ‘diocese’ or
 diocese numbers, but national-level tables are comprised of a single row
 and cannot be filtered.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_census_stats.html">coe_census_stats</a></span><span class="op">(</span>nomis_code <span class="op">=</span>  <span class="st">"TS001"</span>, level <span class="op">=</span> <span class="st">"england"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_census.html">coe_census</a></span><span class="op">(</span>ons_id <span class="op">=</span>  <span class="st">"TS001"</span>, level <span class="op">=</span> <span class="st">"england"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Church of England Census Data</span></span>
+<span><span class="co">#&gt; TS001 - Number of usual residents in households and communal establishments </span></span>
+<span><span class="co">#&gt; Units:  persons </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 3</span></span></span>
 <span><span class="co">#&gt;   population lives_in_a_household lives_in_a_communal_establishment</span></span>
 <span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>   56<span style="text-decoration: underline;">490</span>048             55<span style="text-decoration: underline;">504</span>302                            <span style="text-decoration: underline;">985</span>746</span></span>
-<span><span class="fu"><a href="../reference/coe_census_stats.html">coe_census_stats</a></span><span class="op">(</span>nomis_code <span class="op">=</span> <span class="st">"TS001"</span>, level <span class="op">=</span> <span class="st">"diocese"</span>, areas <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="fu"><a href="../reference/coe_census.html">coe_census</a></span><span class="op">(</span>ons_id <span class="op">=</span> <span class="st">"TS001"</span>, level <span class="op">=</span> <span class="st">"diocese"</span>, areas <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Church of England Census Data</span></span>
+<span><span class="co">#&gt; TS001 - Number of usual residents in households and communal establishments </span></span>
+<span><span class="co">#&gt; Units:  persons </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 5</span></span></span>
 <span><span class="co">#&gt;   diocese_name diocese_number population lives_in_a_household</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -113,10 +119,13 @@ and cannot be filtered.</p>
 <h2 id="coe_parish_census_context">coe_parish_census_context<a class="anchor" aria-label="anchor" href="#coe_parish_census_context"></a>
 </h2>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_parish_census_context.html">coe_parish_census_context</a></span><span class="op">(</span>parish_code <span class="op">=</span> <span class="st">"370047"</span>, nomis_codes <span class="op">=</span> <span class="st">"TS001"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_parish_census_context.html">coe_parish_census_context</a></span><span class="op">(</span>parish_code <span class="op">=</span> <span class="st">"370047"</span>, ons_ids <span class="op">=</span> <span class="st">"TS001"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coeparishdata_parish-data</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'TS001'</span>'.</span></span>
 <span><span class="co">#&gt; $TS001</span></span>
+<span><span class="co">#&gt; Church of England Census Data</span></span>
+<span><span class="co">#&gt; TS001 - Number of usual residents in households and communal establishments </span></span>
+<span><span class="co">#&gt; Units:  Proportion of all persons </span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 6</span></span></span>
 <span><span class="co">#&gt;   level   level_code level_name                population lives_in_a_household</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
@@ -126,21 +135,21 @@ and cannot be filtered.</p>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: lives_in_a_communal_establishment &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="coe_parish_census_stats">coe_parish_census_stats<a class="anchor" aria-label="anchor" href="#coe_parish_census_stats"></a>
+<h2 id="coe_census_parish">coe_census_parish<a class="anchor" aria-label="anchor" href="#coe_census_parish"></a>
 </h2>
-<p>A convenient wrapper around <code>coe_census_stats</code> for getting
+<p>A convenient wrapper around <code>coe_census</code> for getting
 parish-level statistics for parishes of your choosing</p>
 </div>
 <div class="section level2">
-<h2 id="coe_diocese_census_stats">coe_diocese_census_stats<a class="anchor" aria-label="anchor" href="#coe_diocese_census_stats"></a>
+<h2 id="coe_census_diocese">coe_census_diocese<a class="anchor" aria-label="anchor" href="#coe_census_diocese"></a>
 </h2>
-<p>A convenient wrapper around <code>coe_census_stats</code> for getting
+<p>A convenient wrapper around <code>coe_census</code> for getting
 diocese-level statistics for dioceses of your choosing</p>
 </div>
 <div class="section level2">
-<h2 id="coe_england_census_stats">coe_england_census_stats<a class="anchor" aria-label="anchor" href="#coe_england_census_stats"></a>
+<h2 id="coe_census_england">coe_census_england<a class="anchor" aria-label="anchor" href="#coe_census_england"></a>
 </h2>
-<p>A convenient wrapper around <code>coe_census_stats</code> for getting
+<p>A convenient wrapper around <code>coe_census</code> for getting
 national-level stats for a topic of your choosing</p>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
