@@ -72,19 +72,19 @@ esri_churches <- function(where, outFields){
 }
 ```
 
-## coe_church_parish
+## coe_parish_from_church
 
-Get the parish code of any given church(es).
+Get the parish code of any number of churches.
 
-```{r function-coe_church_parish}
-#' Get parish code(s) from church code(s)
+```{r function-coe_parish_from_church}
+#' Get the parish codes of any number of Church of England churches.
 #' 
 #' @param church_codes A character vector of church codes
 #' @return A character vector of parish codes, with the same length as `church_codes`
 #' 
 #' @export
 
-coe_church_parish <- function(church_codes){
+coe_parish_from_church <- function(church_codes){
   
   query_codes <- paste0("(", paste(church_codes, collapse = ", "), ")")
   
@@ -94,6 +94,10 @@ coe_church_parish <- function(church_codes){
   
   parishes$ParishID[match(church_codes, parishes$ChurchCode)]
 }
+```
+
+```{r examples-coe_parish_from_church}
+coe_parish_from_church(c(635041, 623001))
 ```
 
 ## coe_esri_fields
@@ -110,5 +114,9 @@ coe_esri_fields <- function(){
     "LBGrade", "ParLocNa", "ParLegNa", "ParishID", "BenefNa", "BenefID", 
     "DeanNa", "DeanID", "ArchdNa", "ArchdID", "DioNa", "DioID")
 }
+```
+
+```{r examples-coe_esri_fields}
+coe_esri_fields()
 ```
 
