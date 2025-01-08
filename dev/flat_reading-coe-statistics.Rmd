@@ -14,18 +14,18 @@ library(testthat)
 pkgload::load_all(export_all = FALSE)
 ```
 
-## coe_datasets()
+## coe_census_datasets()
 
 Display information on all datasets available through this package. Default is to return a two-column tibble including `ons_id` and `description`, but setting `description = FALSE` will return a character vector of all valid nomis codes which can be passed to functions such as `coe_census()` 
 
-```{r function-coe_datasets}
+```{r function-coe_census_datasets}
 #' View nomis codes of available data
 #' 
 #' @return A tibble of nomis codes and dataset descriptions, or a character vector of nomis codes
 #' @param description Logical. If TRUE, (the default), a tibble is returned that contains nomis codes and corresponding dataset descriptions. If false, a character vector containing only nomis codes is returned. 
 #' @export
 
-coe_datasets <- function(description = TRUE){
+coe_census_datasets <- function(description = TRUE){
   out <- read_parish_data()
   
   out <- out[c("ons_id", "description")] |>
@@ -38,8 +38,8 @@ coe_datasets <- function(description = TRUE){
 
 ```
 
-```{r examples-coe_datasets}
-coe_datasets() |>
+```{r examples-coe_census_datasets}
+coe_census_datasets() |>
   dplyr::glimpse()
 ```
 
@@ -51,7 +51,7 @@ Get statistics on a particular topic, for a particular geographical level, filte
 #' Get census data for the Church of England at a parish, diocesan or national level.
 #'
 #' @return A [tibble::tibble()] containing census data for the Church of England  
-#' @param ons_id The ONS id of required data. Must be one of [coe_datasets()].
+#' @param ons_id The ONS id of required data. Must be one of [coe_census_datasets()].
 #' @param level The geographical level at which data are required. Must be one of 'parish', 'diocese' or 'england'.
 #' @param areas A character vector of parish codes or diocese numbers. If specified, the returned tibble will contain only data for these areas. Cannot be used with `level = 'england'`. `NA` values will be removed.
 #' @param relative Logical. Should returned table contain absolute statitiscs (e.g. persons/households) or proportions for each area?
@@ -164,7 +164,7 @@ test_that("coe_census doesn't work when it shouldn't", {
 #' @export
 
 coe_parish_census_context <- function(parish_code,
-                                  ons_ids = coe_datasets(description = FALSE),
+                                  ons_ids = coe_census_datasets(description = FALSE),
                                   relative = TRUE){
   
   p_table <- read_parish_table()

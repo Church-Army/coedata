@@ -16,7 +16,7 @@ library(dplyr)
 
 ```{r loadpackage}
 pkgload::load_all()
-codes <- coeparishdata::coe_datasets(description = FALSE)
+codes <- coeparishdata::coe_census_datasets(description = FALSE)
 names(codes) <- codes
 
 stat_names <- map(codes,
