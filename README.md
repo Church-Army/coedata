@@ -51,23 +51,25 @@ couple of parishes. We’ll use the neighbouring parishes of **Stifford:
 St Mary** (parish code 580342) and **Grays: St Peter and St Paul**
 (parish code 580334).
 
-### Sidebar: parish codes
+``` r
+coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334))
+#> ✔ Reading from "coeparishdata_parish-data".
+#> ✔ Range ''TS037''.
+#> Church of England Census Data
+#> TS037 - General health 
+#> Units:  persons 
+#> # A tibble: 2 × 7
+#>   parish_code population general_health_very_good general_health_good
+#>   <chr>            <dbl>                    <dbl>               <dbl>
+#> 1 580334           49315                   26735.              16254.
+#> 2 580342            6332                    2956.               2160.
+#> # ℹ 3 more variables: general_health_fair <dbl>, general_health_bad <dbl>,
+#> #   general_health_very_bad <dbl>
+```
 
-When you’re looking at individual parishes with `coedata`, you’ll need
-to identify them with their unique parish codes. If you’re not sure what
-the parish code is for a parish or church, you can either:
-
-- Find the parish in the [intercative
-  map](https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a)
-  provided by the Church of England’s Data Services team
-- Find the church’s church code by clicking ‘more information’ on its [A
-  Church Near You](https://www.achurchnearyou.com) page, and then use
-  `coe_parish_from_church()` to find it’s parish code.
-
-## Back to the example
-
-We need to know which ONS dataset contains the general health data we
-need. Let’s take a look at all the available datasets:
+**TS037** is the ONS ID of the dataset that contains General Health
+information. You can view all ONS datasets made available in this
+package like so:
 
 ``` r
 coe_census_datasets()
@@ -91,32 +93,24 @@ coe_census_datasets()
 #> 15 TS003  TS003 - Household composition
 ```
 
-We can see from the table that the General Health dataset has ONS ID
-**TS037**. Now that we have our parish codes and the ONS ID, we can get
-parish-level data:
+Note that we can also get relative statistics for the same data by
+setting `relative = TRUE`:
 
 ``` r
-coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334))
-#> ✔ Reading from "coeparishdata_parish-data".
-#> ✔ Range ''TS037''.
+coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334), relative = TRUE)
 #> Church of England Census Data
 #> TS037 - General health 
-#> Units:  persons 
+#> Units:  Proportion of all persons 
 #> # A tibble: 2 × 7
 #>   parish_code population general_health_very_good general_health_good
 #>   <chr>            <dbl>                    <dbl>               <dbl>
-#> 1 580334           49315                   26735.              16254.
-#> 2 580342            6332                    2956.               2160.
+#> 1 580334           49315                    0.542               0.330
+#> 2 580342            6332                    0.467               0.341
 #> # ℹ 3 more variables: general_health_fair <dbl>, general_health_bad <dbl>,
 #> #   general_health_very_bad <dbl>
 ```
 
-The above code has returned a table that counts individuals in each
-parish, but we could also have passed `relative = TRUE` to
-`coe_census_parish` to get those values as fractions of the parish
-population.
-
-### Example 2: Viewing a parish in its diocesan and national contexts
+## Example 2: Viewing a parish in its diocesan and national contexts
 
 Sometimes people want to see how their parish compares to its diocese
 and to the nation as a whole. `coedata` contains a function that returns
@@ -137,6 +131,28 @@ coe_parish_snapshot(580342, ons_ids = "TS037")
 #> # ℹ 4 more variables: general_health_good <dbl>, general_health_fair <dbl>,
 #> #   general_health_bad <dbl>, general_health_very_bad <dbl>
 ```
+
+## Where to find parish codes
+
+When you’re looking at individual parishes with `coedata`, you’ll need
+to identify them with their unique parish codes. If you’re not sure what
+the parish code is for a parish or church, you can either:
+
+- Find the parish in the [intercative
+  map](https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a)
+  provided by the Church of England’s Data Services team
+- Find the church’s church code by clicking ‘more information’ on its [A
+  Church Near You](https://www.achurchnearyou.com) page, and then use
+  `coe_parish_from_church()` to find it’s parish code.
+
+## A note on socio-economic classification labels
+
+Most of the statistics used in this package are labelled very
+intuitively, using labels like `general_health_very_good` or
+`country_of_birth_middle_east_asia`. This is not true of the
+socio0economic classification data (TS062), which uses labels like
+`ns_sec_L1_3`. To understand these labels, please consult the table
+returned by `ns_sec_descriptions()`.
 
 ## Thanks and attribution
 
