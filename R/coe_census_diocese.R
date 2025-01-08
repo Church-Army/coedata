@@ -7,6 +7,8 @@
 #' @param ... Other arguments passed to [coe_census()]
 #' 
 #' @export
+#' @examples
+#' coe_census_diocese(ons_id = "TS062", diocese_numbers = c(3, 7), relative = TRUE)
 coe_census_diocese <- function(ons_id, diocese_numbers, ...){
   
   if(!rlang::is_missing(diocese_numbers)) out <- coe_census(ons_id, level = "diocese", areas = diocese_numbers, ...)

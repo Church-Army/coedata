@@ -16,3 +16,6 @@ coe_census_parish(ons_id, parish_codes, ...)
 \description{
 Obtain parish-level census statistics on a given topic
 }
+\examples{
+coe_census_parish(ons_id = "TS062", parish_codes = "350041", relative = TRUE)
+}

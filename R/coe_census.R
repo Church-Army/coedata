@@ -3,7 +3,7 @@
 #' Get census data for the Church of England at a parish, diocesan or national level.
 #'
 #' @return A [tibble::tibble()] containing census data for the Church of England  
-#' @param ons_id The ONS id of required data. Must be one of [coe_datasets()].
+#' @param ons_id The ONS id of required data. Must be one of [coe_census_datasets()].
 #' @param level The geographical level at which data are required. Must be one of 'parish', 'diocese' or 'england'.
 #' @param areas A character vector of parish codes or diocese numbers. If specified, the returned tibble will contain only data for these areas. Cannot be used with `level = 'england'`. `NA` values will be removed.
 #' @param relative Logical. Should returned table contain absolute statitiscs (e.g. persons/households) or proportions for each area?

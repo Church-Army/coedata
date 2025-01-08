@@ -4,6 +4,8 @@
 
 #' @returns A character vector of field names
 #' @export
+#' @examples
+#' coe_esri_fields()
 coe_esri_fields <- function(){
   c("FID", "ChurchCode", "ChurchName", "ACNY_url", "ACNY_id", "Heritg_url",
     "LBGrade", "ParLocNa", "ParLegNa", "ParishID", "BenefNa", "BenefID", 

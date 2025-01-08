@@ -151,10 +151,80 @@ test_that("coe_census doesn't work when it shouldn't", {
 })
 ```
 
+## coe_census_parish
+
+A convenient wrapper around `coe_census` for getting parish-level statistics for parishes of your choosing
+
+```{r function-coe_census_parish}
+#' Obtain parish-level census statistics on a given topic 
+#' 
+#' @param ons_id The ONS id the required topic
+#' @param parish_codes Parish codes of required parishes. If empty (the default) data for all parishes are returned.
+#' @param ... Other arguments passed to [coe_census()]
+#' 
+#'@export 
+coe_census_parish <- function(ons_id, parish_codes, ...){
+  
+  if(!rlang::is_missing(parish_codes)) out <- coe_census(ons_id, level = "parish", areas = parish_codes, ...)
+  else out <- coe_census(ons_id, level = "parish", ...)
+  out
+}
+```
+
+```{r examples-coe_census_parish}
+coe_census_parish(ons_id = "TS062", parish_codes = "350041", relative = TRUE)
+```
+
+## coe_census_diocese
+
+A convenient wrapper around `coe_census` for getting diocese-level statistics for dioceses of your choosing
+
+```{r function-coe_census_diocese}
+#' Obtain diocese-level census statistics on a given topic
+#' 
+#' @param ons_id The ONS id for the required topic
+#' @param diocese_numbers Diocese numbers of required dioceses. If empty (the default) data for all dioceses are returned.
+#' @param ... Other arguments passed to [coe_census()]
+#' 
+#' @export
+coe_census_diocese <- function(ons_id, diocese_numbers, ...){
+  
+  if(!rlang::is_missing(diocese_numbers)) out <- coe_census(ons_id, level = "diocese", areas = diocese_numbers, ...)
+  else out <- coe_census(ons_id, level = "diocese", ...)
+  out
+}
+```
+
+```{r examples-coe_census_diocese}
+coe_census_diocese(ons_id = "TS062", diocese_numbers = c(3, 7), relative = TRUE)
+```
+
+## coe_census_england
+
+A convenient wrapper around `coe_census` for getting national-level stats for a topic of your choosing
+
+```{r function-coe_census_england}
+#' Obtain national level census statistics on a given topic
+#' 
+#' @param ons_id The ONS id for the required topic
+#' @param ... Other arguments passed to [coe_census()]
+#' 
+#' @export
+coe_census_england <- function(ons_id, ...){
+  coe_census(ons_id, level = "england", ...)
+}
+```
+
+```{r examples-coe_census_england}
+coe_census_england(ons_id = "TS062", relative = TRUE)
+```
+
 ## coe_parish_census_context
 
+Get a contextual 'snapshot' of any given parish for any number of census topics, comparing the parochial statistics with those of the diocese and the whole of England. A wrapper around `coe_census_parish()`, `coe_census_diocese()` and `coe_census_england()` to obtain relative statistics for each geography and combine them into a single table, iterating over census topics to return a list.
+
 ```{r function-coe_parish_census_context}
-#' Get a (list of) comparative table(s) of local, diocesan and national data for a given parish
+#' Get a list of comparative table(s) of local, diocesan and national data for a given parish
 #' 
 #' Extracts parish, diocese and national level data for a given parish, then [base::rbind]s them into a single table. Iterates over `ons_ids` to output a list of such tables
 #' @returns A list of `coe_parish_data` tibbles
@@ -256,59 +326,3 @@ coe_relocate <- function(.data, cols){
 }
 ```
 
-## coe_census_parish
-
-A convenient wrapper around `coe_census` for getting parish-level statistics for parishes of your choosing
-
-```{r function-coe_census_parish}
-#' Obtain parish-level census statistics on a given topic 
-#' 
-#' @param ons_id The ONS id the required topic
-#' @param parish_codes Parish codes of required parishes. If empty (the default) data for all parishes are returned.
-#' @param ... Other arguments passed to [coe_census()]
-#' 
-#'@export 
-coe_census_parish <- function(ons_id, parish_codes, ...){
-  
-  if(!rlang::is_missing(parish_codes)) out <- coe_census(ons_id, level = "parish", areas = parish_codes, ...)
-  else out <- coe_census(ons_id, level = "parish", ...)
-  out
-}
-```
-
-## coe_census_diocese
-
-A convenient wrapper around `coe_census` for getting diocese-level statistics for dioceses of your choosing
-
-```{r function-coe_census_diocese}
-#' Obtain diocese-level census statistics on a given topic
-#' 
-#' @param ons_id The ONS id for the required topic
-#' @param diocese_numbers Diocese numbers of required dioceses. If empty (the default) data for all dioceses are returned.
-#' @param ... Other arguments passed to [coe_census()]
-#' 
-#' @export
-coe_census_diocese <- function(ons_id, diocese_numbers, ...){
-  
-  if(!rlang::is_missing(diocese_numbers)) out <- coe_census(ons_id, level = "diocese", areas = diocese_numbers, ...)
-  else out <- coe_census(ons_id, level = "diocese", ...)
-  out
-}
-```
-
-
-## coe_census_england
-
-A convenient wrapper around `coe_census` for getting national-level stats for a topic of your choosing
-
-```{r function-coe_census_england}
-#' Obtain national level census statistics on a given topic
-#' 
-#' @param ons_id The ONS id for the required topic
-#' @param ... Other arguments passed to [coe_census()]
-#' 
-#' @export
-coe_census_england <- function(ons_id, ...){
-  coe_census(ons_id, level = "england", ...)
-}
-```

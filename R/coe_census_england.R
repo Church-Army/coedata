@@ -6,6 +6,8 @@
 #' @param ... Other arguments passed to [coe_census()]
 #' 
 #' @export
+#' @examples
+#' coe_census_england(ons_id = "TS062", relative = TRUE)
 coe_census_england <- function(ons_id, ...){
   coe_census(ons_id, level = "england", ...)
 }

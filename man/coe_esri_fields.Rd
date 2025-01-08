@@ -12,3 +12,6 @@ A character vector of field names
 \description{
 View fields that can be passed to the \code{where} argument of \code{\link[=coe_churches]{coe_churches()}}
 }
+\examples{
+coe_esri_fields()
+}

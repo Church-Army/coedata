@@ -14,3 +14,6 @@ coe_census_england(ons_id, ...)
 \description{
 Obtain national level census statistics on a given topic
 }
+\examples{
+coe_census_england(ons_id = "TS062", relative = TRUE)
+}

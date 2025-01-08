@@ -7,6 +7,8 @@
 #' @param ... Other arguments passed to [coe_census()]
 #' 
 #' @export 
+#' @examples
+#' coe_census_parish(ons_id = "TS062", parish_codes = "350041", relative = TRUE)
 coe_census_parish <- function(ons_id, parish_codes, ...){
   
   if(!rlang::is_missing(parish_codes)) out <- coe_census(ons_id, level = "parish", areas = parish_codes, ...)

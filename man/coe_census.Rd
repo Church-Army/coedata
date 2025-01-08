@@ -7,7 +7,7 @@
 coe_census(ons_id, level, areas, relative = FALSE)
 }
 \arguments{
-\item{ons_id}{The ONS id of required data. Must be one of \code{\link[=coe_datasets]{coe_datasets()}}.}
+\item{ons_id}{The ONS id of required data. Must be one of \code{\link[=coe_census_datasets]{coe_census_datasets()}}.}
 
 \item{level}{The geographical level at which data are required. Must be one of 'parish', 'diocese' or 'england'.}
 

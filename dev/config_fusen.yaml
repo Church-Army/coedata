@@ -28,9 +28,9 @@ flat_read_church_data.Rmd:
   path: dev/flat_read_church_data.Rmd
   state: active
   R:
-  - R/coe_church_parish.R
   - R/coe_churches.R
   - R/coe_esri_fields.R
+  - R/coe_parish_from_church.R
   tests: tests/testthat/test-coe_churches.R
   vignettes: vignettes/data-on-individual-churches.Rmd
   inflate:
@@ -46,10 +46,10 @@ flat_reading-coe-statistics.Rmd:
   state: active
   R:
   - R/coe_census.R
+  - R/coe_census_datasets.R
   - R/coe_census_diocese.R
   - R/coe_census_england.R
   - R/coe_census_parish.R
-  - R/coe_datasets.R
   - R/coe_parish_census_context.R
   tests:
   - tests/testthat/test-coe_census.R

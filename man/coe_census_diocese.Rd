@@ -16,3 +16,6 @@ coe_census_diocese(ons_id, diocese_numbers, ...)
 \description{
 Obtain diocese-level census statistics on a given topic
 }
+\examples{
+coe_census_diocese(ons_id = "TS062", diocese_numbers = c(3, 7), relative = TRUE)
+}

@@ -2,11 +2,11 @@
 % Please edit documentation in R/coe_parish_census_context.R
 \name{coe_parish_census_context}
 \alias{coe_parish_census_context}
-\title{Get a (list of) comparative table(s) of local, diocesan and national data for a given parish}
+\title{Get a list of comparative table(s) of local, diocesan and national data for a given parish}
 \usage{
 coe_parish_census_context(
   parish_code,
-  ons_ids = coe_datasets(description = FALSE),
+  ons_ids = coe_census_datasets(description = FALSE),
   relative = TRUE
 )
 }

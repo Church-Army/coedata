@@ -35,11 +35,21 @@ coe_churches(where = "ChurchCode = 608186") |>
 
 
 
-## coe_church_parish
+## coe_parish_from_church
 
-Get the parish code of any given church(es).
+Get the parish code of any number of churches.
+
+```{r examples-coe_parish_from_church}
+coe_parish_from_church(c(635041, 623001))
+```
+
 
 ## coe_esri_fields
 
 This tiny function returns the names of the fields used in the Feature Server of Churches provided by CoE Data Services through ESRI.
+
+```{r examples-coe_esri_fields}
+coe_esri_fields()
+```
+
 
