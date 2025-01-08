@@ -2,16 +2,16 @@
 
 #' Get a list of comparative table(s) of local, diocesan and national data for a given parish
 #' 
-#' Extracts parish, diocese and national level data for a given parish, then [base::rbind]s them into a single table. Iterates over `ons_ids` to output a list of such tables
+#' Extracts parish, diocese and national level data fcor a given parish, then [base::rbind]s them into a single table. Iterates over `ons_ids` to output a list of such tables
 #' @returns A list of `coe_parish_data` tibbles
 #' @param parish_code A single parish code. Character.
 #' @param ons_ids A character vector of ons_ids.
 #' @param relative Logical. Should outputs be relative? Default is `TRUE`.
 #' @export
 #' @examples
-#' coe_parish_census_context(parish_code = "370047", ons_ids = "TS001")
+#' coe_parish_snapshot(parish_code = "370047", ons_ids = "TS001")
 
-coe_parish_census_context <- function(parish_code,
+coe_parish_snapshot <- function(parish_code,
                                   ons_ids = coe_census_datasets(description = FALSE),
                                   relative = TRUE){
   

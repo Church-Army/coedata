@@ -50,10 +50,10 @@ flat_reading-coe-statistics.Rmd:
   - R/coe_census_diocese.R
   - R/coe_census_england.R
   - R/coe_census_parish.R
-  - R/coe_parish_census_context.R
+  - R/coe_parish_snapshot.R
   tests:
   - tests/testthat/test-coe_census.R
-  - tests/testthat/test-coe_parish_census_context.R
+  - tests/testthat/test-coe_parish_snapshot.R
   vignettes: vignettes/reading-coe-statistics.Rmd
   inflate:
     flat_file: dev/flat_reading-coe-statistics.Rmd
