@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<title>Interface to Parish Level Census Data Provided by the Church of England • coeparishdata</title>
+<title>Interface to Parish Level Census Data Provided by the Church of England • coedata</title>
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link href="deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
@@ -20,7 +20,7 @@
 
     <nav class="navbar navbar-expand-lg fixed-top bg-light" data-bs-theme="light" aria-label="Site navigation"><div class="container">
 
-    <a class="navbar-brand me-2" href="index.html">coeparishdata</a>
+    <a class="navbar-brand me-2" href="index.html">coedata</a>
 
     <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9000</small>
 
@@ -45,7 +45,7 @@
 <li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="search.json">
 </form></li>
-<li class="nav-item"><a class="external-link nav-link" href="https://github.com/Church-Army/coeparishdata/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
+<li class="nav-item"><a class="external-link nav-link" href="https://github.com/Church-Army/coedata/" aria-label="GitHub"><span class="fa fab fa-github fa-lg"></span></a></li>
       </ul>
 </div>
 
@@ -54,11 +54,11 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="coeparishdata">coeparishdata<a class="anchor" aria-label="anchor" href="#coeparishdata"></a>
+<div class="page-header"><h1 id="coedata">coedata<a class="anchor" aria-label="anchor" href="#coedata"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>coeparishdata is a data package that’s built around various datasets made available by the Church of England’s <a href="https://www.churchofengland.org/about/data-services" class="external-link">Data Services</a> team. Data sources include:</p>
+<p>coedata is a data package that serves up various datasets made available by the Church of England’s <a href="https://www.churchofengland.org/about/data-services" class="external-link">Data Services</a> team. Data sources include:</p>
 <ul class="task-list">
 <li><label><input type="checkbox" checked><a href="https://www.churchofengland.org/about/data-services/resources-publications-and-data" class="external-link">Parish-level census data</a> from ONS’ 2021 Census of England and Wales (Updated November 2024)</label></li>
 <li><label><input type="checkbox" checked>A <a href="https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer" class="external-link">database</a> of Churches, Parishes, Dioceses and other geographies (Updated November 2024)</label></li>
@@ -68,15 +68,103 @@
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of coeparishdata from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of coedata from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
-<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"Church-Army/coeparishdata"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">"Church-Army/coedata"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="documentation">Documentation<a class="anchor" aria-label="anchor" href="#documentation"></a>
 </h2>
-<p>Full documentation website on: <a href="https://Church-Army.github.io/coeparishdata" class="external-link uri">https://Church-Army.github.io/coeparishdata</a></p>
+<p>Full documentation website on: <a href="https://Church-Army.github.io/coedata" class="external-link uri">https://Church-Army.github.io/coedata</a></p>
+</div>
+<div class="section level2">
+<h2 id="a-simple-example">A simple example<a class="anchor" aria-label="anchor" href="#a-simple-example"></a>
+</h2>
+<p>Let’s use <code>coedata</code> to get 2021 census data on general health for a couple of parishes. We’ll use the neighbouring parishes of <strong>Stifford: St Mary</strong> (parish code 580342) and <strong>Grays: St Peter and St Paul</strong> (parish code 580334).</p>
+<div class="section level3">
+<h3 id="sidebar-parish-codes">Sidebar: parish codes<a class="anchor" aria-label="anchor" href="#sidebar-parish-codes"></a>
+</h3>
+<p>When you’re looking at individual parishes with <code>coedata</code>, you’ll need to identify them with their unique parish codes. If you’re not sure what the parish code is for a parish or church, you can either:</p>
+<ul>
+<li>Find the parish in the <a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a" class="external-link">intercative map</a> provided by the Church of England’s Data Services team</li>
+<li>Find the church’s church code by clicking ‘more information’ on its <a href="https://www.achurchnearyou.com" class="external-link">A Church Near You</a> page, and then use <code><a href="reference/coe_parish_from_church.html">coe_parish_from_church()</a></code> to find it’s parish code.</li>
+</ul>
+</div>
+</div>
+<div class="section level2">
+<h2 id="back-to-the-example">Back to the example<a class="anchor" aria-label="anchor" href="#back-to-the-example"></a>
+</h2>
+<p>We need to know which ONS dataset contains the general health data we need. Let’s take a look at all the available datasets:</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/coe_census_datasets.html">coe_census_datasets</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 15 × 2</span></span>
+<span><span class="co">#&gt;    ons_id description                                                           </span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;                                                                 </span></span>
+<span><span class="co">#&gt;  1 TS001  TS001 - Number of usual residents in households and communal establis…</span></span>
+<span><span class="co">#&gt;  2 TS004  TS004 - Country of birth                                              </span></span>
+<span><span class="co">#&gt;  3 TS007A TS007A - Age by 5 year age bands                                      </span></span>
+<span><span class="co">#&gt;  4 TS021  TS021 - Ethnic group                                                  </span></span>
+<span><span class="co">#&gt;  5 TS030  TS030 - Religion                                                      </span></span>
+<span><span class="co">#&gt;  6 TS037  TS037 - General health                                                </span></span>
+<span><span class="co">#&gt;  7 TS062  TS062 - Social Classification (NS-SeC)                                </span></span>
+<span><span class="co">#&gt;  8 TS066  TS066 - Economic activity status                                      </span></span>
+<span><span class="co">#&gt;  9 TS067  TS067 - Highest level of qualification                                </span></span>
+<span><span class="co">#&gt; 10 TS011  TS011 - Households by deprivation dimensions                          </span></span>
+<span><span class="co">#&gt; 11 TS025  TS025 - Household language                                            </span></span>
+<span><span class="co">#&gt; 12 TS044  TS044 - Accommodation type                                            </span></span>
+<span><span class="co">#&gt; 13 TS045  TS045 - Car or van availability                                       </span></span>
+<span><span class="co">#&gt; 14 TS054  TS054 - Tenure                                                        </span></span>
+<span><span class="co">#&gt; 15 TS003  TS003 - Household composition</span></span></code></pre></div>
+<p>We can see from the table that the General Health dataset has ONS ID <strong>TS037</strong>. Now that we have our parish codes and the ONS ID, we can get parish-level data:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/coe_census_parish.html">coe_census_parish</a></span><span class="op">(</span>ons_id <span class="op">=</span> <span class="st">"TS037"</span>, parish_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">580342</span>, <span class="fl">580334</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Reading from "coeparishdata_parish-data".</span></span>
+<span><span class="co">#&gt; ✔ Range ''TS037''.</span></span>
+<span><span class="co">#&gt; Church of England Census Data</span></span>
+<span><span class="co">#&gt; TS037 - General health </span></span>
+<span><span class="co">#&gt; Units:  persons </span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 7</span></span>
+<span><span class="co">#&gt;   parish_code population general_health_very_good general_health_good</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;            &lt;dbl&gt;                    &lt;dbl&gt;               &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 580334           49315                   26735.              16254.</span></span>
+<span><span class="co">#&gt; 2 580342            6332                    2956.               2160.</span></span>
+<span><span class="co">#&gt; # ℹ 3 more variables: general_health_fair &lt;dbl&gt;, general_health_bad &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   general_health_very_bad &lt;dbl&gt;</span></span></code></pre></div>
+<p>The above code has returned a table that counts individuals in each parish, but we could also have passed <code>relative = TRUE</code> to <code>coe_census_parish</code> to get those values as fractions of the parish population.</p>
+<div class="section level3">
+<h3 id="example-2-viewing-a-parish-in-its-diocesan-and-national-contexts">Example 2: Viewing a parish in its diocesan and national contexts<a class="anchor" aria-label="anchor" href="#example-2-viewing-a-parish-in-its-diocesan-and-national-contexts"></a>
+</h3>
+<p>Sometimes people want to see how their parish compares to its diocese and to the nation as a whole. <code>coedata</code> contains a function that returns this data for any parish and any number of ONS datasets:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/coe_parish_snapshot.html">coe_parish_snapshot</a></span><span class="op">(</span><span class="fl">580342</span>, ons_ids <span class="op">=</span> <span class="st">"TS037"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; $TS037</span></span>
+<span><span class="co">#&gt; Church of England Census Data</span></span>
+<span><span class="co">#&gt; TS037 - General health </span></span>
+<span><span class="co">#&gt; Units:  Proportion of all persons </span></span>
+<span><span class="co">#&gt; # A tibble: 3 × 9</span></span>
+<span><span class="co">#&gt;   level   level_code level_name        population general_health_very_good</span></span>
+<span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                  &lt;dbl&gt;                    &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1 parish  580342     Stifford: St Mary       6332                    0.467</span></span>
+<span><span class="co">#&gt; 2 diocese 8          Chelmsford           3279964                    0.497</span></span>
+<span><span class="co">#&gt; 3 nation  &lt;NA&gt;       england             56490046                    0.485</span></span>
+<span><span class="co">#&gt; # ℹ 4 more variables: general_health_good &lt;dbl&gt;, general_health_fair &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   general_health_bad &lt;dbl&gt;, general_health_very_bad &lt;dbl&gt;</span></span></code></pre></div>
+</div>
+</div>
+<div class="section level2">
+<h2 id="thanks-and-attribution">Thanks and attribution<a class="anchor" aria-label="anchor" href="#thanks-and-attribution"></a>
+</h2>
+<ul>
+<li>All census data was originally rovided by the <a href="https://www.ons.gov.uk/" class="external-link">Office for National Statistics</a>. ONS also maintain the <a href="https://www.nomisweb.co.uk/" class="external-link">nomis</a> service, which was used to source some of this package’s internal data.</li>
+<li>Parish-level census data profiles were compiled by Ken Eames, who is a senior statistical researcher at the Church of England’s Data Services. Original parish-level datasets are available on the <a href="https://www.churchofengland.org/about/data-services/resources-publications-and-data" class="external-link">Church of England website</a>
+<ul>
+<li>Ken also maintains the <a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a" class="external-link">parish map</a> from which Church data are read by this package. Thanks again, Ken!</li>
+</ul>
+</li>
+<li>Thanks to <a href="https://github.com/ropensci" class="external-link">ropensci</a> for their development and maintenance of the <a href="https://github.com/ropensci/nomisr" class="external-link">nomisr</a> package, which was used to interface with nomis.</li>
+<li>Thanks to <a href="https://jennybryan.org/about/" class="external-link">Jenny Bryan</a> at Posit for the development and maintenance of <a href="https://googlesheets4.tidyverse.org/" class="external-link">googlesheets4</a>, which provided a simple, secure way of minimising package size by storing data remotely.</li>
+</ul>
 </div>
 <div class="section level2">
 <h2 id="todo">TODO:<a class="anchor" aria-label="anchor" href="#todo"></a>
@@ -88,20 +176,20 @@
 <li>Aggregating parish data causes considerable rounding error</li>
 </ul>
 </li>
-<li><label><input type="checkbox">Add data-dictionary vignettes</label></li>
+<li><label><input type="checkbox" checked>Add data-dictionary vignettes</label></li>
 <li><label><input type="checkbox" checked>Create print methods for <code>"coe_parish_data"</code> class</label></li>
 <li><label><input type="checkbox" checked>Create methods for <code>dplyr</code> that preserve attributes in <code>"coe_parish_data"</code> objects</label></li>
 <li><label><input type="checkbox">Add IMD data</label></li>
-<li><label><input type="checkbox">Ensure appropriate credit/attribution/documentation</label></li>
-<li><label><input type="checkbox">Rename everything, perhaps including this package</label></li>
+<li><label><input type="checkbox" checked>Ensure appropriate credit/attribution/documentation</label></li>
+<li><label><input type="checkbox" checked>Rename everything, perhaps including this package</label></li>
 </ul>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
 <h2 data-toc-skip>Links</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/Church-Army/coeparishdata/" class="external-link">Browse source code</a></li>
-<li><a href="https://github.com/Church-Army/coeparishdata/issues" class="external-link">Report a bug</a></li>
+<li><a href="https://github.com/Church-Army/coedata/" class="external-link">Browse source code</a></li>
+<li><a href="https://github.com/Church-Army/coedata/issues" class="external-link">Report a bug</a></li>
 </ul>
 </div>
 
@@ -117,7 +205,7 @@
 <div class="citation">
 <h2 data-toc-skip>Citation</h2>
 <ul class="list-unstyled">
-<li><a href="authors.html#citation">Citing coeparishdata</a></li>
+<li><a href="authors.html#citation">Citing coedata</a></li>
 </ul>
 </div>
 
@@ -131,8 +219,8 @@
 <div class="dev-status">
 <h2 data-toc-skip>Dev status</h2>
 <ul class="list-unstyled">
-<li><a href="https://github.com/Church-Army/coeparishdata/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/Church-Army/coeparishdata/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
-<li><a href="https://app.codecov.io/gh/Church-Army/coeparishdata" class="external-link"><img src="https://codecov.io/gh/Church-Army/coeparishdata/graph/badge.svg" alt="Codecov test coverage"></a></li>
+<li><a href="https://github.com/Church-Army/coedata/actions/workflows/R-CMD-check.yaml" class="external-link"><img src="https://github.com/Church-Army/coedata/actions/workflows/R-CMD-check.yaml/badge.svg" alt="R-CMD-check"></a></li>
+<li><a href="https://app.codecov.io/gh/Church-Army/coedata" class="external-link"><img src="https://codecov.io/gh/Church-Army/coedata/graph/badge.svg" alt="Codecov test coverage"></a></li>
 </ul>
 </div>
 
