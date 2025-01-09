@@ -1,0 +1,378 @@
+---
+title: "Creating diocesan statistics"
+author: "Dave"
+format: html
+editor: visual
+---
+
+## Set up
+
+```{r libraries}
+library(fs)
+library(here)
+library(sf)
+library(dplyr)
+library(httr2)
+library(ggplot2)
+library(stringr)
+library(tidyr)
+library(progress)
+library(purrr)
+library(nomisr)
+library(janitor)
+
+pkgload::load_all()
+```
+
+## Read in diocesan shapes
+
+```{r read_dioceses}
+  diocese_request <-
+    request("https://services5.arcgis.com") |> 
+    req_url_path(
+      "KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Diocese_Oct2023/FeatureServer/0/query") |> 
+  req_url_query(where = "1=1", outFields = "*",
+                returnGeometry = "true", f = "geojson")
+
+dioceses <- st_read(diocese_request$url, quiet = FALSE)
+
+dioceses <- 
+  select(dioceses, diocese_no = Diocese_Nu, diocese_name = Diocese_Na)
+```
+
+```{r unionise_diocesan_shapes}
+dioceses <- 
+  mutate(dioceses, geometry = st_make_valid(geometry)) |> 
+  group_by(diocese_no, diocese_name) |> 
+  summarise(geometry = st_union(geometry))
+```
+
+### Show dioceses
+
+```{r show_dioceses}
+ggplot(dioceses) + 
+  geom_sf(aes(fill = factor(diocese_no)),
+          show.legend = FALSE)
+```
+## Read LSOA
+
+```{r read_lsoa}
+lsoa <- read_sf(here("dev", "civic-areas",
+                     "2021_lsoa-boundaries_england-wales_generalised_clipped"))
+```
+
+### Keep only LSOA that intersect CoE dioceses
+
+```{r filter_lsoa}
+dioceses <- st_transform(dioceses, st_crs(lsoa))
+coe <- st_union(dioceses)
+
+not_na <- \(x) !is.na(x)
+
+intersecting <- function(x, y){
+  st_intersects(x, y, sparse = TRUE) |> 
+    as.logical() |> 
+    not_na()
+}
+
+lsoa_intersects <- intersecting(lsoa, coe)
+
+lsoa <- lsoa[lsoa_intersects,]
+```
+
+### Tidy LSOA names
+
+```{r tidy_lsoa}
+lsoa <- select(lsoa, lsoa_2021_code = LSOA21CD, area = Shape__Are)
+
+## NB 55 Welsh LSOA intersect CoE dioceses
+
+filter(lsoa, str_detect(lsoa_2021_code, "W")) |> 
+  nrow()
+```
+
+## Find contained LSOA
+
+```{r find_contained}
+filter_intersecting <- function(x){
+  
+  contained <-
+    st_intersects(x, lsoa$geometry, sparse = TRUE) |> 
+    unlist()
+
+  lsoa <- lsoa[contained, ]
+  rename(lsoa, geometry_lsoa = geometry)
+}
+
+dioceses_lsoa <- 
+  dioceses |> 
+  group_by(diocese_no, diocese_name, geometry) |> 
+  reframe(contained_lsoa = list(filter_intersecting(geometry)))
+
+dioceses_lsoa <-
+  unnest(dioceses_lsoa, contained_lsoa) |> 
+  group_by(lsoa_2021_code) |> 
+  mutate(intersected_dioceses = n())
+
+group_by(dioceses_lsoa, intersected_dioceses) |> 
+  count()
+
+```
+
+### Get proportion of intersection in each diocese
+
+```{r intersection_proportion}
+if(interactive()) prog <- progress_bar$new(total = nrow(dioceses_lsoa))
+
+intersection_proportion <- function(intersections, lsoa_shape, diocese_shape){
+  
+  if(intersections == 1) out <- 1
+  else {
+    
+    shape_area <- st_area(lsoa_shape)
+    intersected_shape <- st_intersection(lsoa_shape, diocese_shape)
+    intersected_area <- st_area(intersected_shape)
+    
+    out <- as.numeric(intersected_area/shape_area)
+    
+  }
+  if(interactive()) prog$tick()
+  out
+}
+
+dioceses_lsoa <- 
+  rowwise(dioceses_lsoa) |> 
+  mutate(intersection_prop = 
+           intersection_proportion(intersected_dioceses, geometry_lsoa, geometry))
+```
+
+```{r intersections}
+intersections <- 
+  dioceses_lsoa |> 
+  select(diocese_no, diocese_name, lsoa_2021_code, intersection_prop)
+```
+
+## Get census stats from nomis
+
+```{r get_census_stats}
+ons_codes <- coe_census_datasets(description = FALSE)
+
+nomis_codes <- map(ons_codes, \(x) nomis_search(name = str_c("*", x, "*")))
+
+nomis_codes <- map2_chr(nomis_codes, ons_codes, 
+                    \(nomis_data, ons_code){
+                      filter(nomis_data, str_detect(name.value, str_c(ons_code, " "))) |> 
+                        pull(id)
+                    })
+
+lsoa_code <-
+  nomis_get_metadata(nomis_codes[[1]], "geography", "TYPE") |>
+  filter(description.en == "2021 super output areas - lower layer") |> 
+  pull(id)
+
+lsoa_code
+
+value_label <- 
+  nomis_get_metadata(nomis_codes[[1]], "measures") |> 
+  filter(label.en == "value") |> 
+  pull(id)
+
+
+nomis_data <- map(nomis_codes, 
+                  \(x){
+                    nomis_get_data(x, geography = lsoa_code,
+                                   measures = value_label,
+                                   tidy = TRUE) |> 
+                      select(lsoa_2021_code = geography_code,
+                             n = obs_value,
+                             matches("^c_2021_.*_name"))
+                  })
+
+nomis_data <- map(nomis_data,
+                  \(x){
+                    rename(x, stat = 3) |> 
+                      pivot_wider(names_from = stat, values_from = n)
+                  })
+
+nomis_data <- map(nomis_data, clean_names)
+
+```
+## Rename/format nomis data tables
+
+```{r formatting_nomis_data}
+package_stats <- map(ons_codes, coe_census_diocese)
+package_names <- map(package_stats, names)
+nomis_names <- map(nomis_data, names)
+
+dio_names <- \(x) names(x)[!names(x) %in% c("diocese_name", "diocese_number")]
+
+prefix_cols <- function(x, prefix, but_not){
+    rename_with(x,
+                \(y) str_c(prefix, y),
+                .cols = !any_of(but_not))
+}
+
+select_shared <- function(x, shared_with, and_also){
+  select(x, all_of(c(and_also, dio_names(shared_with))))
+}
+
+package_names[[15]]
+nomis_names[[15]]
+
+common_names <- c("lsoa_2021_code", "population")
+common_names_16 <- c("lsoa_2021_code", "population_16_and_over")
+common_names_hh <- c("lsoa_2021_code", "occupied_households")
+
+nomis_data <- map(nomis_data, \(x) rename_with(x, 
+                                               \(x) rep("population", length(x)),
+                                               any_of("total_all_usual_residents")))
+nomis_data <- map(nomis_data,
+                  \(x){
+                    rename_with(x, 
+                                \(y) rep("population_16_and_over", length(y)),
+                                any_of("total_all_usual_residents_aged_16_years_and_over"))
+                  })
+
+nomis_data <- map(nomis_data, 
+                  \(x){
+                    rename_with(x, 
+                                \(y) rep("occupied_households", length(y)),
+                                any_of("total_all_households"))
+                                })
+
+nomis_data[[2]] <- prefix_cols(nomis_data[[2]], "country_of_birth_", but_not = common_names)
+
+nomis_data[[2]] <- rename(nomis_data[[2]], 
+                          country_of_birth_europe_non_eu_countries = 
+                            country_of_birth_europe_non_eu_countries_all_other_non_eu_countries,
+                          country_of_birth_united_kingdom =
+                            country_of_birth_europe_united_kingdom)
+
+nomis_data[[2]] <- select_shared(nomis_data[[2]], package_stats[[2]], common_names)
+
+nomis_data[[3]] <-
+  rename(nomis_data[[3]], population = total) |> 
+  rename_with(\(x) {
+    str_replace_all(x, "aged", "age") |>
+      str_remove_all("to_") |> 
+      str_remove_all("_years")},
+    .cols = !any_of(common_names)
+    )
+
+nomis_data[[4]] <- prefix_cols(nomis_data[[4]], "ethnic_group_", but_not = common_names)
+
+nomis_data[[4]] <- select_shared(nomis_data[[4]], package_stats[[4]], common_names)
+
+nomis_data[[5]] <- prefix_cols(nomis_data[[5]],"religion_", common_names)
+
+nomis_data[[6]] <- 
+  rename_with(nomis_data[[6]], 
+              \(x){
+                str_remove(x, "_health") |> 
+                  str_c("general_health_", to = _)
+              },
+              .cols = !any_of(common_names_16))
+
+names(nomis_data[[7]])[3:11] <- names(package_stats[[7]])[4:12]
+
+nomis_data[[8]] <- prefix_cols(nomis_data[[8]], "ea_status_", common_names_16)
+
+nomis_data[[8]] <- select_shared(nomis_data[[8]], package_stats[[8]], common_names_16)
+
+nomis_data[[9]] <- prefix_cols(nomis_data[[9]], "highest_level_of_qualification_", 
+                               but_not = common_names_16)
+
+nomis_data[[10]] <- prefix_cols(nomis_data[[10]], "deprivation_", common_names_hh)
+
+nomis_data[[11]] <- prefix_cols(nomis_data[[11]], "household_language_", common_names_hh)
+nomis_data[[11]] <- select_shared(nomis_data[[11]], package_stats[[11]], common_names_hh)
+
+nomis_data[[12]] <- prefix_cols(nomis_data[[12]], "accommodation_type_", common_names_hh)
+
+nomis_data[[13]] <- prefix_cols(nomis_data[[13]], "car_or_van_availability_", common_names_hh)
+nomis_data[[13]] <- rename_with(nomis_data[[13]], \(x) str_remove(x, "x(?=\\d)"))
+
+nomis_data[[14]] <-
+  prefix_cols(nomis_data[[14]], "tenure_", common_names_hh) |> 
+  select_shared(package_stats[[14]], common_names_hh)
+
+nomis_data[[15]] <- 
+  prefix_cols(nomis_data[[15]], "household_composition_", common_names_hh) |> 
+  select_shared(package_stats[[15]], common_names_hh)
+```
+
+### Join nomis datasets to dioceses
+
+```{r join_nomis_datasets_to_dioceses}
+long_nomis <-
+  map(nomis_data,
+      \(x){
+        select(x, -any_of(c("population", "population_16_and_over","occupied_households"))) |>
+          pivot_longer(-lsoa_2021_code, names_to = "stat", values_to = "value")
+                  })
+
+dioceses_nomis_joined <- 
+  map(long_nomis, \(x) left_join(dioceses_lsoa, x, by = "lsoa_2021_code",
+                                 relationship = "many-to-many"))
+```
+
+### Calculate stats for intersected areas
+
+```{r intersected_stats}
+dioceses_nomis_joined <- 
+  map(dioceses_nomis_joined,
+      \(x){
+        mutate(x, value_weighted = value * intersection_prop)
+      })
+
+tidy_dioceses <- 
+  map(dioceses_nomis_joined, 
+      \(x){
+      as_tibble(x) |> 
+          select(diocese_name, diocese_no, lsoa_2021_code, stat, value = value_weighted) |> 
+          group_by(diocese_no) |> 
+          mutate(total = sum(value))
+      })
+
+diocesan_totals <- 
+  map(tidy_dioceses, 
+      \(x){
+        pivot_wider(x, names_from = stat, values_from = value) |> 
+          group_by(diocese_name, diocese_no, total) |> 
+          summarise(across(!lsoa_2021_code, sum), .groups = "drop") |> 
+          mutate(across(where(is.numeric), round))
+      })
+```
+
+## Compare
+
+```{r compare}
+diocesan_totals[[1]]
+coe_census_diocese("TS001")
+```
+
+## Final tweaks to names
+
+```{r final_tweaks_to_names}
+diocesan_totals <- map(diocesan_totals, \(x) rename(x, diocese_number = diocese_no))
+
+total_column_names <- map_chr(nomis_data, \(x) names(x)[2])
+
+total_column_names[total_column_names == "accommodation_type_total"] <- "occupied_households"
+
+diocesan_totals <- map2(diocesan_totals, total_column_names, 
+                        \(data, new_name){
+                          names(data)[names(data) == "total"] <- new_name
+                          data
+                        })
+
+```
+
+## Edit package data
+
+```{r edit_package_data, eval = FALSE}
+load(here("R", "sysdata.rda"))
+
+parish_data[parish_data$level == "diocese",][["data"]] <- diocesan_totals
+usethis::use_data(parish_data, internal = TRUE, overwrite = TRUE)
+```
