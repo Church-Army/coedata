@@ -148,7 +148,7 @@ and cannot be filtered.</p>
 parish-level statistics for parishes of your choosing</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_census_parish.html">coe_census_parish</a></span><span class="op">(</span>ons_id <span class="op">=</span> <span class="st">"TS062"</span>, parish_codes <span class="op">=</span> <span class="st">"350041"</span>, relative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coeparishdata_parish-data</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coedata_parish-data</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'TS062'</span>'.</span></span>
 <span><span class="co">#&gt; Church of England Census Data</span></span>
 <span><span class="co">#&gt; TS062 - Social Classification (NS-SeC) </span></span>
@@ -158,7 +158,8 @@ parish-level statistics for parishes of your choosing</p>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> 350041                       <span style="text-decoration: underline;">4</span>548.      0.081<span style="text-decoration: underline;">8</span>      0.076<span style="text-decoration: underline;">7</span>    0.036<span style="text-decoration: underline;">2</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ 6 more variables: ns_sec_L8_9 &lt;dbl&gt;, ns_sec_L10_11 &lt;dbl&gt;, ns_sec_L12 &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   ns_sec_L13 &lt;dbl&gt;, ns_sec_L14 &lt;dbl&gt;, ns_sec_L15 &lt;dbl&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   ns_sec_L13 &lt;dbl&gt;, ns_sec_L14 &lt;dbl&gt;, ns_sec_L15 &lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; Parish-level data compiled by the Church of England</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="obtain-diocese-level-data-with-coe_census_diocese">Obtain diocese-level data with
@@ -210,7 +211,7 @@ geography and combine them into a single table, iterating over census
 topics to return a list.</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_parish_snapshot.html">coe_parish_snapshot</a></span><span class="op">(</span>parish_code <span class="op">=</span> <span class="st">"370047"</span>, ons_ids <span class="op">=</span> <span class="st">"TS001"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coeparishdata_parish-data</span>.</span></span>
+<span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coedata_parish-data</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'TS001'</span>'.</span></span>
 <span><span class="co">#&gt; $TS001</span></span>
 <span><span class="co">#&gt; Church of England Census Data</span></span>

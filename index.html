@@ -60,11 +60,28 @@
 
 <p>coedata is a data package that serves up various datasets made available by the Church of England’s <a href="https://www.churchofengland.org/about/data-services" class="external-link">Data Services</a> team. Data sources include:</p>
 <ul class="task-list">
-<li><label><input type="checkbox" checked><a href="https://www.churchofengland.org/about/data-services/resources-publications-and-data" class="external-link">Parish-level census data</a> from ONS’ 2021 Census of England and Wales (Updated November 2024)</label></li>
-<li><label><input type="checkbox" checked>A <a href="https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer" class="external-link">database</a> of Churches, Parishes, Dioceses and other geographies (Updated November 2024)</label></li>
-<li><label><input type="checkbox"><del><a href="https://www.churchofengland.org/about/data-services/resources-publications-and-data" class="external-link">Parish-level data</a> from the 2019 Index of Multiple Deprivation</del> (PENDING)</label></li>
+<li><label><input type="checkbox" checked>Parish-level 2021 census data</label></li>
+<li><label><input type="checkbox" checked>A database of Churches, Parishes, Dioceses and other geographies (Updated November 2024)</label></li>
+<li><label><input type="checkbox"><del>Parish-level data from the 2019 Index of Multiple Deprivation</del> (pending)</label></li>
 </ul>
-<p>National-level data are sourced directly from ONS data via <a href="https://www.nomisweb.co.uk/" class="external-link">nomis</a> (via <a href="https://github.com/ropensci/nomisr" class="external-link">nomisr</a>).</p>
+<p>2021 Census topics made available by coedata include:</p>
+<ul>
+<li>Number of usual residents in households and communal establishments</li>
+<li>Country of birth</li>
+<li>Age by 5 year age bands</li>
+<li>Ethnic group</li>
+<li>Religion</li>
+<li>General health</li>
+<li>Social Classification (NS-SeC)</li>
+<li>Economic activity status</li>
+<li>Highest level of qualification</li>
+<li>Households by deprivation dimensions</li>
+<li>Household language</li>
+<li>Accommodation type</li>
+<li>Car or van availability</li>
+<li>Tenure</li>
+<li>Household composition</li>
+</ul>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -79,12 +96,99 @@
 <p>Full documentation website on: <a href="https://Church-Army.github.io/coedata" class="external-link uri">https://Church-Army.github.io/coedata</a></p>
 </div>
 <div class="section level2">
-<h2 id="a-simple-example">A simple example<a class="anchor" aria-label="anchor" href="#a-simple-example"></a>
+<h2 id="usage">Usage<a class="anchor" aria-label="anchor" href="#usage"></a>
 </h2>
-<p>Let’s use <code>coedata</code> to get 2021 census data on general health for a couple of parishes. We’ll use the neighbouring parishes of <strong>Stifford: St Mary</strong> (parish code 580342) and <strong>Grays: St Peter and St Paul</strong> (parish code 580334).</p>
+<div class="section level3">
+<h3 id="using-coedata-to-get-parish-level-census-statistics">Using coedata to get parish-level census statistics<a class="anchor" aria-label="anchor" href="#using-coedata-to-get-parish-level-census-statistics"></a>
+</h3>
+<p>This is an example of how you could use coedata to get 2021 census data on general health for a selection of parishes. We’ll use the neighbouring parishes of <strong>Stifford: St Mary</strong> and <strong>Grays: St Peter and St Paul</strong>.</p>
+<p>To get this data, we’ll need:</p>
+<ul>
+<li>The parish codes of those parishes</li>
+<li>The ONS ID of the general health dataset</li>
+</ul>
+<p>We can find the ONS ID of the general health dataset by using <code>coe_datasets()</code>, which lists the ID of every census dataset that’s a available through this package:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="reference/coe_census_datasets.html">coe_census_datasets</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> </span>
+<span>  <span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/kable.html" class="external-link">kable</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<table class="table">
+<colgroup>
+<col width="50%">
+<col width="50%">
+</colgroup>
+<thead><tr class="header">
+<th align="left">ons_id</th>
+<th align="left">description</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td align="left">TS001</td>
+<td align="left">TS001 - Number of usual residents in households and communal establishments</td>
+</tr>
+<tr class="even">
+<td align="left">TS004</td>
+<td align="left">TS004 - Country of birth</td>
+</tr>
+<tr class="odd">
+<td align="left">TS007A</td>
+<td align="left">TS007A - Age by 5 year age bands</td>
+</tr>
+<tr class="even">
+<td align="left">TS021</td>
+<td align="left">TS021 - Ethnic group</td>
+</tr>
+<tr class="odd">
+<td align="left">TS030</td>
+<td align="left">TS030 - Religion</td>
+</tr>
+<tr class="even">
+<td align="left">TS037</td>
+<td align="left">TS037 - General health</td>
+</tr>
+<tr class="odd">
+<td align="left">TS062</td>
+<td align="left">TS062 - Social Classification (NS-SeC)</td>
+</tr>
+<tr class="even">
+<td align="left">TS066</td>
+<td align="left">TS066 - Economic activity status</td>
+</tr>
+<tr class="odd">
+<td align="left">TS067</td>
+<td align="left">TS067 - Highest level of qualification</td>
+</tr>
+<tr class="even">
+<td align="left">TS011</td>
+<td align="left">TS011 - Households by deprivation dimensions</td>
+</tr>
+<tr class="odd">
+<td align="left">TS025</td>
+<td align="left">TS025 - Household language</td>
+</tr>
+<tr class="even">
+<td align="left">TS044</td>
+<td align="left">TS044 - Accommodation type</td>
+</tr>
+<tr class="odd">
+<td align="left">TS045</td>
+<td align="left">TS045 - Car or van availability</td>
+</tr>
+<tr class="even">
+<td align="left">TS054</td>
+<td align="left">TS054 - Tenure</td>
+</tr>
+<tr class="odd">
+<td align="left">TS003</td>
+<td align="left">TS003 - Household composition</td>
+</tr>
+</tbody>
+</table>
+<p>We can see that general health data can be found in the dataset with ID TS037.</p>
+<p>Luckily, we already know the parish codes for the parishes we’re interested in. If you’re not sure where to find the parish codes you need, please refer to <a href="#finding-parish-codes">Finding parish codes</a>.</p>
+<p>Now that we have the ONS ID and the parish codes, we can get our census data:</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/coe_census_parish.html">coe_census_parish</a></span><span class="op">(</span>ons_id <span class="op">=</span> <span class="st">"TS037"</span>, parish_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">580342</span>, <span class="fl">580334</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="co">#&gt; ✔ Reading from "coeparishdata_parish-data".</span></span>
+<span><span class="co">#&gt; ✔ Reading from "coedata_parish-data".</span></span>
 <span><span class="co">#&gt; ✔ Range ''TS037''.</span></span>
 <span><span class="co">#&gt; Church of England Census Data</span></span>
 <span><span class="co">#&gt; TS037 - General health </span></span>
@@ -95,31 +199,12 @@
 <span><span class="co">#&gt; 1 580334           49315                   26735.              16254.</span></span>
 <span><span class="co">#&gt; 2 580342            6332                    2956.               2160.</span></span>
 <span><span class="co">#&gt; # ℹ 3 more variables: general_health_fair &lt;dbl&gt;, general_health_bad &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   general_health_very_bad &lt;dbl&gt;</span></span></code></pre></div>
-<p><strong>TS037</strong> is the ONS ID of the dataset that contains General Health information. You can view all ONS datasets made available in this package like so:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/coe_census_datasets.html">coe_census_datasets</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; # A tibble: 15 × 2</span></span>
-<span><span class="co">#&gt;    ons_id description                                                           </span></span>
-<span><span class="co">#&gt;    &lt;chr&gt;  &lt;chr&gt;                                                                 </span></span>
-<span><span class="co">#&gt;  1 TS001  TS001 - Number of usual residents in households and communal establis…</span></span>
-<span><span class="co">#&gt;  2 TS004  TS004 - Country of birth                                              </span></span>
-<span><span class="co">#&gt;  3 TS007A TS007A - Age by 5 year age bands                                      </span></span>
-<span><span class="co">#&gt;  4 TS021  TS021 - Ethnic group                                                  </span></span>
-<span><span class="co">#&gt;  5 TS030  TS030 - Religion                                                      </span></span>
-<span><span class="co">#&gt;  6 TS037  TS037 - General health                                                </span></span>
-<span><span class="co">#&gt;  7 TS062  TS062 - Social Classification (NS-SeC)                                </span></span>
-<span><span class="co">#&gt;  8 TS066  TS066 - Economic activity status                                      </span></span>
-<span><span class="co">#&gt;  9 TS067  TS067 - Highest level of qualification                                </span></span>
-<span><span class="co">#&gt; 10 TS011  TS011 - Households by deprivation dimensions                          </span></span>
-<span><span class="co">#&gt; 11 TS025  TS025 - Household language                                            </span></span>
-<span><span class="co">#&gt; 12 TS044  TS044 - Accommodation type                                            </span></span>
-<span><span class="co">#&gt; 13 TS045  TS045 - Car or van availability                                       </span></span>
-<span><span class="co">#&gt; 14 TS054  TS054 - Tenure                                                        </span></span>
-<span><span class="co">#&gt; 15 TS003  TS003 - Household composition</span></span></code></pre></div>
+<span><span class="co">#&gt; #   general_health_very_bad &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; Parish-level data compiled by the Church of England</span></span></code></pre></div>
+<p>Those parishes are both in central London - they are very densely populated!</p>
 <p>Note that we can also get relative statistics for the same data by setting <code>relative = TRUE</code>:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/coe_census_parish.html">coe_census_parish</a></span><span class="op">(</span>ons_id <span class="op">=</span> <span class="st">"TS037"</span>, parish_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">580342</span>, <span class="fl">580334</span><span class="op">)</span>, relative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/coe_census_parish.html">coe_census_parish</a></span><span class="op">(</span>ons_id <span class="op">=</span> <span class="st">"TS037"</span>, parish_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">580342</span>, <span class="fl">580334</span><span class="op">)</span>, relative <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> </span>
 <span><span class="co">#&gt; Church of England Census Data</span></span>
 <span><span class="co">#&gt; TS037 - General health </span></span>
 <span><span class="co">#&gt; Units:  Proportion of all persons </span></span>
@@ -129,11 +214,12 @@
 <span><span class="co">#&gt; 1 580334           49315                    0.542               0.330</span></span>
 <span><span class="co">#&gt; 2 580342            6332                    0.467               0.341</span></span>
 <span><span class="co">#&gt; # ℹ 3 more variables: general_health_fair &lt;dbl&gt;, general_health_bad &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   general_health_very_bad &lt;dbl&gt;</span></span></code></pre></div>
+<span><span class="co">#&gt; #   general_health_very_bad &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; Parish-level data compiled by the Church of England</span></span></code></pre></div>
 </div>
-<div class="section level2">
-<h2 id="example-2-viewing-a-parish-in-its-diocesan-and-national-contexts">Example 2: Viewing a parish in its diocesan and national contexts<a class="anchor" aria-label="anchor" href="#example-2-viewing-a-parish-in-its-diocesan-and-national-contexts"></a>
-</h2>
+<div class="section level3">
+<h3 id="viewing-a-parish-in-its-diocesan-and-national-contexts">Viewing a parish in its diocesan and national contexts<a class="anchor" aria-label="anchor" href="#viewing-a-parish-in-its-diocesan-and-national-contexts"></a>
+</h3>
 <p>Sometimes people want to see how their parish compares to its diocese and to the nation as a whole. <code>coedata</code> contains a function that returns this data for any parish and any number of ONS datasets:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/coe_parish_snapshot.html">coe_parish_snapshot</a></span><span class="op">(</span><span class="fl">580342</span>, ons_ids <span class="op">=</span> <span class="st">"TS037"</span><span class="op">)</span></span>
@@ -145,13 +231,14 @@
 <span><span class="co">#&gt;   level   level_code level_name        population general_health_very_good</span></span>
 <span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                  &lt;dbl&gt;                    &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; 1 parish  580342     Stifford: St Mary       6332                    0.467</span></span>
-<span><span class="co">#&gt; 2 diocese 8          Chelmsford           3279964                    0.497</span></span>
+<span><span class="co">#&gt; 2 diocese 8          Chelmsford           3281380                    0.497</span></span>
 <span><span class="co">#&gt; 3 nation  &lt;NA&gt;       england             56490046                    0.485</span></span>
 <span><span class="co">#&gt; # ℹ 4 more variables: general_health_good &lt;dbl&gt;, general_health_fair &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   general_health_bad &lt;dbl&gt;, general_health_very_bad &lt;dbl&gt;</span></span></code></pre></div>
 </div>
+</div>
 <div class="section level2">
-<h2 id="where-to-find-parish-codes">Where to find parish codes<a class="anchor" aria-label="anchor" href="#where-to-find-parish-codes"></a>
+<h2 id="finding-parish-codes">Finding parish codes<a class="anchor" aria-label="anchor" href="#finding-parish-codes"></a>
 </h2>
 <p>When you’re looking at individual parishes with <code>coedata</code>, you’ll need to identify them with their unique parish codes. If you’re not sure what the parish code is for a parish or church, you can either:</p>
 <ul>
@@ -168,7 +255,7 @@
 <h2 id="thanks-and-attribution">Thanks and attribution<a class="anchor" aria-label="anchor" href="#thanks-and-attribution"></a>
 </h2>
 <ul>
-<li>All census data was originally rovided by the <a href="https://www.ons.gov.uk/" class="external-link">Office for National Statistics</a>. ONS also maintain the <a href="https://www.nomisweb.co.uk/" class="external-link">nomis</a> service, which was used to source some of this package’s internal data.</li>
+<li>All census data was originally provided by the <a href="https://www.ons.gov.uk/" class="external-link">Office for National Statistics</a>. ONS also maintain the <a href="https://www.nomisweb.co.uk/" class="external-link">nomis</a> service, which was used to source some of this package’s internal data.</li>
 <li>Parish-level census data profiles were compiled by Ken Eames, who is a senior statistical researcher at the Church of England’s Data Services. Original parish-level datasets are available on the <a href="https://www.churchofengland.org/about/data-services/resources-publications-and-data" class="external-link">Church of England website</a>
 <ul>
 <li>Ken also maintains the <a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a" class="external-link">parish map</a> from which Church data are read by this package. Thanks again, Ken!</li>
@@ -182,18 +269,7 @@
 <h2 id="todo">TODO:<a class="anchor" aria-label="anchor" href="#todo"></a>
 </h2>
 <ul class="task-list">
-<li>
-<label><input type="checkbox" checked>Replace national level data with NOMIS census data</label>
-<ul>
-<li>Aggregating parish data causes considerable rounding error</li>
-</ul>
-</li>
-<li><label><input type="checkbox" checked>Add data-dictionary vignettes</label></li>
-<li><label><input type="checkbox" checked>Create print methods for <code>"coe_parish_data"</code> class</label></li>
-<li><label><input type="checkbox" checked>Create methods for <code>dplyr</code> that preserve attributes in <code>"coe_parish_data"</code> objects</label></li>
 <li><label><input type="checkbox">Add IMD data</label></li>
-<li><label><input type="checkbox" checked>Ensure appropriate credit/attribution/documentation</label></li>
-<li><label><input type="checkbox" checked>Rename everything, perhaps including this package</label></li>
 </ul>
 </div>
 </div>
