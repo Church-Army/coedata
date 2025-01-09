@@ -15,20 +15,29 @@ by the Church of England’s [Data
 Services](https://www.churchofengland.org/about/data-services) team.
 Data sources include:
 
-- [x] [Parish-level census
-  data](https://www.churchofengland.org/about/data-services/resources-publications-and-data)
-  from ONS’ 2021 Census of England and Wales (Updated November 2024)
-- [x] A
-  [database](https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer)
-  of Churches, Parishes, Dioceses and other geographies (Updated
-  November 2024)
-- [ ] ~~[Parish-level
-  data](https://www.churchofengland.org/about/data-services/resources-publications-and-data)
-  from the 2019 Index of Multiple Deprivation~~ (PENDING)
+- [x] Parish-level 2021 census data
+- [x] A database of Churches, Parishes, Dioceses and other geographies
+  (Updated November 2024)
+- [ ] ~~Parish-level data from the 2019 Index of Multiple Deprivation~~
+  (pending)
 
-National-level data are sourced directly from ONS data via
-[nomis](https://www.nomisweb.co.uk/) (via
-[nomisr](https://github.com/ropensci/nomisr)).
+2021 Census topics made available by coedata include:
+
+- Number of usual residents in households and communal establishments
+- Country of birth
+- Age by 5 year age bands
+- Ethnic group
+- Religion
+- General health
+- Social Classification (NS-SeC)
+- Economic activity status
+- Highest level of qualification
+- Households by deprivation dimensions
+- Household language
+- Accommodation type
+- Car or van availability
+- Tenure
+- Household composition
 
 ## Installation
 
@@ -44,16 +53,60 @@ pak::pak("Church-Army/coedata")
 
 Full documentation website on: <https://Church-Army.github.io/coedata>
 
-## A simple example
+## Usage
 
-Let’s use `coedata` to get 2021 census data on general health for a
-couple of parishes. We’ll use the neighbouring parishes of **Stifford:
-St Mary** (parish code 580342) and **Grays: St Peter and St Paul**
-(parish code 580334).
+### Using coedata to get parish-level census statistics
+
+This is an example of how you could use coedata to get 2021 census data
+on general health for a selection of parishes. We’ll use the
+neighbouring parishes of **Stifford: St Mary** and **Grays: St Peter and
+St Paul**.
+
+To get this data, we’ll need:
+
+- The parish codes of those parishes
+- The ONS ID of the general health dataset
+
+We can find the ONS ID of the general health dataset by using
+`coe_datasets()`, which lists the ID of every census dataset that’s a
+available through this package:
+
+``` r
+coe_census_datasets() |> 
+  knitr::kable()
+```
+
+| ons_id | description |
+|:---|:---|
+| TS001 | TS001 - Number of usual residents in households and communal establishments |
+| TS004 | TS004 - Country of birth |
+| TS007A | TS007A - Age by 5 year age bands |
+| TS021 | TS021 - Ethnic group |
+| TS030 | TS030 - Religion |
+| TS037 | TS037 - General health |
+| TS062 | TS062 - Social Classification (NS-SeC) |
+| TS066 | TS066 - Economic activity status |
+| TS067 | TS067 - Highest level of qualification |
+| TS011 | TS011 - Households by deprivation dimensions |
+| TS025 | TS025 - Household language |
+| TS044 | TS044 - Accommodation type |
+| TS045 | TS045 - Car or van availability |
+| TS054 | TS054 - Tenure |
+| TS003 | TS003 - Household composition |
+
+We can see that general health data can be found in the dataset with ID
+TS037.
+
+Luckily, we already know the parish codes for the parishes we’re
+interested in. If you’re not sure where to find the parish codes you
+need, please refer to [Finding parish codes](#finding-parish-codes).
+
+Now that we have the ONS ID and the parish codes, we can get our census
+data:
 
 ``` r
 coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334))
-#> ✔ Reading from "coeparishdata_parish-data".
+#> ✔ Reading from "coedata_parish-data".
 #> ✔ Range ''TS037''.
 #> Church of England Census Data
 #> TS037 - General health 
@@ -65,39 +118,17 @@ coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334))
 #> 2 580342            6332                    2956.               2160.
 #> # ℹ 3 more variables: general_health_fair <dbl>, general_health_bad <dbl>,
 #> #   general_health_very_bad <dbl>
+#> Parish-level data compiled by the Church of England
 ```
 
-**TS037** is the ONS ID of the dataset that contains General Health
-information. You can view all ONS datasets made available in this
-package like so:
-
-``` r
-coe_census_datasets()
-#> # A tibble: 15 × 2
-#>    ons_id description                                                           
-#>    <chr>  <chr>                                                                 
-#>  1 TS001  TS001 - Number of usual residents in households and communal establis…
-#>  2 TS004  TS004 - Country of birth                                              
-#>  3 TS007A TS007A - Age by 5 year age bands                                      
-#>  4 TS021  TS021 - Ethnic group                                                  
-#>  5 TS030  TS030 - Religion                                                      
-#>  6 TS037  TS037 - General health                                                
-#>  7 TS062  TS062 - Social Classification (NS-SeC)                                
-#>  8 TS066  TS066 - Economic activity status                                      
-#>  9 TS067  TS067 - Highest level of qualification                                
-#> 10 TS011  TS011 - Households by deprivation dimensions                          
-#> 11 TS025  TS025 - Household language                                            
-#> 12 TS044  TS044 - Accommodation type                                            
-#> 13 TS045  TS045 - Car or van availability                                       
-#> 14 TS054  TS054 - Tenure                                                        
-#> 15 TS003  TS003 - Household composition
-```
+Those parishes are both in central London - they are very densely
+populated!
 
 Note that we can also get relative statistics for the same data by
 setting `relative = TRUE`:
 
 ``` r
-coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334), relative = TRUE)
+coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334), relative = TRUE) 
 #> Church of England Census Data
 #> TS037 - General health 
 #> Units:  Proportion of all persons 
@@ -108,9 +139,10 @@ coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334), relative =
 #> 2 580342            6332                    0.467               0.341
 #> # ℹ 3 more variables: general_health_fair <dbl>, general_health_bad <dbl>,
 #> #   general_health_very_bad <dbl>
+#> Parish-level data compiled by the Church of England
 ```
 
-## Example 2: Viewing a parish in its diocesan and national contexts
+### Viewing a parish in its diocesan and national contexts
 
 Sometimes people want to see how their parish compares to its diocese
 and to the nation as a whole. `coedata` contains a function that returns
@@ -126,13 +158,13 @@ coe_parish_snapshot(580342, ons_ids = "TS037")
 #>   level   level_code level_name        population general_health_very_good
 #>   <chr>   <chr>      <chr>                  <dbl>                    <dbl>
 #> 1 parish  580342     Stifford: St Mary       6332                    0.467
-#> 2 diocese 8          Chelmsford           3279964                    0.497
+#> 2 diocese 8          Chelmsford           3281380                    0.497
 #> 3 nation  <NA>       england             56490046                    0.485
 #> # ℹ 4 more variables: general_health_good <dbl>, general_health_fair <dbl>,
 #> #   general_health_bad <dbl>, general_health_very_bad <dbl>
 ```
 
-## Where to find parish codes
+## Finding parish codes
 
 When you’re looking at individual parishes with `coedata`, you’ll need
 to identify them with their unique parish codes. If you’re not sure what
@@ -156,7 +188,7 @@ returned by `ns_sec_descriptions()`.
 
 ## Thanks and attribution
 
-- All census data was originally rovided by the [Office for National
+- All census data was originally provided by the [Office for National
   Statistics](https://www.ons.gov.uk/). ONS also maintain the
   [nomis](https://www.nomisweb.co.uk/) service, which was used to source
   some of this package’s internal data.
@@ -180,12 +212,4 @@ returned by `ns_sec_descriptions()`.
 
 ## TODO:
 
-- [x] Replace national level data with NOMIS census data
-  - Aggregating parish data causes considerable rounding error
-- [x] Add data-dictionary vignettes
-- [x] Create print methods for `"coe_parish_data"` class
-- [x] Create methods for `dplyr` that preserve attributes in
-  `"coe_parish_data"` objects
 - [ ] Add IMD data
-- [x] Ensure appropriate credit/attribution/documentation
-- [x] Rename everything, perhaps including this package

@@ -48,5 +48,8 @@ print.coe_parish_data <- function(x, ...){
   cat("Church of England Census Data\n")
   cat(attr(x, "description"), "\n")
   cat("Units: ", attr(x, "units"), "\n")
+
   NextMethod(x)
+
+  if("parish_code" %in% names(x)) cat("Parish-level data compiled by the Church of England")
 }

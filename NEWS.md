@@ -4,7 +4,8 @@
 
 ### Changes
 
-- Diocese-level data is now sourced directly from a weighted summation of the intersections between LLSOAs and dioceses. The previous method of summing parish-level statistics incurred a slight rounding error.
+* Diocese-level data is now sourced directly from a weighted summation of the intersections between LLSOAs and dioceses. The previous method of summing parish-level statistics incurred a slight rounding error.
+* Parish-level tibbles with class `"coe_parish_data"` now attribute the Church of England when printed.
 
 ## 2025-01-08
 

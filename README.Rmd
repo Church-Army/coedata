@@ -13,6 +13,7 @@ knitr::opts_chunk$set(
 )
 
 pkgload::load_all()
+library(knitr)
 ```
 
 # coedata
@@ -24,11 +25,27 @@ pkgload::load_all()
 
 coedata is a data package that serves up various datasets made available by the Church of England's [Data Services](https://www.churchofengland.org/about/data-services) team. Data sources include:
 
-- [x] [Parish-level census data](https://www.churchofengland.org/about/data-services/resources-publications-and-data) from ONS' 2021 Census of England and Wales (Updated November 2024)
-- [x] A [database](https://services5.arcgis.com/KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_ACNY_Nov2024/FeatureServer) of Churches, Parishes, Dioceses and other geographies (Updated November 2024)
-- [ ] ~~[Parish-level data](https://www.churchofengland.org/about/data-services/resources-publications-and-data) from the 2019 Index of Multiple Deprivation~~ (PENDING)
+- [x] Parish-level 2021 census data
+- [x] A database of Churches, Parishes, Dioceses and other geographies (Updated November 2024)
+- [ ] ~~Parish-level data from the 2019 Index of Multiple Deprivation~~ (pending)
 
-National-level data are sourced directly from ONS data via [nomis](https://www.nomisweb.co.uk/) (via [nomisr](https://github.com/ropensci/nomisr)).
+2021 Census topics made available by coedata include:
+
+* Number of usual residents in households and communal establishments
+* Country of birth
+* Age by 5 year age bands
+* Ethnic group
+* Religion
+* General health
+* Social Classification (NS-SeC)
+* Economic activity status
+* Highest level of qualification
+* Households by deprivation dimensions
+* Household language
+* Accommodation type
+* Car or van availability
+* Tenure
+* Household composition
 
 ## Installation
 
@@ -43,27 +60,43 @@ pak::pak("Church-Army/coedata")
 
 Full documentation website on: https://Church-Army.github.io/coedata
 
-## A simple example
+## Usage
 
-Let's use `coedata` to get 2021 census data on general health for a couple of parishes. We'll use the neighbouring parishes of **Stifford: St Mary** (parish code 580342) and **Grays: St Peter and St Paul** (parish code 580334).
+### Using coedata to get parish-level census statistics
+
+This is an example of how you could use coedata to get 2021 census data on general health for a selection of parishes. We'll use the neighbouring parishes of **Stifford: St Mary** and **Grays: St Peter and St Paul**.
+
+To get this data, we'll need:
+
+* The parish codes of those parishes
+* The ONS ID of the general health dataset
+
+We can find the ONS ID of the general health dataset by using `coe_datasets()`, which lists the ID of every census dataset that's a available through this package:
+
+```{r coe_datasets}
+coe_census_datasets() |> 
+  knitr::kable()
+```
+
+We can see that general health data can be found in the dataset with ID TS037.
+
+Luckily, we already know the parish codes for the parishes we're interested in. If you're not sure where to find the parish codes you need, please refer to [Finding parish codes].
+
+Now that we have the ONS ID and the parish codes, we can get our census data:
 
 ```{r parish_level_data}
 coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334))
 ```
 
-**TS037** is the ONS ID of the dataset that contains General Health information. You can view all ONS datasets made available in this package like so:
-
-```{r available_datasets}
-coe_census_datasets()
-```
+Those parishes are both in central London - they are very densely populated!
 
 Note that we can also get relative statistics for the same data by setting `relative = TRUE`:
 
 ```{r parish_level_data_relative}
-coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334), relative = TRUE)
+coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334), relative = TRUE) 
 ```
 
-## Example 2: Viewing a parish in its diocesan and national contexts
+### Viewing a parish in its diocesan and national contexts
 
 Sometimes people want to see how their parish compares to its diocese and to the nation as a whole. `coedata` contains a function that returns this data for any parish and any number of ONS datasets:
 
@@ -71,7 +104,7 @@ Sometimes people want to see how their parish compares to its diocese and to the
 coe_parish_snapshot(580342, ons_ids = "TS037")
 ```
 
-## Where to find parish codes
+## Finding parish codes
 
 When you're looking at individual parishes with `coedata`, you'll need to identify them with their unique parish codes. If you're not sure what the parish code is for a parish or church, you can either:
 
@@ -84,7 +117,7 @@ Most of the statistics used in this package are labelled very intuitively, using
 
 ## Thanks and attribution
 
-* All census data was originally rovided by the [Office for National Statistics](https://www.ons.gov.uk/). ONS also maintain the [nomis](https://www.nomisweb.co.uk/) service, which was used to source some of this package's internal data.
+* All census data was originally provided by the [Office for National Statistics](https://www.ons.gov.uk/). ONS also maintain the [nomis](https://www.nomisweb.co.uk/) service, which was used to source some of this package's internal data.
 * Parish-level census data profiles were compiled by Ken Eames, who is a senior statistical researcher at the Church of England's Data Services. Original parish-level datasets are available on the [Church of England website](https://www.churchofengland.org/about/data-services/resources-publications-and-data)
   * Ken also maintains the [parish map](https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a) from which Church data are read by this package. Thanks again, Ken!
 * Thanks to [ropensci](https://github.com/ropensci) for their development and maintenance of the [nomisr](https://github.com/ropensci/nomisr) package, which was used to interface with nomis.
@@ -92,11 +125,5 @@ Most of the statistics used in this package are labelled very intuitively, using
 
 ## TODO:
 
-- [x] Replace national level data with NOMIS census data
-  - Aggregating parish data causes considerable rounding error
-- [x] Add data-dictionary vignettes
-- [x] Create print methods for `"coe_parish_data"` class
-- [x] Create methods for `dplyr` that preserve attributes in `"coe_parish_data"` objects
 - [ ] Add IMD data
-- [x] Ensure appropriate credit/attribution/documentation
-- [x] Rename everything, perhaps including this package
+
