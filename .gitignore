@@ -10,3 +10,4 @@ docs
 
 dev/dev-data/
 dev/civic-areas/
+data-raw/*.csv
