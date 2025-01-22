@@ -19,9 +19,10 @@ pkgload::load_all(export_all = FALSE)
 
 ```{r function-create-environment}
 rlang::on_load({
-  .coeparishdata_envir <- new.env(parent = emptyenv())
-  .coeparishdata_envir$parish_data <- tibble::as_tibble(parish_data)
-  .coeparishdata_envir$parishes_2024 <- NULL
+  .coedata_envir <- new.env(parent = emptyenv())
+  .coedata_envir$parish_data <- tibble::as_tibble(parish_data)
+  .coedata_envir$parishes_2024 <- NULL
+  .coedata_envir$parish_imd_2019 <- NULL
   })
 ```
 
@@ -29,7 +30,7 @@ rlang::on_load({
 
 ```{r function-read_parish_data}
 read_parish_data <- function(){
-  .coeparishdata_envir$parish_data
+  .coedata_envir$parish_data
 }
 ```
 
@@ -45,7 +46,7 @@ test_that("read_parish_data works", {
 
 ```{r function-read_parish_table}
 read_parish_table <- function(){
-  p_table <- .coeparishdata_envir$parishes_2024
+  p_table <- .coedata_envir$parishes_2024
   
   if(is.null(p_table)){
     p_table <- coe_churches()
@@ -54,7 +55,7 @@ read_parish_table <- function(){
       p_table[-which(names(p_table) == "church_code")] |> 
       unique()
 
-    .coeparishdata_envir$parishes_2024 <- p_table
+    .coedata_envir$parishes_2024 <- p_table
   } 
   
   p_table
@@ -163,8 +164,8 @@ read_cpd_stats <- function(ons_id, level){
     out <- get_cpd_sheet(cpd_pd$drive_id[requested_row], cpd_pd$ons_id[requested_row])
     
     ## Update data environment with sheet read from google
-    .coeparishdata_envir$parish_data[["data"]][[requested_row]] <- out
-    .coeparishdata_envir$parish_data[requested_row, "local"] <- TRUE
+    .coedata_envir$parish_data[["data"]][[requested_row]] <- out
+    .coedata_envir$parish_data[requested_row, "local"] <- TRUE
   }
   
     ## Assign class and units attributes

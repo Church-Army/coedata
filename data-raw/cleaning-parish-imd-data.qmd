@@ -1,0 +1,71 @@
+---
+title: "cleaning imd data for upload"
+author: "Dave Lovell"
+format: html
+editor: visual
+---
+
+## Libraries
+
+```{r libraries}
+library(fs)
+library(here)
+library(vroom)
+library(janitor)
+library(dplyr)
+library(stringr)
+library(googlesheets4)
+```
+
+## Read IMD data
+
+```{r read_imd_data}
+imd <- vroom(here("data-raw", "parish-imd-2019.csv"))
+
+imd <- clean_names(imd)
+
+imd <- select(imd, -ends_with(c("_max", "_min")))
+imd <- select(imd, -starts_with(c("benefice_", "deanery_", "archdeaconry_",
+                                  "diocese_")))
+
+
+imd <- rename_with(imd, str_remove, everything(), "_parish$")
+
+imd <-
+  select(imd, -local_name) |> 
+  rename(parish_name = legal_name)
+
+imd <- rename(imd, imd_score = index_of_multiple_deprivation_imd_score)
+
+imd <- rename(
+  imd,
+  outdoors_sub_domain_rank = outdoors_rank,
+  indoors_sub_domain_rank = indoors_rank,
+  wider_barriers_sub_domain_rank = wider_barriers_rank
+)
+
+imd <- rename(imd, education_skills_and_training_rank = 
+                education_skills_training_rank)
+
+imd <- 
+  rename_with(
+    imd, 
+    \(x) str_c("supplementary_", x),
+    contains("affecting_"))
+
+imd <- relocate(imd, starts_with("supplementary"), .after = last_col())
+
+imd <- relocate(imd, starts_with("adult_skills_"), 
+                .after = education_skills_and_training_rank)
+imd <- relocate(imd, starts_with("children_and_young_people"),
+                .after = education_skills_and_training_rank)
+
+imd <- select(imd, -parish_population_2021_census)
+```
+
+```{r write_sheet}
+
+imd_sheet <- gs4_create("coe_parish_imd_2019")
+
+sheet_write(imd, imd_sheet, sheet = "imd")
+```

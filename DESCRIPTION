@@ -16,6 +16,7 @@ BugReports: https://github.com/Church-Army/coedata/issues
 Depends: 
     R (>= 3.5)
 Imports: 
+    assertthat,
     dplyr,
     googlesheets4,
     httr2,

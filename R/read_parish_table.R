@@ -2,7 +2,7 @@
 
 #' @noRd
 read_parish_table <- function(){
-  p_table <- .coeparishdata_envir$parishes_2024
+  p_table <- .coedata_envir$parishes_2024
   
   if(is.null(p_table)){
     p_table <- coe_churches()
@@ -11,7 +11,7 @@ read_parish_table <- function(){
       p_table[-which(names(p_table) == "church_code")] |> 
       unique()
 
-    .coeparishdata_envir$parishes_2024 <- p_table
+    .coedata_envir$parishes_2024 <- p_table
   } 
   
   p_table

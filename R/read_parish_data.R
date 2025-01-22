@@ -2,5 +2,5 @@
 
 #' @noRd
 read_parish_data <- function(){
-  .coeparishdata_envir$parish_data
+  .coedata_envir$parish_data
 }

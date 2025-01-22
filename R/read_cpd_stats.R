@@ -25,8 +25,8 @@ read_cpd_stats <- function(ons_id, level){
     out <- get_cpd_sheet(cpd_pd$drive_id[requested_row], cpd_pd$ons_id[requested_row])
     
     ## Update data environment with sheet read from google
-    .coeparishdata_envir$parish_data[["data"]][[requested_row]] <- out
-    .coeparishdata_envir$parish_data[requested_row, "local"] <- TRUE
+    .coedata_envir$parish_data[["data"]][[requested_row]] <- out
+    .coedata_envir$parish_data[requested_row, "local"] <- TRUE
   }
   
     ## Assign class and units attributes
