@@ -203,7 +203,7 @@
 <span><span class="co">#&gt; # ℹ 3 more variables: general_health_fair &lt;dbl&gt;, general_health_bad &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   general_health_very_bad &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; Parish-level data compiled by the Church of England</span></span></code></pre></div>
-<p>For more information on getting census data, see <code>vignette("CoE Census Statistics")</code>.</p>
+<p>For more information on getting census data, see <code>vignette("coe-census-data")</code>.</p>
 </div>
 <div class="section level3">
 <h3 id="using-coedata-to-get-parish-level-deprivation-statistics">Using coedata to get parish-level deprivation statistics<a class="anchor" aria-label="anchor" href="#using-coedata-to-get-parish-level-deprivation-statistics"></a>
@@ -211,6 +211,9 @@
 <p>The CoE produce deprivation data for every parish in england, which can be accessed like so:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/coe_parish_deprivation.html">coe_parish_deprivation</a></span><span class="op">(</span>parish_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">580342</span>, <span class="fl">580334</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✖ Request failed [429]. Retry 1 happens in 3.4 seconds ...</span></span>
+<span><span class="co">#&gt; ✖ Request failed [429]. Retry 2 happens in 1.4 seconds ...</span></span>
+<span><span class="co">#&gt; ✖ Request failed [429]. Retry 3 happens in 18.2 seconds ...</span></span>
 <span><span class="co">#&gt; ✔ Reading from "coe_parish_imd_2019".</span></span>
 <span><span class="co">#&gt; ✔ Range ''imd''.</span></span>
 <span><span class="co">#&gt; Church of England Deprivation Data</span></span>
@@ -220,7 +223,7 @@
 <span><span class="co">#&gt; 1      580334 Grays Thur…      17.2     5293               5                  44</span></span>
 <span><span class="co">#&gt; 2      580342 Stifford         22.4     2883               3                  24</span></span>
 <span><span class="co">#&gt; Parish-level data compiled by the Church of England</span></span></code></pre></div>
-<p>For more information on getting deprivation data, see <code>vignette("Parish-level deprivation data")</code></p>
+<p>For more information on getting deprivation data, see <code>vignette("parish-deprivation-data")</code></p>
 </div>
 </div>
 <div class="section level2">
@@ -228,7 +231,7 @@
 </h2>
 <p>When you’re looking at individual parishes with <code>coedata</code>, you’ll need to identify them with their unique parish codes. If you’re not sure what the parish code is for a parish or church, you can either:</p>
 <ul>
-<li>Find the parish in the <a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a" class="external-link">intercative map</a> provided by the Church of England’s Data Services team</li>
+<li>Find the parish in the <a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a" class="external-link">interactive map</a> provided by the Church of England’s Data Services team</li>
 <li>Find the church’s church code by clicking ‘more information’ on its <a href="https://www.achurchnearyou.com" class="external-link">A Church Near You</a> page, and then use <code><a href="reference/coe_parish_from_church.html">coe_parish_from_church()</a></code> to find it’s parish code.</li>
 </ul>
 </div>
@@ -244,13 +247,6 @@
 </li>
 <li>Thanks to <a href="https://github.com/ropensci" class="external-link">ropensci</a> for their development and maintenance of the <a href="https://github.com/ropensci/nomisr" class="external-link">nomisr</a> package, which was used to interface with nomis.</li>
 <li>Thanks to <a href="https://jennybryan.org/about/" class="external-link">Jenny Bryan</a> at Posit for the development and maintenance of <a href="https://googlesheets4.tidyverse.org/" class="external-link">googlesheets4</a>, which provided a simple, secure way of minimising package size by storing data remotely.</li>
-</ul>
-</div>
-<div class="section level2">
-<h2 id="todo">TODO:<a class="anchor" aria-label="anchor" href="#todo"></a>
-</h2>
-<ul class="task-list">
-<li><label><input type="checkbox">Add IMD data</label></li>
 </ul>
 </div>
 </div>
