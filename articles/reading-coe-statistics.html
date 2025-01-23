@@ -229,52 +229,26 @@ topics to return a list.</p>
 <h2 id="get-deprivation-data-with-coe_parish_deprivation">Get deprivation data with <code>coe_parish_deprivation()</code><a class="anchor" aria-label="anchor" href="#get-deprivation-data-with-coe_parish_deprivation"></a>
 </h2>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_parish_deprivation.html">coe_parish_deprivation</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/coe_parish_deprivation.html">coe_parish_deprivation</a></span><span class="op">(</span><span class="st">"350259"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coe_parish_imd_2019</span>.</span></span>
 <span><span class="co">#&gt; <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'imd'</span>'.</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12,178 × 34</span></span></span>
-<span><span class="co">#&gt;    parish_code parish_name             imd_score imd_rank barriers_to_housing_…¹</span></span>
-<span><span class="co">#&gt;          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>      <span style="text-decoration: underline;">100</span>001 Cathedral Ex. Par            15.6     <span style="text-decoration: underline;">6</span>286                   17.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>      <span style="text-decoration: underline;">100</span>004 St. Richard Aldwick          12.6     <span style="text-decoration: underline;">8</span>321                   21.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>      <span style="text-decoration: underline;">100</span>006 Angmering, Saint Marga…      12.8     <span style="text-decoration: underline;">8</span>132                   25.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>      <span style="text-decoration: underline;">100</span>007 Arundel with Tortington      13.4     <span style="text-decoration: underline;">7</span>774                   27.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>      <span style="text-decoration: underline;">100</span>009 Binsted                      18.2     <span style="text-decoration: underline;">4</span>772                   47.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>      <span style="text-decoration: underline;">100</span>010 Bognor                       30.7     <span style="text-decoration: underline;">1</span>235                   26.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>      <span style="text-decoration: underline;">100</span>011 Burpham                      19.5     <span style="text-decoration: underline;">4</span>135                   53.0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>      <span style="text-decoration: underline;">100</span>012 Clymping                     21.6     <span style="text-decoration: underline;">3</span>139                   42.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>      <span style="text-decoration: underline;">100</span>014 Aldingbourne, Barnham …      12.3     <span style="text-decoration: underline;">8</span>495                   23.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>      <span style="text-decoration: underline;">100</span>015 East Preston Saint Mary      12.5     <span style="text-decoration: underline;">8</span>383                   21.2</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12,168 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​barriers_to_housing_and_services_score</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 29 more variables: barriers_to_housing_rank &lt;dbl&gt;, crime_score &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   crime_rank &lt;dbl&gt;, education_skills_and_training_score &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   education_skills_and_training_rank &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   children_and_young_people_sub_domain_score &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   children_and_young_people_rank &lt;dbl&gt;, …</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
+<span><span class="co">#&gt;   parish_code parish_name         imd_score imd_rank</span></span>
+<span><span class="co">#&gt;         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      <span style="text-decoration: underline;">350</span>259 The Vine, Sheffield      30.0     <span style="text-decoration: underline;">1</span>310</span></span>
 <span></span>
-<span><span class="co">## This is equivalent for convenience:</span></span>
-<span><span class="fu">coe_parish_imd</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 12,178 × 34</span></span></span>
-<span><span class="co">#&gt;    parish_code parish_name             imd_score imd_rank barriers_to_housing_…¹</span></span>
-<span><span class="co">#&gt;          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>      <span style="text-decoration: underline;">100</span>001 Cathedral Ex. Par            15.6     <span style="text-decoration: underline;">6</span>286                   17.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>      <span style="text-decoration: underline;">100</span>004 St. Richard Aldwick          12.6     <span style="text-decoration: underline;">8</span>321                   21.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>      <span style="text-decoration: underline;">100</span>006 Angmering, Saint Marga…      12.8     <span style="text-decoration: underline;">8</span>132                   25.7</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>      <span style="text-decoration: underline;">100</span>007 Arundel with Tortington      13.4     <span style="text-decoration: underline;">7</span>774                   27.9</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>      <span style="text-decoration: underline;">100</span>009 Binsted                      18.2     <span style="text-decoration: underline;">4</span>772                   47.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>      <span style="text-decoration: underline;">100</span>010 Bognor                       30.7     <span style="text-decoration: underline;">1</span>235                   26.3</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>      <span style="text-decoration: underline;">100</span>011 Burpham                      19.5     <span style="text-decoration: underline;">4</span>135                   53.0</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>      <span style="text-decoration: underline;">100</span>012 Clymping                     21.6     <span style="text-decoration: underline;">3</span>139                   42.8</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>      <span style="text-decoration: underline;">100</span>014 Aldingbourne, Barnham …      12.3     <span style="text-decoration: underline;">8</span>495                   23.2</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>      <span style="text-decoration: underline;">100</span>015 East Preston Saint Mary      12.5     <span style="text-decoration: underline;">8</span>383                   21.2</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 12,168 more rows</span></span></span>
+<span><span class="fu"><a href="../reference/coe_parish_deprivation.html">coe_parish_deprivation</a></span><span class="op">(</span><span class="st">"350259"</span>, domains <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 24</span></span></span>
+<span><span class="co">#&gt;   parish_code parish_name         imd_score imd_rank barriers_to_housing_and_s…¹</span></span>
+<span><span class="co">#&gt;         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span>      <span style="text-decoration: underline;">350</span>259 The Vine, Sheffield      30.0     <span style="text-decoration: underline;">1</span>310                        25.0</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># ℹ abbreviated name: ¹​barriers_to_housing_and_services_score</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 29 more variables: barriers_to_housing_rank &lt;dbl&gt;, crime_score &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 19 more variables: barriers_to_housing_rank &lt;dbl&gt;, crime_score &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   crime_rank &lt;dbl&gt;, education_skills_and_training_score &lt;dbl&gt;,</span></span></span>
 <span><span class="co">#&gt; <span style="color: #949494;">#   education_skills_and_training_rank &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   children_and_young_people_sub_domain_score &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   children_and_young_people_rank &lt;dbl&gt;, …</span></span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #949494;">#   children_and_young_people_rank &lt;dbl&gt;, adult_skills_rank &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   employment_score_rate &lt;dbl&gt;, employment_rank &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   geographical_barriers_rank &lt;dbl&gt;, …</span></span></span></code></pre></div>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co">## Print method</span></span>
 <span><span class="co">#' @export</span></span>
