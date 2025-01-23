@@ -1,5 +1,14 @@
 # coedata (development version)
 
+## 2025-01-23
+
+coedata is ready for public testing!
+
+## Changes
+
+* Parish deprivation data is now available via `coe_parish_deprivation()`
+* Small updates to vignettes
+
 ## 2025-01-08
 
 ### Changes
