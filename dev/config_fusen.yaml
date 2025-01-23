@@ -45,7 +45,7 @@ flat_reading-coe-statistics.Rmd:
   path: dev/flat_reading-coe-statistics.Rmd
   state: active
   R:
-  - R/cached_imd_data.R
+  - R/coe_parish_deprivation.R
   - R/coe_census.R
   - R/coe_census_datasets.R
   - R/coe_census_diocese.R
@@ -56,7 +56,7 @@ flat_reading-coe-statistics.Rmd:
   tests:
   - tests/testthat/test-coe_census.R
   - tests/testthat/test-coe_parish_snapshot.R
-  - tests/testthat/test-cached_imd_data.R
+  - tests/testthat/test-coe_parish_deprivation.R
   vignettes: vignettes/reading-coe-statistics.Rmd
   inflate:
     flat_file: dev/flat_reading-coe-statistics.Rmd

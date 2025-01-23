@@ -6,8 +6,10 @@ cached_imd_data <- function(){
 }
 
 #' Get parish-level deprivation data from the Church of England
+#' 
+#' coe_parish_deprivation and coe_parish_imd are the same function
 #'
-#' @param parish_codes Character vector of parish codes to return. The default returns all parish codes.
+#' @param parish_codes Character vector of parish codes to return. The default (TRUE) returns all parish codes.
 #' @param domains Logical. Should individual domains of deprivation be included?
 #' @param subdomains Logical. Should subdomains be included?
 #' @param supplementary Logical. Should supplementary statistics be included?
@@ -16,10 +18,9 @@ cached_imd_data <- function(){
 #'  
 #' @export
 #' @examples
-#' coe_parish_deprivation()
+#' coe_parish_deprivation("350259")
 #'
-#' ## This is equivalent for convenience:
-#' coe_parish_imd()
+#' coe_parish_deprivation("350259", domains = TRUE)
  
 coe_parish_deprivation <- function(parish_codes = TRUE, domains = FALSE, subdomains = FALSE, supplementary = FALSE){
   

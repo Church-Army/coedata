@@ -101,10 +101,9 @@ coe_parish_snapshot(parish_code = "370047", ons_ids = "TS001")
 
 
 ```{r examples-coe_parish_deprivation}
-coe_parish_deprivation()
+coe_parish_deprivation("350259")
 
-## This is equivalent for convenience:
-coe_parish_imd()
+coe_parish_deprivation("350259", domains = TRUE)
 ```
 
 
