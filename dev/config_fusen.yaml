@@ -20,7 +20,7 @@ flat_first.qmd:
     flat_file: dev/flat_first.qmd
     vignette_name: .na
     open_vignette: true
-    check: true
+    check: false
     document: true
     overwrite: ask
     clean: ask
@@ -34,7 +34,7 @@ flat_get-deprivation-data-for-parishes.Rmd:
   vignettes: vignettes/parish-deprivation-data.Rmd
   inflate:
     flat_file: dev/flat_get-deprivation-data-for-parishes.Rmd
-    vignette_name: Parish-level Deprivation data
+    vignette_name: parish-deprivation-data
     open_vignette: true
     check: true
     document: true
@@ -48,7 +48,7 @@ flat_read_church_data.Rmd:
   - R/coe_esri_fields.R
   - R/coe_parish_from_church.R
   tests: tests/testthat/test-coe_churches.R
-  vignettes: vignettes/individual-church-data.Rmd
+  vignettes: vignettes/data-on-individual-churches.Rmd
   inflate:
     flat_file: dev/flat_read_church_data.Rmd
     vignette_name: Data on individual churches
@@ -73,7 +73,7 @@ flat_reading-coe-statistics.Rmd:
   vignettes: vignettes/coe-census-data.Rmd
   inflate:
     flat_file: dev/flat_reading-coe-statistics.Rmd
-    vignette_name: CoE census statistics
+    vignette_name: coe-census-data
     open_vignette: true
     check: true
     document: true

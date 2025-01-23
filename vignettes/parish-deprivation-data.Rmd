@@ -1,8 +1,8 @@
 ---
-title: "Parish-level Deprivation data"
+title: "parish-deprivation-data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Parish-level Deprivation data}
+  %\VignetteIndexEntry{parish-deprivation-data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
