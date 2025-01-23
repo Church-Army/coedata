@@ -63,6 +63,17 @@ imd <- relocate(imd, starts_with("children_and_young_people"),
 imd <- select(imd, -parish_population_2021_census)
 ```
 
+## Add deciles and percentiles
+
+```{r add_deciles_percentiles}
+max_rank <- max(imd$imd_rank)
+
+imd <- mutate(imd,
+              imd_rank_decile = ceiling((imd_rank / max_rank) * 10),
+              imd_rank_percentile = ceiling((imd_rank / max_rank) * 100),
+              .after = imd_rank)
+```
+
 ```{r write_sheet}
 
 imd_sheet <- gs4_create("coe_parish_imd_2019")

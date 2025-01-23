@@ -1,5 +1,5 @@
 ---
-title: "flat_reading-coe-statistics.Rmd empty"
+title: "flat_read-coe-statistics.Rmd empty"
 output: html_document
 editor_options: 
   chunk_output_type: console
@@ -14,14 +14,14 @@ library(testthat)
 pkgload::load_all(export_all = FALSE)
 ```
 
-The functions on this page are all used for reading 2021 ONS census data for Church of England geographies. You can:
+The functions on this page are all used for reading 2021 ONS census data for Church of England geographies. You can browse available datasets with `coe_census_datasets()`. Once you know the ONS ID of the dataset you need, you can:
 
--   View available datasets with `coe_census_datasets()`
--   Get census data at a level of your choosing with the general-purpose function `coe_census()`
-    -   Get parish-level data with `coe_census_parish()`
-    -   Get diocese-level data with `coe_census_diocese()`
-    -   Get data for all of england with `coe_census_england()`
--   You can also compare a parish with its diocese and the whole of england in a single table with `coe_parish_snapshot()`
+- Get census data at a level of your choosing with the general-purpose function `coe_census()`
+  - Get parish-level data with `coe_census_parish()`
+  - Get diocese-level data with `coe_census_diocese()`
+  - Get data for all of england with `coe_census_england()`
+
+You can also compare a parish with its diocese and the whole of england in a single table with `coe_parish_snapshot()`
 
 ## View available data with `coe_census_datasets()`
 
@@ -339,112 +339,4 @@ coe_relocate <- function(.data, cols){
 }
 ```
 
-## Get deprivation data with `coe_parish_deprivation()`
 
-```{r function-cached_imd_data}
-cached_imd_data <- function(){
-  .coedata_envir$parish_imd_2019
-}
-```
-
-```{r function-get_imd_sheet}
-get_imd_sheet <- \() get_cpd_sheet("1fWr1MIbovWJKo8AEx5On6QuJe1Eqnn98mI5LQ3uq6qs", "imd")
-```
-
-```{r function-read_imd_data}
-read_imd_data <- function(){
-  
-  if(is.null(cached_imd_data())){
-  
-    imd_data <- get_imd_sheet()
-    .coedata_envir$parish_imd_2019 <- imd_data
-    
-  }
-  
-  cached_imd_data()
-  
-}
-```
-
-```{r function-coe_parish_deprivation}
-#' Get parish-level deprivation data from the Church of England
-#' 
-#' coe_parish_deprivation and coe_parish_imd are the same function
-#'
-#' @param parish_codes Character vector of parish codes to return. The default (TRUE) returns all parish codes.
-#' @param domains Logical. Should individual domains of deprivation be included?
-#' @param subdomains Logical. Should subdomains be included?
-#' @param supplementary Logical. Should supplementary statistics be included?
-#' 
-#' @returns A tibble of deprivation data with one row per parish.
-#'  
-#' @export
- 
-coe_parish_deprivation <- function(parish_codes = TRUE, domains = FALSE, subdomains = FALSE, supplementary = FALSE){
-  
-  assertthat::is.flag(domains)
-  assertthat::is.flag(subdomains)
-  assertthat::is.flag(supplementary)
-  
-  out <- read_imd_data()
-  
-  imd_names <- names(out)
-  
-  core_names <- which(imd_names %in% c("parish_code", "parish_name", "imd_score", "imd_rank"))
-  
-  subdomain_names    = grep("sub_domain", imd_names)
-  supplementary_names = grep("supplementary", imd_names)
-  
-  
-  all_names <- 1:length(imd_names)
-  domain_names <- all_names[!all_names %in% c(core_names, subdomain_names, supplementary_names)]
-  
-  included_names <- c(core_names, subdomain_names[subdomains], supplementary_names[supplementary],
-                      domain_names[domains])
-  
-  included_names <- all_names[all_names %in% included_names]
-  
-  class(out) <- c("coe_parish_data_imd", class(out))
-  
-  if(!assertthat::is.flag(parish_codes)) out <- out[included_names][out$parish_code %in% parish_codes,]
-  
-  out
-  }
-
-
-```
-
-```{r function-coe_parish_imd}
-
-#' @rdname coe_parish_deprivation
-#' @export
-coe_parish_imd <- coe_parish_deprivation
-
-```
-
-```{r tests-coe_parish_deprivation}
-test_that("coe_parish_deprivation() returns a tibble", {
-  result <- coe_parish_deprivation()
-  expect_s3_class(result, "tbl_df")
-})
-```
-
-```{r examples-coe_parish_deprivation}
-coe_parish_deprivation("350259")
-
-coe_parish_deprivation("350259", domains = TRUE)
-```
-
-```{r dplyr_method}
-## Print method
-#' @export
-print.coe_parish_data_imd <- function(x, ...){
-
-  cat("Church of England Deprivation Data\n")
-
-  NextMethod(x)
-
-  if("parish_code" %in% names(x)) cat("Parish-level data compiled by the Church of England")
-}
-
-```

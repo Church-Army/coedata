@@ -2,6 +2,7 @@
 
 S3method(group_by,coe_parish_data)
 S3method(print,coe_parish_data)
+S3method(print,coe_parish_data_imd)
 S3method(rowwise,coe_parish_data)
 export(coe_census)
 export(coe_census_datasets)

@@ -15,29 +15,12 @@ by the Church of England’s [Data
 Services](https://www.churchofengland.org/about/data-services) team.
 Data sources include:
 
-- [x] Parish-level 2021 census data
-- [x] A database of Churches, Parishes, Dioceses and other geographies
+- Parish, diocese and national-level 2021 census data (Updated November
+  2024)
+- A database of Churches, Parishes, Dioceses and other geographies
   (Updated November 2024)
-- [ ] ~~Parish-level data from the 2019 Index of Multiple Deprivation~~
-  (pending)
-
-2021 Census topics made available by coedata include:
-
-- Number of usual residents in households and communal establishments
-- Country of birth
-- Age by 5 year age bands
-- Ethnic group
-- Religion
-- General health
-- Social Classification (NS-SeC)
-- Economic activity status
-- Highest level of qualification
-- Households by deprivation dimensions
-- Household language
-- Accommodation type
-- Car or van availability
-- Tenure
-- Household composition
+- Parish-level data from the 2019 Index of Multiple Deprivation (Updated
+  November 2024)
 
 ## Installation
 
@@ -142,27 +125,29 @@ coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334), relative =
 #> Parish-level data compiled by the Church of England
 ```
 
-### Viewing a parish in its diocesan and national contexts
+For more information on getting census data, see
+`vignette("CoE Census Statistics")`.
 
-Sometimes people want to see how their parish compares to its diocese
-and to the nation as a whole. `coedata` contains a function that returns
-this data for any parish and any number of ONS datasets:
+### Using coedata to get parish-level deprivation statistics
+
+The CoE produce deprivation data for every parish in england, which can
+be accessed like so:
 
 ``` r
-coe_parish_snapshot(580342, ons_ids = "TS037")
-#> $TS037
-#> Church of England Census Data
-#> TS037 - General health 
-#> Units:  Proportion of all persons 
-#> # A tibble: 3 × 9
-#>   level   level_code level_name        population general_health_very_good
-#>   <chr>   <chr>      <chr>                  <dbl>                    <dbl>
-#> 1 parish  580342     Stifford: St Mary       6332                    0.467
-#> 2 diocese 8          Chelmsford           3281380                    0.497
-#> 3 nation  <NA>       england             56490046                    0.485
-#> # ℹ 4 more variables: general_health_good <dbl>, general_health_fair <dbl>,
-#> #   general_health_bad <dbl>, general_health_very_bad <dbl>
+coe_parish_deprivation(parish_codes = c(580342, 580334))
+#> ✔ Reading from "coe_parish_imd_2019".
+#> ✔ Range ''imd''.
+#> Church of England Deprivation Data
+#> # A tibble: 2 × 6
+#>   parish_code parish_name imd_score imd_rank imd_rank_decile imd_rank_percentile
+#>         <dbl> <chr>           <dbl>    <dbl>           <dbl>               <dbl>
+#> 1      580334 Grays Thur…      17.2     5293               5                  44
+#> 2      580342 Stifford         22.4     2883               3                  24
+#> Parish-level data compiled by the Church of England
 ```
+
+For more information on getting deprivation data, see
+`vignette("Parish-level deprivation data")`
 
 ## Finding parish codes
 
@@ -176,15 +161,6 @@ the parish code is for a parish or church, you can either:
 - Find the church’s church code by clicking ‘more information’ on its [A
   Church Near You](https://www.achurchnearyou.com) page, and then use
   `coe_parish_from_church()` to find it’s parish code.
-
-## A note on socio-economic classification labels
-
-Most of the statistics used in this package are labelled very
-intuitively, using labels like `general_health_very_good` or
-`country_of_birth_middle_east_asia`. This is not true of the
-socio0economic classification data (TS062), which uses labels like
-`ns_sec_L1_3`. To understand these labels, please consult the table
-returned by `ns_sec_descriptions()`.
 
 ## Thanks and attribution
 

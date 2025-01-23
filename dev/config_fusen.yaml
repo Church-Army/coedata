@@ -24,6 +24,22 @@ flat_first.qmd:
     document: true
     overwrite: ask
     clean: ask
+flat_get-deprivation-data-for-parishes.Rmd:
+  path: dev/flat_get-deprivation-data-for-parishes.Rmd
+  state: active
+  R:
+  - R/coe_parish_deprivation.R
+  - R/get-deprivation-data-with-coe_parish_deprivation--or-coe_parish_imd-.R
+  tests: tests/testthat/test-coe_parish_deprivation.R
+  vignettes: vignettes/parish-level-deprivation-data.Rmd
+  inflate:
+    flat_file: dev/flat_get-deprivation-data-for-parishes.Rmd
+    vignette_name: Parish-level Deprivation data
+    open_vignette: true
+    check: true
+    document: true
+    overwrite: ask
+    clean: ask
 flat_read_church_data.Rmd:
   path: dev/flat_read_church_data.Rmd
   state: active
@@ -45,22 +61,19 @@ flat_reading-coe-statistics.Rmd:
   path: dev/flat_reading-coe-statistics.Rmd
   state: active
   R:
-  - R/coe_parish_deprivation.R
   - R/coe_census.R
   - R/coe_census_datasets.R
   - R/coe_census_diocese.R
   - R/coe_census_england.R
   - R/coe_census_parish.R
   - R/coe_parish_snapshot.R
-  - R/get-deprivation-data-with-coe_parish_deprivation-.R
   tests:
   - tests/testthat/test-coe_census.R
   - tests/testthat/test-coe_parish_snapshot.R
-  - tests/testthat/test-coe_parish_deprivation.R
-  vignettes: vignettes/reading-coe-statistics.Rmd
+  vignettes: vignettes/coe-census-statistics.Rmd
   inflate:
     flat_file: dev/flat_reading-coe-statistics.Rmd
-    vignette_name: Reading CoE statistics
+    vignette_name: CoE census statistics
     open_vignette: true
     check: true
     document: true

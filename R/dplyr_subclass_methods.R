@@ -53,3 +53,15 @@ print.coe_parish_data <- function(x, ...){
 
   if("parish_code" %in% names(x)) cat("Parish-level data compiled by the Church of England")
 }
+
+
+## Print method (deprivational data)
+#' @export
+print.coe_parish_data_imd <- function(x, ...){
+
+  cat("Church of England Deprivation Data\n")
+
+  NextMethod(x)
+
+  if("parish_code" %in% names(x)) cat("Parish-level data compiled by the Church of England")
+}
