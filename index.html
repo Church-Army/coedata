@@ -35,7 +35,9 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="articles/data-on-individual-churches.html">Data on individual churches</a></li>
+<li><a class="dropdown-item" href="articles/coe-census-statistics.html">CoE census statistics</a></li>
+    <li><a class="dropdown-item" href="articles/data-on-individual-churches.html">Data on individual churches</a></li>
+    <li><a class="dropdown-item" href="articles/parish-level-deprivation-data.html">Parish-level Deprivation data</a></li>
     <li><a class="dropdown-item" href="articles/reading-coe-statistics.html">Reading CoE statistics</a></li>
   </ul>
 </li>
@@ -59,28 +61,13 @@
 <!-- badges: start -->
 
 <p>coedata is a data package that serves up various datasets made available by the Church of England’s <a href="https://www.churchofengland.org/about/data-services" class="external-link">Data Services</a> team. Data sources include:</p>
-<ul class="task-list">
-<li><label><input type="checkbox" checked>Parish-level 2021 census data</label></li>
-<li><label><input type="checkbox" checked>A database of Churches, Parishes, Dioceses and other geographies (Updated November 2024)</label></li>
-<li><label><input type="checkbox"><del>Parish-level data from the 2019 Index of Multiple Deprivation</del> (pending)</label></li>
-</ul>
-<p>2021 Census topics made available by coedata include:</p>
 <ul>
-<li>Number of usual residents in households and communal establishments</li>
-<li>Country of birth</li>
-<li>Age by 5 year age bands</li>
-<li>Ethnic group</li>
-<li>Religion</li>
-<li>General health</li>
-<li>Social Classification (NS-SeC)</li>
-<li>Economic activity status</li>
-<li>Highest level of qualification</li>
-<li>Households by deprivation dimensions</li>
-<li>Household language</li>
-<li>Accommodation type</li>
-<li>Car or van availability</li>
-<li>Tenure</li>
-<li>Household composition</li>
+<li>Parish, diocese and national-level 2021 census data (Updated November
+<ol start="2024" style="list-style-type: decimal"><li>
+</li></ol>
+</li>
+<li>A database of Churches, Parishes, Dioceses and other geographies (Updated November 2024)</li>
+<li>Parish-level data from the 2019 Index of Multiple Deprivation (Updated November 2024)</li>
 </ul>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -216,25 +203,24 @@
 <span><span class="co">#&gt; # ℹ 3 more variables: general_health_fair &lt;dbl&gt;, general_health_bad &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   general_health_very_bad &lt;dbl&gt;</span></span>
 <span><span class="co">#&gt; Parish-level data compiled by the Church of England</span></span></code></pre></div>
+<p>For more information on getting census data, see <code>vignette("CoE Census Statistics")</code>.</p>
 </div>
 <div class="section level3">
-<h3 id="viewing-a-parish-in-its-diocesan-and-national-contexts">Viewing a parish in its diocesan and national contexts<a class="anchor" aria-label="anchor" href="#viewing-a-parish-in-its-diocesan-and-national-contexts"></a>
+<h3 id="using-coedata-to-get-parish-level-deprivation-statistics">Using coedata to get parish-level deprivation statistics<a class="anchor" aria-label="anchor" href="#using-coedata-to-get-parish-level-deprivation-statistics"></a>
 </h3>
-<p>Sometimes people want to see how their parish compares to its diocese and to the nation as a whole. <code>coedata</code> contains a function that returns this data for any parish and any number of ONS datasets:</p>
+<p>The CoE produce deprivation data for every parish in england, which can be accessed like so:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/coe_parish_snapshot.html">coe_parish_snapshot</a></span><span class="op">(</span><span class="fl">580342</span>, ons_ids <span class="op">=</span> <span class="st">"TS037"</span><span class="op">)</span></span>
-<span><span class="co">#&gt; $TS037</span></span>
-<span><span class="co">#&gt; Church of England Census Data</span></span>
-<span><span class="co">#&gt; TS037 - General health </span></span>
-<span><span class="co">#&gt; Units:  Proportion of all persons </span></span>
-<span><span class="co">#&gt; # A tibble: 3 × 9</span></span>
-<span><span class="co">#&gt;   level   level_code level_name        population general_health_very_good</span></span>
-<span><span class="co">#&gt;   &lt;chr&gt;   &lt;chr&gt;      &lt;chr&gt;                  &lt;dbl&gt;                    &lt;dbl&gt;</span></span>
-<span><span class="co">#&gt; 1 parish  580342     Stifford: St Mary       6332                    0.467</span></span>
-<span><span class="co">#&gt; 2 diocese 8          Chelmsford           3281380                    0.497</span></span>
-<span><span class="co">#&gt; 3 nation  &lt;NA&gt;       england             56490046                    0.485</span></span>
-<span><span class="co">#&gt; # ℹ 4 more variables: general_health_good &lt;dbl&gt;, general_health_fair &lt;dbl&gt;,</span></span>
-<span><span class="co">#&gt; #   general_health_bad &lt;dbl&gt;, general_health_very_bad &lt;dbl&gt;</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/coe_parish_deprivation.html">coe_parish_deprivation</a></span><span class="op">(</span>parish_codes <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">580342</span>, <span class="fl">580334</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="co">#&gt; ✔ Reading from "coe_parish_imd_2019".</span></span>
+<span><span class="co">#&gt; ✔ Range ''imd''.</span></span>
+<span><span class="co">#&gt; Church of England Deprivation Data</span></span>
+<span><span class="co">#&gt; # A tibble: 2 × 6</span></span>
+<span><span class="co">#&gt;   parish_code parish_name imd_score imd_rank imd_rank_decile imd_rank_percentile</span></span>
+<span><span class="co">#&gt;         &lt;dbl&gt; &lt;chr&gt;           &lt;dbl&gt;    &lt;dbl&gt;           &lt;dbl&gt;               &lt;dbl&gt;</span></span>
+<span><span class="co">#&gt; 1      580334 Grays Thur…      17.2     5293               5                  44</span></span>
+<span><span class="co">#&gt; 2      580342 Stifford         22.4     2883               3                  24</span></span>
+<span><span class="co">#&gt; Parish-level data compiled by the Church of England</span></span></code></pre></div>
+<p>For more information on getting deprivation data, see <code>vignette("Parish-level deprivation data")</code></p>
 </div>
 </div>
 <div class="section level2">
@@ -245,11 +231,6 @@
 <li>Find the parish in the <a href="https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a" class="external-link">intercative map</a> provided by the Church of England’s Data Services team</li>
 <li>Find the church’s church code by clicking ‘more information’ on its <a href="https://www.achurchnearyou.com" class="external-link">A Church Near You</a> page, and then use <code><a href="reference/coe_parish_from_church.html">coe_parish_from_church()</a></code> to find it’s parish code.</li>
 </ul>
-</div>
-<div class="section level2">
-<h2 id="a-note-on-socio-economic-classification-labels">A note on socio-economic classification labels<a class="anchor" aria-label="anchor" href="#a-note-on-socio-economic-classification-labels"></a>
-</h2>
-<p>Most of the statistics used in this package are labelled very intuitively, using labels like <code>general_health_very_good</code> or <code>country_of_birth_middle_east_asia</code>. This is not true of the socio0economic classification data (TS062), which uses labels like <code>ns_sec_L1_3</code>. To understand these labels, please consult the table returned by <code><a href="reference/ns_sec_descriptions.html">ns_sec_descriptions()</a></code>.</p>
 </div>
 <div class="section level2">
 <h2 id="thanks-and-attribution">Thanks and attribution<a class="anchor" aria-label="anchor" href="#thanks-and-attribution"></a>

@@ -18,7 +18,9 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/data-on-individual-churches.html">Data on individual churches</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/coe-census-statistics.html">CoE census statistics</a></li>
+    <li><a class="dropdown-item" href="../articles/data-on-individual-churches.html">Data on individual churches</a></li>
+    <li><a class="dropdown-item" href="../articles/parish-level-deprivation-data.html">Parish-level Deprivation data</a></li>
     <li><a class="dropdown-item" href="../articles/reading-coe-statistics.html">Reading CoE statistics</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -34,7 +36,7 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Get parish-level deprivation data from the Church of England</h1>
-      <small class="dont-index">Source: <a href="https://github.com/Church-Army/coedata/blob/main/R/coe_parish_deprivation.R" class="external-link"><code>R/coe_parish_deprivation.R</code></a>, <a href="https://github.com/Church-Army/coedata/blob/main/R/get-deprivation-data-with-coe_parish_deprivation-.R" class="external-link"><code>R/get-deprivation-data-with-coe_parish_deprivation-.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/Church-Army/coedata/blob/main/R/coe_parish_deprivation.R" class="external-link"><code>R/coe_parish_deprivation.R</code></a>, <a href="https://github.com/Church-Army/coedata/blob/main/R/get-deprivation-data-with-coe_parish_deprivation--or-coe_parish_imd-.R" class="external-link"><code>R/get-deprivation-data-with-coe_parish_deprivation--or-coe_parish_imd-.R</code></a></small>
       <div class="d-none name"><code>coe_parish_deprivation.Rd</code></div>
     </div>
 
@@ -89,23 +91,27 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">coe_parish_deprivation</span><span class="op">(</span><span class="st">"350259"</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Reading from <span style="color: #00BBBB;">coe_parish_imd_2019</span>.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> <span style="color: #00BB00;">✔</span> Range '<span style="color: #BBBB00;">'imd'</span>'.</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   parish_code parish_name         imd_score imd_rank</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      <span style="text-decoration: underline;">350</span>259 The Vine, Sheffield      30.0     <span style="text-decoration: underline;">1</span>310</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Church of England Deprivation Data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 6</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   parish_code parish_name imd_score imd_rank imd_rank_decile imd_rank_percentile</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      <span style="text-decoration: underline;">350</span>259 The Vine, …      30.0     <span style="text-decoration: underline;">1</span>310               2                  11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parish-level data compiled by the Church of England</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="fu">coe_parish_deprivation</span><span class="op">(</span><span class="st">"350259"</span>, domains <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 24</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   parish_code parish_name         imd_score imd_rank barriers_to_housing_and_s…¹</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>                       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      <span style="text-decoration: underline;">350</span>259 The Vine, Sheffield      30.0     <span style="text-decoration: underline;">1</span>310                        25.0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ abbreviated name: ¹​barriers_to_housing_and_services_score</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 19 more variables: barriers_to_housing_rank &lt;dbl&gt;, crime_score &lt;dbl&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   crime_rank &lt;dbl&gt;, education_skills_and_training_score &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Church of England Deprivation Data</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 26</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   parish_code parish_name imd_score imd_rank imd_rank_decile imd_rank_percentile</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>      <span style="text-decoration: underline;">350</span>259 The Vine, …      30.0     <span style="text-decoration: underline;">1</span>310               2                  11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 20 more variables: barriers_to_housing_and_services_score &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   barriers_to_housing_rank &lt;dbl&gt;, crime_score &lt;dbl&gt;, crime_rank &lt;dbl&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   education_skills_and_training_score &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   education_skills_and_training_rank &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   children_and_young_people_rank &lt;dbl&gt;, adult_skills_rank &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   employment_score_rate &lt;dbl&gt;, employment_rank &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   geographical_barriers_rank &lt;dbl&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parish-level data compiled by the Church of England</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
