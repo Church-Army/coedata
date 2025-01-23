@@ -126,7 +126,7 @@ coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334), relative =
 ```
 
 For more information on getting census data, see
-`vignette("CoE Census Statistics")`.
+`vignette("coe-census-data")`.
 
 ### Using coedata to get parish-level deprivation statistics
 
@@ -135,6 +135,9 @@ be accessed like so:
 
 ``` r
 coe_parish_deprivation(parish_codes = c(580342, 580334))
+#> ✖ Request failed [429]. Retry 1 happens in 3.4 seconds ...
+#> ✖ Request failed [429]. Retry 2 happens in 1.4 seconds ...
+#> ✖ Request failed [429]. Retry 3 happens in 18.2 seconds ...
 #> ✔ Reading from "coe_parish_imd_2019".
 #> ✔ Range ''imd''.
 #> Church of England Deprivation Data
@@ -147,7 +150,7 @@ coe_parish_deprivation(parish_codes = c(580342, 580334))
 ```
 
 For more information on getting deprivation data, see
-`vignette("Parish-level deprivation data")`
+`vignette("parish-deprivation-data")`
 
 ## Finding parish codes
 
@@ -155,7 +158,7 @@ When you’re looking at individual parishes with `coedata`, you’ll need
 to identify them with their unique parish codes. If you’re not sure what
 the parish code is for a parish or church, you can either:
 
-- Find the parish in the [intercative
+- Find the parish in the [interactive
   map](https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a)
   provided by the Church of England’s Data Services team
 - Find the church’s church code by clicking ‘more information’ on its [A
@@ -185,7 +188,3 @@ the parish code is for a parish or church, you can either:
   [googlesheets4](https://googlesheets4.tidyverse.org/), which provided
   a simple, secure way of minimising package size by storing data
   remotely.
-
-## TODO:
-
-- [ ] Add IMD data
