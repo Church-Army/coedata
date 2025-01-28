@@ -71,3 +71,4 @@ keep:
   R:
   - R/aaa.R
   - R/dplyr_subclass_methods.R
+  - R/data.R
