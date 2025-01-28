@@ -1,0 +1,125 @@
+---
+title: "flat_get-deprivation-data-for-parishes.Rmd"
+output: html_document
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r development, include=FALSE}
+library(testthat)
+```
+
+```{r development-load}
+# Load already included functions if relevant
+pkgload::load_all(export_all = FALSE)
+```
+
+# get_deprivation_data_for_parishes
+
+## Get deprivation data with `coe_parish_deprivation()` or `coe_parish_imd()`
+
+The English [Indices of Multiple Deprivation](https://assets.publishing.service.gov.uk/media/5d8b399a40f0b609946034a4/IoD2019_Infographic.pdf) are a way of raking every small area (LLSOA) in England from most to least deprived. The Church of England's Data Services team use these data to produce deprivation statistics for every parish in the Church of England, giving every parish a score and a rank from most to least deprived. With coedata, you can view these data using the `coe_parish_deprivation()` function. By default, this function returns, for each parish:
+
+- Overall deprivation score
+- Overall deprivation rank
+- Parish deprivation decile 
+- Parish deprivation percentile
+
+However, the function paramaters can be adjusted so that scores and ranks for IMD domains and subdomains are included, as well as additional supplementary data.
+
+Note that for ranks, deciles and percentiles, lower values correspond to higher deprivation.
+
+```{r function-cached_imd_data}
+cached_imd_data <- function(){
+  .coedata_envir$parish_imd_2019
+}
+```
+
+```{r function-get_imd_sheet}
+get_imd_sheet <- \() get_cpd_sheet("1fWr1MIbovWJKo8AEx5On6QuJe1Eqnn98mI5LQ3uq6qs", "imd")
+```
+
+```{r function-read_imd_data}
+read_imd_data <- function(){
+  
+  if(is.null(cached_imd_data())){
+    
+    imd_data <- get_imd_sheet()
+    .coedata_envir$parish_imd_2019 <- imd_data
+    
+  }
+  
+  cached_imd_data()
+  
+}
+```
+
+```{r function-coe_parish_deprivation}
+#' Get parish-level deprivation data from the Church of England
+#' 
+#' coe_parish_deprivation and coe_parish_imd are the same function
+#'
+#' @rdname coe_parish_deprivation
+#' @param parish_codes Character vector of parish codes to return. The default (TRUE) returns all parish codes.
+#' @param domains Logical. Should individual domains of deprivation be included?
+#' @param subdomains Logical. Should subdomains be included?
+#' @param supplementary Logical. Should supplementary statistics be included?
+#' 
+#' @returns A tibble of deprivation data with one row per parish.
+#'  
+#' @export
+
+coe_parish_deprivation <- function(parish_codes = TRUE, domains = FALSE, subdomains = FALSE, supplementary = FALSE){
+  
+  assertthat::is.flag(domains)
+  assertthat::is.flag(subdomains)
+  assertthat::is.flag(supplementary)
+  
+  out <- read_imd_data()
+  
+  imd_names <- names(out)
+  
+  core_names <- which(imd_names %in% c("parish_code", "parish_name", "imd_score", 
+                                      "imd_rank", "imd_rank_decile", "imd_rank_percentile"))
+  
+  subdomain_names    = grep("sub_domain", imd_names)
+  supplementary_names = grep("supplementary", imd_names)
+  
+  
+  all_names <- 1:length(imd_names)
+  domain_names <- all_names[!all_names %in% c(core_names, subdomain_names, supplementary_names)]
+  
+  included_names <- c(core_names, subdomain_names[subdomains], supplementary_names[supplementary],
+                      domain_names[domains])
+  
+  included_names <- all_names[all_names %in% included_names]
+  
+  class(out) <- c("coe_parish_data_imd", class(out))
+  
+  if(!assertthat::is.flag(parish_codes)) out <- out[included_names][out$parish_code %in% parish_codes,]
+  
+  out
+}
+
+```
+
+```{r function-coe_parish_imd}
+
+#' @rdname coe_parish_deprivation
+#' @export
+coe_parish_imd <- coe_parish_deprivation
+
+```
+
+```{r tests-coe_parish_deprivation}
+test_that("coe_parish_deprivation() returns a tibble", {
+  result <- coe_parish_deprivation()
+  expect_s3_class(result, "tbl_df")
+})
+```
+
+```{r examples-coe_parish_deprivation}
+coe_parish_deprivation("350259")
+
+coe_parish_deprivation("350259", domains = TRUE)
+```

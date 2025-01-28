@@ -1,8 +1,8 @@
 ---
-title: "Reading CoE statistics"
+title: "coe-census-data"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Reading CoE statistics}
+  %\VignetteIndexEntry{coe-census-data}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -23,14 +23,14 @@ library(coedata)
 
 
 
-The functions on this page are all used for reading 2021 ONS census data for Church of England geographies. You can:
+The functions on this page are all used for reading 2021 ONS census data for Church of England geographies. You can browse available datasets with `coe_census_datasets()`. Once you know the ONS ID of the dataset you need, you can:
 
--   View available datasets with `coe_census_datasets()`
--   Get census data at a level of your choosing with the general-purpose function `coe_census()`
-    -   Get parish-level data with `coe_census_parish()`
-    -   Get diocese-level data with `coe_census_diocese()`
-    -   Get data for all of england with `coe_census_england()`
--   You can also compare a parish with its diocese and the whole of england in a single table with `coe_parish_snapshot()`
+- Get census data at a level of your choosing with the general-purpose function `coe_census()`
+  - Get parish-level data with `coe_census_parish()`
+  - Get diocese-level data with `coe_census_diocese()`
+  - Get data for all of england with `coe_census_england()`
+
+You can also compare a parish with its diocese and the whole of england in a single table with `coe_parish_snapshot()`
 
 ## View available data with `coe_census_datasets()`
 
@@ -93,32 +93,8 @@ coe_parish_snapshot(parish_code = "370047", ons_ids = "TS001")
 
 
 
-## Get deprivation data with `coe_parish_deprivation()`
+## A note on socio-economic classification labels
 
+Most of the statistics used in this package are labelled very intuitively, using labels like `general_health_very_good` or `country_of_birth_middle_east_asia`. This is not true of the socio0economic classification data (TS062), which uses labels like `ns_sec_L1_3`. To understand these labels, please consult the table returned by `ns_sec_descriptions()`.
 
-
-
-
-
-```{r examples-coe_parish_deprivation}
-coe_parish_deprivation()
-
-## This is equivalent for convenience:
-coe_parish_imd()
-```
-
-
-```{r dplyr_method}
-## Print method
-#' @export
-print.coe_parish_data_imd <- function(x, ...){
-
-  cat("Church of England Deprivation Data\n")
-
-  NextMethod(x)
-
-  if("parish_code" %in% names(x)) cat("Parish-level data compiled by the Church of England")
-}
-
-```
 

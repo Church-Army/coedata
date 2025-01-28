@@ -25,27 +25,9 @@ library(knitr)
 
 coedata is a data package that serves up various datasets made available by the Church of England's [Data Services](https://www.churchofengland.org/about/data-services) team. Data sources include:
 
-- [x] Parish-level 2021 census data
-- [x] A database of Churches, Parishes, Dioceses and other geographies (Updated November 2024)
-- [ ] ~~Parish-level data from the 2019 Index of Multiple Deprivation~~ (pending)
-
-2021 Census topics made available by coedata include:
-
-* Number of usual residents in households and communal establishments
-* Country of birth
-* Age by 5 year age bands
-* Ethnic group
-* Religion
-* General health
-* Social Classification (NS-SeC)
-* Economic activity status
-* Highest level of qualification
-* Households by deprivation dimensions
-* Household language
-* Accommodation type
-* Car or van availability
-* Tenure
-* Household composition
+- Parish, diocese and national-level 2021 census data (Updated November 2024)
+- A database of Churches, Parishes, Dioceses and other geographies (Updated November 2024)
+- Parish-level data from the 2019 Index of Multiple Deprivation (Updated November 2024)
 
 ## Installation
 
@@ -96,24 +78,24 @@ Note that we can also get relative statistics for the same data by setting `rela
 coe_census_parish(ons_id = "TS037", parish_codes = c(580342, 580334), relative = TRUE) 
 ```
 
-### Viewing a parish in its diocesan and national contexts
+For more information on getting census data, see `vignette("coe-census-data")`.
 
-Sometimes people want to see how their parish compares to its diocese and to the nation as a whole. `coedata` contains a function that returns this data for any parish and any number of ONS datasets:
+### Using coedata to get parish-level deprivation statistics
 
-```{r parish_context_example}
-coe_parish_snapshot(580342, ons_ids = "TS037")
+The CoE produce deprivation data for every parish in england, which can be accessed like so:
+
+```{r deprivation_example}
+coe_parish_deprivation(parish_codes = c(580342, 580334))
 ```
+
+For more information on getting deprivation data, see `vignette("parish-deprivation-data")`
 
 ## Finding parish codes
 
 When you're looking at individual parishes with `coedata`, you'll need to identify them with their unique parish codes. If you're not sure what the parish code is for a parish or church, you can either:
 
-* Find the parish in the [intercative map](https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a) provided by the Church of England's Data Services team
+* Find the parish in the [interactive map](https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a) provided by the Church of England's Data Services team
 * Find the church's church code by clicking 'more information' on its [A Church Near You](https://www.achurchnearyou.com) page, and then use `coe_parish_from_church()` to find it's parish code.
-
-## A note on socio-economic classification labels
-
-Most of the statistics used in this package are labelled very intuitively, using labels like `general_health_very_good` or `country_of_birth_middle_east_asia`. This is not true of the socio0economic classification data (TS062), which uses labels like `ns_sec_L1_3`. To understand these labels, please consult the table returned by `ns_sec_descriptions()`.
 
 ## Thanks and attribution
 
@@ -122,8 +104,3 @@ Most of the statistics used in this package are labelled very intuitively, using
   * Ken also maintains the [parish map](https://www.arcgis.com/home/webmap/viewer.html?webmap=67bce0ed36dd4ee0af7a16bc079aa09a) from which Church data are read by this package. Thanks again, Ken!
 * Thanks to [ropensci](https://github.com/ropensci) for their development and maintenance of the [nomisr](https://github.com/ropensci/nomisr) package, which was used to interface with nomis.
 * Thanks to [Jenny Bryan](https://jennybryan.org/about/) at Posit for the development and maintenance of [googlesheets4](https://googlesheets4.tidyverse.org/), which provided a simple, secure way of minimising package size by storing data remotely.
-
-## TODO:
-
-- [ ] Add IMD data
-
