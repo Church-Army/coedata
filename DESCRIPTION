@@ -26,7 +26,6 @@ Imports:
 Suggests: 
     knitr,
     rmarkdown,
-    stringr,
     testthat,
     tidyr
 VignetteBuilder: 
