@@ -38,11 +38,14 @@ test_that("stat names are consistent across levels", {
     dplyr::select(census_data_copy, ons_id, level, data_names) |> 
     tidyr::pivot_wider(names_from = level, values_from = data_names, values_fn = list)
   
-  names_tabe <-
     dplyr::rowwise(names_table) |> 
     dplyr::mutate(
-      test_diocese = list(expect_identical(parish, diocese)),
-      test_england = list(expect_identical(parish, england)),
+      test_diocese = list(expect(
+        unlist(parish) == unlist(diocese),
+        failure_message = stringr::str_c("Parish/diocese names mismatch for ons_id ", ons_id))),
+      test_england = list(expect(
+        unlist(parish) == unlist(england),
+        failure_message = stringr::str_c("Parish/england names mismatch for ons_id ", ons_id))),
       .keep = "none"
     )
   
