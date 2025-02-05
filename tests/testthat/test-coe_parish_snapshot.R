@@ -40,12 +40,8 @@ test_that("stat names are consistent across levels", {
   
     dplyr::rowwise(names_table) |> 
     dplyr::mutate(
-      test_diocese = list(expect(
-        unlist(parish) == unlist(diocese),
-        failure_message = paste0("Parish/diocese names mismatch for ons_id ", ons_id))),
-      test_england = list(expect(
-        unlist(parish) == unlist(england),
-        failure_message = paste0("Parish/england names mismatch for ons_id ", ons_id))),
+      test_diocese = list(expect_identical(parish, diocese)),
+      test_england = list(expect_identical(parish, england)),
       .keep = "none"
     )
   
