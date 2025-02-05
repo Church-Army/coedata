@@ -12,7 +12,7 @@ all_nomis_datasets <- nomis_data_info()
 
 load(here("R", "sysdata.rda"))
 
-codes <- unique(parish_data$nomis_code)
+codes <- unique(parish_data$ons_id)
 
 codes_reprex <-
   codes |>
@@ -37,9 +37,9 @@ package_col_names <-
   filter(parish_data, level == "diocese") |>
   rowwise() |>
   mutate(names = list(names(data)[!names(data) %in% c("diocese_name", "diocese_number")])) |>
-  select(nomis_code, names)
+  select(ons_id, names)
 
-nomis_codes_table <- left_join(nomis_codes_table, package_col_names, by = c("census_code" = "nomis_code"))
+nomis_codes_table <- left_join(nomis_codes_table, package_col_names, by = c("census_code" = "ons_id"))
 
 nomis_codes_table <- mutate(nomis_codes_table, names_compare = list(list(nomis = names(data), package = names)))
 
@@ -73,6 +73,7 @@ nomis_codes_table[["data"]][[3]] <-
 nomis_codes_table[["data"]][[4]] <-
   select(nomis_codes_table[["data"]][[4]],
          population = total_all_usual_residents,
+         country_of_birth_united_kingdom = europe_united_kingdom,
          country_of_birth_europe_eu_countries = europe_eu_countries,
          country_of_birth_europe_non_eu_countries = europe_non_eu_countries_all_other_non_eu_countries,
          country_of_birth_africa = africa,
@@ -126,6 +127,7 @@ nomis_codes_table[["data"]][[11]] <-
 
 nomis_codes_table[["data"]][[12]] <-
   select(nomis_codes_table[["data"]][[12]],
+         total_all_households,
          owned_owns_outright,
          owned_owns_with_a_mortgage_or_loan,
          shared_ownership,

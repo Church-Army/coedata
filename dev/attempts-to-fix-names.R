@@ -53,5 +53,7 @@ parish_data[["data"]][parish_data$level == "diocese" & parish_data$ons_id == "TS
   select(parish_data[["data"]][parish_data$level == "diocese" & parish_data$ons_id == "TS044"][[1]],
          -accommodation_type_total)
 
+## Country of birth (NB this is completely non-reproducible, just here for posterity)
+parish_data[["data"]][parish_data$level == "england" & parish_data$ons_id == "TS004"][[1]] <- nomis_codes_table$data[[1]]
 
 ##### use_data(parish_data, internal = TRUE, overwrite = TRUE)
