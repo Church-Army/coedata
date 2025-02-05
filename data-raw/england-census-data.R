@@ -62,10 +62,10 @@ nomis_codes_table[["data"]][[2]] <- rename(nomis_codes_table[["data"]][[2]], pop
 nomis_codes_table[["data"]][[3]] <-
   select(nomis_codes_table[["data"]][[3]],
          -any_of(c("single_family_household", "one_person_household", "other_household_types",
-                   "household_composition_single_family_household_married_or_civil_partnership_couple",
-                   "household_composition_single_family_household_cohabiting_couple_family",
-                   "household_composition_single_family_household_lone_parent_family",
-                   "household_composition_single_family_household_other_single_family_household_other_family_composition")
+                   "single_family_household_married_or_civil_partnership_couple",
+                   "single_family_household_cohabiting_couple_family",
+                   "single_family_household_lone_parent_family",
+                   "single_family_household_other_single_family_household_other_family_composition")
          )) |>
   rename_with(\(x) str_c("household_composition_", x)) |>
   rename(occupied_households = 1)

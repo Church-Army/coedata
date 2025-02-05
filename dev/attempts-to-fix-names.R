@@ -2,6 +2,7 @@
 ## Don't try to run this - it might break something.
 
 pkgload::load_all()
+load(here("R", "sysdata.rda"))
 library(dplyr)
 
 datasets <-
@@ -55,5 +56,10 @@ parish_data[["data"]][parish_data$level == "diocese" & parish_data$ons_id == "TS
 
 ## Country of birth (NB this is completely non-reproducible, just here for posterity)
 parish_data[["data"]][parish_data$level == "england" & parish_data$ons_id == "TS004"][[1]] <- nomis_codes_table$data[[1]]
+
+## Houehold tenure
+parish_data[["data"]][parish_data$level == "england" & parish_data$ons_id == "TS054"][[1]] <- bar
+
+
 
 ##### use_data(parish_data, internal = TRUE, overwrite = TRUE)
