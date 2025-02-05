@@ -359,7 +359,7 @@ test_that("stat names are consistent across levels", {
     dplyr::select(census_data_copy, ons_id, level, data_names) |> 
     tidyr::pivot_wider(names_from = level, values_from = data_names, values_fn = list)
   
-    dplyr::rowwise(names_table) |> 
+    dplyr::group_by(names_table, ons_id) |> 
     dplyr::mutate(
       test_diocese = list(expect_equal(parish, diocese)),
       test_england = list(expect_equal(parish, england)),
