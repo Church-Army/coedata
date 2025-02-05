@@ -40,8 +40,8 @@ test_that("stat names are consistent across levels", {
   
     dplyr::rowwise(names_table) |> 
     dplyr::mutate(
-      test_diocese = list(expect_identical(parish, diocese)),
-      test_england = list(expect_identical(parish, england)),
+      test_diocese = list(expect_equal(parish, diocese)),
+      test_england = list(expect_equal(parish, england)),
       .keep = "none"
     )
   

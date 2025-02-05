@@ -48,4 +48,10 @@ parish_data[["data"]][parish_data$level == "england" & parish_data$ons_id == "TS
            religion_no_religion, .after = religion_other_religion)
 
 
+## Accommodation type
+parish_data[["data"]][parish_data$level == "diocese" & parish_data$ons_id == "TS044"][[1]] <-
+  select(parish_data[["data"]][parish_data$level == "diocese" & parish_data$ons_id == "TS044"][[1]],
+         -accommodation_type_total)
+
+
 ##### use_data(parish_data, internal = TRUE, overwrite = TRUE)
