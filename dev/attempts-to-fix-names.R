@@ -60,6 +60,7 @@ parish_data[["data"]][parish_data$level == "england" & parish_data$ons_id == "TS
 ## Houehold tenure
 parish_data[["data"]][parish_data$level == "england" & parish_data$ons_id == "TS054"][[1]] <- bar
 
-
+## Household composition
+parish_data[["data"]][parish_data$level == "england" & parish_data$ons_id == "TS003"][[1]] <- res
 
 ##### use_data(parish_data, internal = TRUE, overwrite = TRUE)
