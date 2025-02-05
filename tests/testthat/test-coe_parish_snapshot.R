@@ -9,3 +9,41 @@ test_that("coe_parish_snapshot works", {
   
   expect_equal(nrow(test[[1]]), 3)
 })
+
+test_that("stat names are consistent across levels", {
+  
+  census_data_copy <-
+    .coedata_envir$parish_data |> 
+    dplyr::select(ons_id, level, data, drive_id) |> 
+    dplyr::rowwise()
+  
+  sheet_names <- function(data, ons_id, drive_id){
+    if(is.null(data)){
+      # read first row (i.e names)
+      out <- 
+        get_cpd_sheet(drive_id, ons_id, range = "1:1") |>
+        names()
+    } else out <- names(data)
+    
+    out
+    
+  }
+
+  census_data_copy <- 
+    dplyr::mutate(census_data_copy, data_names = list(sheet_names(data, ons_id, drive_id))) |> 
+    tidyr::unnest(data_names) |> 
+    dplyr::filter(!data_names %in% c("parish_code", "parish_name", "diocese_number", "diocese_name"))
+  
+  names_table <- 
+    dplyr::select(census_data_copy, ons_id, level, data_names) |> 
+    tidyr::pivot_wider(names_from = level, values_from = data_names, values_fn = list)
+  
+  names_tabe <-
+    dplyr::rowwise(names_table) |> 
+    dplyr::mutate(
+      test_diocese = list(expect_identical(parish, diocese)),
+      test_england = list(expect_identical(parish, england)),
+      .keep = "none"
+    )
+  
+})

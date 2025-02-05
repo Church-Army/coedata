@@ -16,10 +16,10 @@ pkgload::load_all(export_all = FALSE)
 
 The functions on this page are all used for reading 2021 ONS census data for Church of England geographies. You can browse available datasets with `coe_census_datasets()`. Once you know the ONS ID of the dataset you need, you can:
 
-- Get census data at a level of your choosing with the general-purpose function `coe_census()`
-  - Get parish-level data with `coe_census_parish()`
-  - Get diocese-level data with `coe_census_diocese()`
-  - Get data for all of england with `coe_census_england()`
+-   Get census data at a level of your choosing with the general-purpose function `coe_census()`
+    -   Get parish-level data with `coe_census_parish()`
+    -   Get diocese-level data with `coe_census_diocese()`
+    -   Get data for all of england with `coe_census_england()`
 
 You can also compare a parish with its diocese and the whole of england in a single table with `coe_parish_snapshot()`
 
@@ -330,6 +330,44 @@ test_that("coe_parish_snapshot works", {
   
   expect_equal(nrow(test[[1]]), 3)
 })
+
+test_that("stat names are consistent across levels", {
+  
+  census_data_copy <-
+    .coedata_envir$parish_data |> 
+    dplyr::select(ons_id, level, data, drive_id) |> 
+    dplyr::rowwise()
+  
+  sheet_names <- function(data, ons_id, drive_id){
+    if(is.null(data)){
+      # read first row (i.e names)
+      out <- 
+        get_cpd_sheet(drive_id, ons_id, range = "1:1") |>
+        names()
+    } else out <- names(data)
+    
+    out
+    
+  }
+
+  census_data_copy <- 
+    dplyr::mutate(census_data_copy, data_names = list(sheet_names(data, ons_id, drive_id))) |> 
+    tidyr::unnest(data_names) |> 
+    dplyr::filter(!data_names %in% c("parish_code", "parish_name", "diocese_number", "diocese_name"))
+  
+  names_table <- 
+    dplyr::select(census_data_copy, ons_id, level, data_names) |> 
+    tidyr::pivot_wider(names_from = level, values_from = data_names, values_fn = list)
+  
+  names_tabe <-
+    dplyr::rowwise(names_table) |> 
+    dplyr::mutate(
+      test_diocese = list(expect_identical(parish, diocese)),
+      test_england = list(expect_identical(parish, england)),
+      .keep = "none"
+    )
+  
+})
 ```
 
 ```{r function-coe_relocate}
@@ -342,6 +380,3 @@ coe_relocate <- function(.data, cols){
 ## A note on socio-economic classification labels
 
 Most of the statistics used in this package are labelled very intuitively, using labels like `general_health_very_good` or `country_of_birth_middle_east_asia`. This is not true of the socio0economic classification data (TS062), which uses labels like `ns_sec_L1_3`. To understand these labels, please consult the table returned by `ns_sec_descriptions()`.
-
-
-
