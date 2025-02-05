@@ -1,4 +1,6 @@
 ## fixing diocese data
+## Don't try to run this - it might break something.
+
 pkgload::load_all()
 library(dplyr)
 
@@ -36,5 +38,14 @@ parish_data[["data"]][parish_data$level == "diocese" & parish_data$ons_id == "TS
 parish_data[["data"]][parish_data$level == "diocese" & parish_data$ons_id == "TS007A"] <- list(ts007a)
 parish_data[["data"]][parish_data$level == "england" & parish_data$ons_id == "TS007A"] <- list(ts007a_england)
 
+## Religion relocation
+parish_data[["data"]][parish_data$level == "diocese" & parish_data$ons_id == "TS030"][[1]] <-
+  relocate(parish_data[["data"]][parish_data$level == "diocese" & parish_data$ons_id == "TS030"][[1]],
+           religion_no_religion, .after = religion_other_religion)
 
-use_data(parish_data, internal = TRUE, overwrite = TRUE)
+parish_data[["data"]][parish_data$level == "england" & parish_data$ons_id == "TS030"][[1]] <-
+  relocate(parish_data[["data"]][parish_data$level == "england" & parish_data$ons_id == "TS030"][[1]],
+           religion_no_religion, .after = religion_other_religion)
+
+
+##### use_data(parish_data, internal = TRUE, overwrite = TRUE)
