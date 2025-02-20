@@ -296,7 +296,7 @@ coe_parish_snapshot <- function(parish_code,
                             
                             stat_table$level <- "nation"
                             stat_table$level_code = NA_character_
-                            stat_table$level_name = "england"
+                            stat_table$level_name = "England"
                             
                             stat_table <- coe_relocate(stat_table, c("level", "level_code", "level_name"))
                             stat_table

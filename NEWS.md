@@ -4,7 +4,7 @@
 
 ### Bug fixes
 
-* Removed various inconsitencies betweeen census data tables between parish, diocese and national levels. These included:
+* Removed various, breaking inconsistencies between census data tables between parish, diocese and national levels. These included:
   * Missing columns
   * Columns that should not have been there
   * Inconsistent names
