@@ -31,7 +31,8 @@ Get tidy data on Church of England churches.
 coe_churches(where = "Church_Cod = 608186") |>
   dplyr::glimpse()
 #> Rows: 1
-#> Columns: 13
+#> Columns: 14
+#> $ church_name       <chr> "Leytonstone: St Margaret"
 #> $ church_code       <int> 608186
 #> $ parish_name       <chr> "Leytonstone: St Margaret w St Columba"
 #> $ parish_code       <int> 580186
