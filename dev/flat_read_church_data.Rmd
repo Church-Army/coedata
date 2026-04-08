@@ -42,10 +42,10 @@ coe_churches <- function(where = "1=1") {
 
 churches <- esri_churches(where = where, outFields = "*")
 
-churches <- churches[c("Church_Cod", "ParLocNa", "ParishID", "BenefNa", "BenefID",
+churches <- churches[c("Church_Nam", "Church_Cod", "ParLocNa", "ParishID", "BenefNa", "BenefID",
                        "DeanNa", "DeanID", "ArchdNa", "ArchdID", "DioNa", "DioID", "ACNY_ID", "ACNY_url")]
 
-names(churches) <- c("church_code", "parish_name", "parish_code", "benefice_name", "benefice_id",
+names(churches) <- c("church_name", "church_code", "parish_name", "parish_code", "benefice_name", "benefice_id",
                      "deanery_name", "deanery_id", "archdeaconry_name", "archdeaconry_id", "diocese_name",
                      "diocese_number", "acny_id", "acny_url")
 
