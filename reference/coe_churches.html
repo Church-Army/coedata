@@ -19,7 +19,7 @@
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/coe-census-data.html">coe-census-data</a></li>
-    <li><a class="dropdown-item" href="../articles/data-on-individual-churches.html">Data on individual churches</a></li>
+    <li><a class="dropdown-item" href="../articles/get-started.html">Get started</a></li>
     <li><a class="dropdown-item" href="../articles/parish-deprivation-data.html">parish-deprivation-data</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
@@ -68,10 +68,10 @@ can be accessed via <code><a href="coe_esri_fields.html">coe_esri_fields()</a></
 
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">coe_churches</span><span class="op">(</span>where <span class="op">=</span> <span class="st">"ChurchCode = 608186"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu">coe_churches</span><span class="op">(</span>where <span class="op">=</span> <span class="st">"Church_Cod = 608186"</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Rows: 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 11</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Columns: 13</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ church_code       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 608186</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ parish_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Leytonstone: St Margaret w St Columba"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ parish_code       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 580186</span>
@@ -83,6 +83,8 @@ can be accessed via <code><a href="coe_esri_fields.html">coe_esri_fields()</a></
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ archdeaconry_id   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 581</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ diocese_name      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Chelmsford"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ diocese_number    <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 8</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ acny_id           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 6475</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ acny_url          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "https://www.achurchnearyou.com/church/6475/"</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -94,7 +96,7 @@ can be accessed via <code><a href="coe_esri_fields.html">coe_esri_fields()</a></
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer></div>

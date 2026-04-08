@@ -1,11 +1,11 @@
 pandoc: 3.1.11
-pkgdown: 2.1.1
+pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   coe-census-data: coe-census-data.html
-  data-on-individual-churches: data-on-individual-churches.html
+  get-started: get-started.html
   parish-deprivation-data: parish-deprivation-data.html
-last_built: 2025-02-20T14:40Z
+last_built: 2026-04-08T10:02Z
 urls:
   reference: https://church-army.github.io/coedata/reference
   article: https://church-army.github.io/coedata/articles
