@@ -1,8 +1,8 @@
 ---
-title: "Data on individual churches"
+title: "Get started"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Data on individual churches}
+  %\VignetteIndexEntry{Get started}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -34,7 +34,7 @@ The functions on this page all help with processing data related to individual c
 Get tidy data on Church of England churches. 
 
 ```{r examples-coe_churches}
-coe_churches(where = "ChurchCode = 608186") |>
+coe_churches(where = "Church_Cod = 608186") |>
   dplyr::glimpse()
 ```
 

@@ -42,18 +42,19 @@ coe_churches <- function(where = "1=1") {
 
 churches <- esri_churches(where = where, outFields = "*")
 
-churches <- churches[c("ChurchCode", "ParLocNa", "ParishID", "BenefNa", "BenefID",
-                       "DeanNa", "DeanID", "ArchdNa", "ArchdID", "DioNa", "DioID")]
+churches <- churches[c("Church_Cod", "ParLocNa", "ParishID", "BenefNa", "BenefID",
+                       "DeanNa", "DeanID", "ArchdNa", "ArchdID", "DioNa", "DioID", "ACNY_ID", "ACNY_url")]
 
 names(churches) <- c("church_code", "parish_name", "parish_code", "benefice_name", "benefice_id",
-                     "deanery_name", "deanery_id", "archdeaconry_name", "archdeaconry_id", "diocese_name", "diocese_number")
+                     "deanery_name", "deanery_id", "archdeaconry_name", "archdeaconry_id", "diocese_name",
+                     "diocese_number", "acny_id", "acny_url")
 
 churches
 }
 ```
 
 ```{r examples-coe_churches}
-coe_churches(where = "ChurchCode = 608186") |>
+coe_churches(where = "Church_Cod = 608186") |>
   dplyr::glimpse()
 ```
 
@@ -67,7 +68,7 @@ test_that("coe_churches works", {
 esri_churches <- function(where, outFields){
   req <-
   httr2::request("https://services5.arcgis.com") |> 
-  httr2::req_url_path("KDRjxGRQDVgVtFTS/arcgis/rest/services/Churches_ACNY_Nov2024/FeatureServer/0/query") |> 
+  httr2::req_url_path("KDRjxGRQDVgVtFTS/ArcGIS/rest/services/Churches_June2025/FeatureServer/0/query") |> 
   httr2::req_url_query(where = where, outFields = outFields, returnGeometry = "false", f = "geojson")
 
   churches <- sf::st_read(req$url, quiet = TRUE)
@@ -116,7 +117,7 @@ This tiny function returns the names of the fields used in the Feature Server of
 #' @returns A character vector of field names
 #' @export
 coe_esri_fields <- function(){
-  c("FID", "ChurchCode", "ChurchName", "ACNY_url", "ACNY_id", "Heritg_url",
+  c("FID", "Church_Cod", "ChurchName", "ACNY_id", "ACNY_url", "Church_Her",
     "LBGrade", "ParLocNa", "ParLegNa", "ParishID", "BenefNa", "BenefID", 
     "DeanNa", "DeanID", "ArchdNa", "ArchdID", "DioNa", "DioID")
 }

@@ -48,15 +48,16 @@ flat_read_church_data.Rmd:
   - R/coe_esri_fields.R
   - R/coe_parish_from_church.R
   tests: tests/testthat/test-coe_churches.R
-  vignettes: vignettes/data-on-individual-churches.Rmd
+  vignettes: vignettes/get-started.Rmd
   inflate:
     flat_file: dev/flat_read_church_data.Rmd
-    vignette_name: Data on individual churches
+    vignette_name: Get started
     open_vignette: true
     check: true
     document: true
     overwrite: ask
     clean: ask
+    codecov: false
 flat_reading-coe-statistics.Rmd:
   path: dev/flat_reading-coe-statistics.Rmd
   state: active

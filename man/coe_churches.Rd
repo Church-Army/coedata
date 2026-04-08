@@ -20,6 +20,6 @@ This function renames fields in the returned tibble, but any query passed to \co
 can be accessed via \code{\link[=coe_esri_fields]{coe_esri_fields()}}
 }
 \examples{
-coe_churches(where = "ChurchCode = 608186") |>
+coe_churches(where = "Church_Cod = 608186") |>
   dplyr::glimpse()
 }

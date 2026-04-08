@@ -9,7 +9,6 @@ editor_options:
 library(testthat)
 ```
 
-
 ```{r development-load}
 # Load already included functions if relevant
 pkgload::load_all(export_all = FALSE)
@@ -40,7 +39,6 @@ test_that("read_parish_data works", {
   expect_s3_class(read_parish_data(), "tbl_df")
 })
 ```
-
 
 ## read_parish_table
 
@@ -204,5 +202,3 @@ test_that("class information is not duplicated", {
   expect_true(all(table(class(read_cpd_stats("TS001", "diocese"))) == 1))
 })
 ```
-
-
